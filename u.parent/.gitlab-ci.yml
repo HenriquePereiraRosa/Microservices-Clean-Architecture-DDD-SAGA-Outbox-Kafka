@@ -1,0 +1,47 @@
+image: maven:3.8.3-openjdk-17
+
+stages:
+ - build
+ - deploy-discovery-uat
+ 
+before_script:
+#   - 'which ssh-agent || ( apt update -y && apt install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  # - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  # - mkdir -p ~/.ssh
+  # - '[[ -f /.dockerenv ]] && ssh-keyscan -H "$SSH_HOSTNAME" > ~/.ssh/known_hosts'
+  # - scp root@$SSH_HOSTNAME:/var/lib/ojdbc8.jar /tmp/
+
+build:
+ stage: build
+ variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+ script:
+  - echo "Compiling the code..."
+  - mvn clean install package -DskipTests
+  - ls -la
+  - ls -la /builds/henriquepereirarosa/sos.parent/
+  - echo "Compile complete."
+ artifacts:
+  paths:
+    - pom.xml
+    - sos.auth/target/*.jar
+    - sos.brand/target/*.jar
+    - sos.core/target/*.jar
+    - sos.discovery/target/*.jar
+    - sos.gateway/target/*.jar
+    - sos.user/target/*.jar
+
+
+deploy-discovery-uat:
+ stage: deploy-discovery-uat
+ image: ubuntu:latest
+ script:
+   - apt update
+   - apt install -y ruby-dev
+   - gem install dpl
+   - echo $HEROKU_API_KEY_DISCOVERY
+   - dpl --provider=heroku --app=sos-discovery --api-key=$HEROKU_API_KEY_DISCOVERY
+ only:
+  - uat
+

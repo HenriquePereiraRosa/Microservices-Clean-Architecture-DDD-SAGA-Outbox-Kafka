@@ -1,0 +1,69 @@
+
+version: '3.7'
+services:
+
+  auth_db:
+    image: mysql:8.0.27
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'auth_db'
+      MYSQL_USER: 'user_api'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '33061:3306'
+    #    expose:
+    #      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql01
+  user_db:
+    image: mysql:8.0.27
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'user_db'
+      MYSQL_USER: 'user_api'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '33061:3306'
+    #    expose:
+    #      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql01
+
+
+  brand_db:
+    image: mysql:8.0.27
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'brand_db'
+      MYSQL_USER: 'brand_api'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '33062:3306'
+#    expose:
+#      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql02
+
+
+  rank_db:
+    image: mysql:8.0.27
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'rank_db'
+      MYSQL_USER: 'rank_api'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '33063:3306'
+#    expose:
+#      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql03
+
+
+# Names our volume
+volumes:
+  my-db:
