@@ -15,4 +15,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>common-domain</artifactId>
+        </dependency>
+
+    </dependencies>
+
 </project>
