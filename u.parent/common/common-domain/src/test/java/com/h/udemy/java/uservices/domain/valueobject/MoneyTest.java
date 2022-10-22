@@ -19,7 +19,7 @@ class MoneyTest {
         Money money1 = new Money(new BigDecimal(2.02));
         BigDecimal amount = money1.getAmount();
 
-        assertTrue(money1.equals(new Money(amount)));
+        assertEquals(money1, new Money(amount));
     }
 
     @Test
@@ -43,7 +43,7 @@ class MoneyTest {
         Money money2 = new Money(new BigDecimal(0.02));
         money1 = money1.add(money2);
 
-        assertTrue(money1.equals(new Money(new BigDecimal(2.04))));
+        assertEquals(money1, new Money(new BigDecimal(2.04)));
     }
 
     @Test
@@ -52,7 +52,7 @@ class MoneyTest {
         Money money2 = new Money(new BigDecimal(0.02));
         money1 = money1.substract(money2);
 
-        assertTrue(money1.equals(new Money(new BigDecimal(2.00))));
+        assertEquals(money1, new Money(new BigDecimal(2.00)));
     }
 
     @Test
@@ -60,7 +60,7 @@ class MoneyTest {
         Money money1 = new Money(new BigDecimal(2.02));
         money1 = money1.multiply(2);
 
-        assertTrue(money1.equals(new Money(new BigDecimal(4.04))));
+        assertEquals(money1, new Money(new BigDecimal(4.04)));
     }
 
     @Test
@@ -68,7 +68,7 @@ class MoneyTest {
         Money money1 = new Money(new BigDecimal(1000.999));
         Money money2 = new Money(new BigDecimal(1000.999));
 
-        assertTrue(money1.equals(money2));
+        assertEquals(money1, money2);
     }
 
     @Test
@@ -76,7 +76,7 @@ class MoneyTest {
         Money money1 = new Money(new BigDecimal(1000.999));
         Money money2 = new Money(new BigDecimal(1000.988));
 
-        assertTrue(!money1.equals(money2));
+        assertFalse(money1.equals(money2));
 
     }
 
