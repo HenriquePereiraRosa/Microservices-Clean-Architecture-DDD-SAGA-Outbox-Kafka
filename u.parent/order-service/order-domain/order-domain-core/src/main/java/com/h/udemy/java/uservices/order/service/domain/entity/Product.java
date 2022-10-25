@@ -5,8 +5,8 @@ import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.domain.valueobject.ProductId;
 
 public class Product extends BaseEntity<ProductId> {
-    private final String name;
-    private final Money price;
+    private String name;
+    private Money price;
 
     public Product(ProductId productId, String name, Money price) {
         super.setId(productId);
@@ -20,5 +20,10 @@ public class Product extends BaseEntity<ProductId> {
 
     public Money getPrice() {
         return price;
+    }
+
+    public void updateWithConfirmedNameAndPrice(Product product) {
+        this.name = product.getName();
+        this.price = product.getPrice();
     }
 }
