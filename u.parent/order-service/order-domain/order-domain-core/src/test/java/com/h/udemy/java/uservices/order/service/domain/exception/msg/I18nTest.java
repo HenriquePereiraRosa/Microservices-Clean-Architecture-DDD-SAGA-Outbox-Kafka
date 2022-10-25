@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain.exception.msg;
 
-import com.h.udemy.java.uservices.order.service.domain.entity.ApiEnvTest;
+import com.h.udemy.java.uservices.order.service.domain.ApiEnvTest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

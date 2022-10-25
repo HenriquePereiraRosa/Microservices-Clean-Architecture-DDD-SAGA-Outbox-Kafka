@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -216,8 +217,18 @@ public class Order extends AggregateRoot<OrderId> {
             return this;
         }
 
+        public Builder customerId(UUID val) {
+            customerId = new CustomerId(val);
+            return this;
+        }
+
         public Builder restaurantId(RestaurantId val) {
             restaurantId = val;
+            return this;
+        }
+
+        public Builder restaurantId(UUID val) {
+            restaurantId = new RestaurantId(val);
             return this;
         }
 
@@ -228,6 +239,11 @@ public class Order extends AggregateRoot<OrderId> {
 
         public Builder price(Money val) {
             price = val;
+            return this;
+        }
+
+        public Builder price(BigDecimal val) {
+            price = new Money(val);
             return this;
         }
 

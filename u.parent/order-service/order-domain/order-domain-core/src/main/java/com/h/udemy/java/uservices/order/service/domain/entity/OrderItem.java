@@ -5,6 +5,9 @@ import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.domain.valueobject.OrderId;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.OrderItemId;
 
+import java.math.BigDecimal;
+import java.util.UUID;
+
 public class OrderItem extends BaseEntity<OrderItemId> {
     private  OrderId orderId;
     private final Product product;
@@ -79,6 +82,11 @@ public class OrderItem extends BaseEntity<OrderItemId> {
             return this;
         }
 
+        public Builder product(UUID val) {
+            product = new Product(val);
+            return this;
+        }
+
         public Builder quantity(int val) {
             quantity = val;
             return this;
@@ -86,6 +94,11 @@ public class OrderItem extends BaseEntity<OrderItemId> {
 
         public Builder price(Money val) {
             price = val;
+            return this;
+        }
+
+        public Builder price(BigDecimal val) {
+            price = new Money(val);
             return this;
         }
 

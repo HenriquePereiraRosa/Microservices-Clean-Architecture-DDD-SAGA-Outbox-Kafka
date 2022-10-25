@@ -10,6 +10,9 @@ public enum I18n { //        implements MessageSourceAware {
     APP_NAME_DESCRIPTION("app.name.description"),
 
     ORDER_ID_INITIATED("order.id.initiated"),
+    ORDER_ID_PAYMENT_CANCELLING("order.id.payment-cancelling"),
+    ORDER_ID_PAYMENT_CANCELLED("order.id.payment-cancelled"),
+    ORDER_ID_CREATED("order.id.created"),
 
     ERR_ORDER_NOT_CORRECT_INIT_STATE("err.order.not-correct-state-initialization"),
     ERR_ORDER_PRICE_MUST_GREATER_ZERO("err.order.price-must-greater-zero"),
@@ -19,7 +22,9 @@ public enum I18n { //        implements MessageSourceAware {
     ERR_ORDER_NOT_CORRECT_STATE_F_APPROVE("err.order.not-correct-state-for-approve"),
     ERR_ORDER_NOT_CORRECT_STATE_F_INIT_CANCEL("err.order.not-correct-state-for-init-cancel"),
     ERR_ORDER_NOT_CORRECT_STATE_F_CANCEL("err.order.not-correct-state-for-cancel"),
-    ERR_RESTAURANT_ID_NOT_ACTIVE("err.restaurant.id.not-active");
+    ERR_ORDER_COULD_NOT_BE_SAVED("err.order.could-not-be-saved"),
+    ERR_RESTAURANT_ID_NOT_ACTIVE("err.restaurant.id.not-active"),
+    ERR_RESTAURANT_NOT_FOUND("err.restaurant.not-found");
 
     private static MessageSource messageSource;
 

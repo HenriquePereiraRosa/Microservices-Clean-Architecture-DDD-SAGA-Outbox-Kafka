@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.order.service.domain.entity;
+package com.h.udemy.java.uservices.order.service.domain;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
