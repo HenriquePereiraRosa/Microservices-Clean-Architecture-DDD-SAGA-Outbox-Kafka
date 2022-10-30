@@ -5,7 +5,7 @@ import com.h.udemy.java.uservices.order.service.domain.entity.Customer;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface CustomerRepository {
+public interface ICustomerRepository {
 
     Customer insertCustomer(Customer customer);
 

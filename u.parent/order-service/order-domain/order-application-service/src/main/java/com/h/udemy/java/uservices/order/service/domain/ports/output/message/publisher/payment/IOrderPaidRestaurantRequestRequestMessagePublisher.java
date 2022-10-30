@@ -3,7 +3,7 @@ package com.h.udemy.java.uservices.order.service.domain.ports.output.message.pub
 import com.h.udemy.java.uservices.domain.event.DomainPublisherEvent;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderPaidEvent;
 
-public interface OrderPaidRestaurantRequestRequestMessagePublisher
+public interface IOrderPaidRestaurantRequestRequestMessagePublisher
         extends DomainPublisherEvent<OrderPaidEvent> {
 
 

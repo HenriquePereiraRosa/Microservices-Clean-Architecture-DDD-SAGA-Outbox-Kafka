@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain.exception;
 
-import com.h.udemy.java.uservices.order.service.domain.exception.msg.I18n;
+import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
 
 public class OrderDomainInitialStateException extends OrderDomainException {
     public OrderDomainInitialStateException() {

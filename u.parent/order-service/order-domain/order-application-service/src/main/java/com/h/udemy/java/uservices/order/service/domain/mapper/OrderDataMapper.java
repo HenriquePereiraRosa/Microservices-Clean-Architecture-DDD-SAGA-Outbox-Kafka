@@ -5,16 +5,19 @@ import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCom
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderResponse;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.OrderAddressDTO;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.OrderItemDTO;
+import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderResponse;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import com.h.udemy.java.uservices.order.service.domain.entity.OrderItem;
 import com.h.udemy.java.uservices.order.service.domain.entity.Product;
 import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.StreetAddress;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Component
 public class OrderDataMapper {
 
     public Restaurant createOrderCommandToRestaurant(CreateOrderCommand createOrderCommand) {
@@ -55,11 +58,19 @@ public class OrderDataMapper {
         );
     }
 
-    public CreateOrderResponse orderToCreateOrderResponse(Order order) {
+    public CreateOrderResponse orderToCreateOrderResponse(Order order, String message) {
         return CreateOrderResponse.builder()
-//                .message(message)
                 .orderStatus(order.getOrderStatus())
                 .trackingId(order.getTrackingId().getValue())
+                .message(message)
+                .build();
+    }
+
+    public TrackOrderResponse orderToTrackOrderResponse(Order order) {
+        return TrackOrderResponse.builder()
+                .orderTrackingId(order.getTrackingId().getValue())
+                .orderStatus(order.getOrderStatus())
+                .failureMessages(order.getFailureMessages())
                 .build();
     }
 }

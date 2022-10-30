@@ -8,7 +8,7 @@ import com.h.udemy.java.uservices.order.service.domain.event.OrderCancelledEvent
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderPaidEvent;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
-import com.h.udemy.java.uservices.order.service.domain.exception.msg.I18n;
+import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.ZoneId;
@@ -22,11 +22,11 @@ public class OrderDomainService implements IOrderDomainService {
 
     private static final ZoneId ZONE = ZoneId.of("UTC");
     @Override
-    public OrderCreatedEvent validateAndInitateOrder(Order order, Restaurant restaurant) {
+    public OrderCreatedEvent validateAndInitiateOrder(Order order, Restaurant restaurant) {
         validateResaurant(restaurant);
         setOrderProductInformation(order, restaurant);
         order.validateOrder();
-        order.initialeOrder();
+        order.initializeOrder();
         log.info(I18n.ORDER_ID_INITIATED.getMsg(), order.getId().getValue());
         return new OrderCreatedEvent(order, ZonedDateTime.now(ZONE));
     }
@@ -57,7 +57,7 @@ public class OrderDomainService implements IOrderDomainService {
     private void validateResaurant(Restaurant restaurant) {
         if (!restaurant.isActive()) {
             throw new OrderDomainException(I18n.ERR_RESTAURANT_ID_NOT_ACTIVE.getMsg()
-                    + restaurant.getId());
+                    + restaurant.getId().getValue());
         }
     }
 
@@ -65,7 +65,8 @@ public class OrderDomainService implements IOrderDomainService {
 
         long timeStamp = System.nanoTime();
 
-        //todo: remove / clean this code after performonce diagnosys
+        //todo: remove this code after performonce diagnosys
+        // n*n = O(n^2) -> exp
         order.getItems().forEach(orderItem -> restaurant.getProducts().forEach(product -> {
             Product currentProduct = orderItem.getProduct();
             if (currentProduct.equals(product)) {
@@ -77,6 +78,8 @@ public class OrderDomainService implements IOrderDomainService {
         timeStamp = System.nanoTime();
 
 
+
+        // n + n = O(2n) -> linear
         Map<ProductId, Product> restaurantProductMap = new HashMap<>();
         restaurant.getProducts().forEach(restaurantProduct ->{
             restaurantProductMap.put(restaurantProduct.getId(), restaurantProduct);
@@ -86,7 +89,6 @@ public class OrderDomainService implements IOrderDomainService {
             Product restaurantProduct = restaurantProductMap.get(currentProduct.getId());
             currentProduct.updateWithConfirmedNameAndPrice(restaurantProduct);
         });
-
 
         System.out.println(":: -> time diff: " + (System.nanoTime() - timeStamp));
     }

@@ -4,10 +4,11 @@ import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCom
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderResponse;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
 import com.h.udemy.java.uservices.order.service.domain.mapper.OrderDataMapper;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.CustomerRepository;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.OrderRepository;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.RestaurantRepository;
+import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCreatedPaymentRequestMessagePublisher;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.ICustomerRepository;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IRestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -15,29 +16,29 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderCreateCommandHandler {
 
-    private final OrderDomainService orderDomainService;
+    private final IOrderDomainService IOrderDomainService;
     private final OrderCreateHelper orderCreateHelper;
-    private final OrderRepository orderRepository;
-    private final CustomerRepository customerRepository;
-    private final RestaurantRepository restaurantRepository;
+    private final IOrderRepository IOrderRepository;
+    private final ICustomerRepository ICustomerRepository;
+    private final IRestaurantRepository IRestaurantRepository;
     private final OrderDataMapper orderDataMapper;
 
-    private final OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher;
+    private final IOrderCreatedPaymentRequestMessagePublisher IOrderCreatedPaymentRequestMessagePublisher;
 
-    public OrderCreateCommandHandler(OrderDomainService orderDomainService,
+    public OrderCreateCommandHandler(IOrderDomainService IOrderDomainService,
                                      OrderCreateHelper orderCreateHelper,
-                                     OrderRepository orderRepository,
-                                     CustomerRepository customerRepository,
-                                     RestaurantRepository restaurantRepository,
+                                     IOrderRepository IOrderRepository,
+                                     ICustomerRepository ICustomerRepository,
+                                     IRestaurantRepository IRestaurantRepository,
                                      OrderDataMapper orderDataMapper,
-                                     OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher) {
-        this.orderDomainService = orderDomainService;
+                                     IOrderCreatedPaymentRequestMessagePublisher IOrderCreatedPaymentRequestMessagePublisher) {
+        this.IOrderDomainService = IOrderDomainService;
         this.orderCreateHelper = orderCreateHelper;
-        this.orderRepository = orderRepository;
-        this.customerRepository = customerRepository;
-        this.restaurantRepository = restaurantRepository;
+        this.IOrderRepository = IOrderRepository;
+        this.ICustomerRepository = ICustomerRepository;
+        this.IRestaurantRepository = IRestaurantRepository;
         this.orderDataMapper = orderDataMapper;
-        this.orderCreatedPaymentRequestMessagePublisher = orderCreatedPaymentRequestMessagePublisher;
+        this.IOrderCreatedPaymentRequestMessagePublisher = IOrderCreatedPaymentRequestMessagePublisher;
     }
 
 
@@ -45,9 +46,10 @@ public class OrderCreateCommandHandler {
         OrderCreatedEvent orderCreatedEvent = orderCreateHelper
                 .persistOrder(createOrderCommand);
 
-        orderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
+        IOrderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
 
-        return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder());
+        return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder(),
+                I18n.ORDER_CREATED_SUCCESSFULLY.getMsg());
 
     }
 }

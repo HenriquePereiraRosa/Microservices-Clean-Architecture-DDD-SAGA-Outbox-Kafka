@@ -1,11 +1,11 @@
 package com.h.udemy.java.uservices.order.service.domain.entity;
 
-import com.h.udemy.java.uservices.domain.entity.BaseEntity;
+import com.h.udemy.java.uservices.domain.entity.AggregateRoot;
 import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
 
 import java.util.List;
 
-public class Restaurant extends BaseEntity<RestaurantId> {
+public class Restaurant extends AggregateRoot<RestaurantId> {
 
     private final List<Product> products;
     private boolean active;

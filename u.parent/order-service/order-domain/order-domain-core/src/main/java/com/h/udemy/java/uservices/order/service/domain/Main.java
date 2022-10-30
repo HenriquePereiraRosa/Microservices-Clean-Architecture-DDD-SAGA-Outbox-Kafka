@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
-import com.h.udemy.java.uservices.order.service.domain.exception.msg.I18n;
+import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

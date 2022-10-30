@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.order.service.domain.exception.msg;
+package com.h.udemy.java.uservices.order.service.domain.messages;
 
 import lombok.Getter;
 import org.springframework.context.MessageSource;
@@ -6,13 +6,16 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 
 @Getter
-public enum I18n { //        implements MessageSourceAware {
+public enum I18n {
+
     APP_NAME_DESCRIPTION("app.name.description"),
 
+    ORDER_CREATED_SUCCESSFULLY("order.created.successfully"),
     ORDER_ID_INITIATED("order.id.initiated"),
     ORDER_ID_PAYMENT_CANCELLING("order.id.payment-cancelling"),
     ORDER_ID_PAYMENT_CANCELLED("order.id.payment-cancelled"),
     ORDER_ID_CREATED("order.id.created"),
+    ORDER_TRACKING_ID_NOT_FOUND("err.order.tracking-id.not-found"),
 
     ERR_ORDER_NOT_CORRECT_INIT_STATE("err.order.not-correct-state-initialization"),
     ERR_ORDER_PRICE_MUST_GREATER_ZERO("err.order.price-must-greater-zero"),
@@ -24,7 +27,8 @@ public enum I18n { //        implements MessageSourceAware {
     ERR_ORDER_NOT_CORRECT_STATE_F_CANCEL("err.order.not-correct-state-for-cancel"),
     ERR_ORDER_COULD_NOT_BE_SAVED("err.order.could-not-be-saved"),
     ERR_RESTAURANT_ID_NOT_ACTIVE("err.restaurant.id.not-active"),
-    ERR_RESTAURANT_NOT_FOUND("err.restaurant.not-found");
+    ERR_RESTAURANT_NOT_FOUND("err.restaurant.not-found"),
+    ERR_CUSTOMER_NOT_FOUND("err.customer.not-found");
 
     private static MessageSource messageSource;
 

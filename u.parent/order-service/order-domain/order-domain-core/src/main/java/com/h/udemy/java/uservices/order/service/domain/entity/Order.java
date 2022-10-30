@@ -5,7 +5,7 @@ import com.h.udemy.java.uservices.domain.valueobject.*;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainInitialStateException;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainTotalPriceException;
-import com.h.udemy.java.uservices.order.service.domain.exception.msg.I18n;
+import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.OrderItemId;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.StreetAddress;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.TrackingId;
@@ -91,7 +91,7 @@ public class Order extends AggregateRoot<OrderId> {
         return failureMessages;
     }
 
-    public void initialeOrder() {
+    public void initializeOrder() {
         setId(new OrderId(UUID.randomUUID()));
         trackingId = new TrackingId(UUID.randomUUID());
         orderStatus = OrderStatus.PENDING;
@@ -112,9 +112,8 @@ public class Order extends AggregateRoot<OrderId> {
     }
 
     private void validateInitialOrder() {
-        if (orderStatus == null
-                || orderStatus != OrderStatus.PENDING
-                || getId() == null) {
+        if (orderStatus != null
+                || getId() != null) {
             throw new OrderDomainInitialStateException();
         }
     }
@@ -133,9 +132,9 @@ public class Order extends AggregateRoot<OrderId> {
 
         if (!orderItemsTotal.equals(price)) {
             throw new OrderDomainException(I18n.ERR_ORDER_TOTAL_AND_ORDER_PRICES_DIFF.getMsg()
-                    + " :  (price)" + price.getAmount()
+                    + ": (price) " + price.getAmount()
                     + " != "
-                    + " (orderItemsTotal)" + orderItemsTotal.getAmount());
+                    + "(orderItemsTotal) " + orderItemsTotal.getAmount());
         }
     }
 
@@ -181,7 +180,7 @@ public class Order extends AggregateRoot<OrderId> {
     }
 
     private void updateFailureMessages(List<String> failureMessages) {
-        if(!CollectionUtils.isEmpty(failureMessages)) {
+        if (!CollectionUtils.isEmpty(failureMessages)) {
             this.failureMessages.addAll(failureMessages.stream()
                     .filter(message -> !message.isEmpty())
                     .toList());

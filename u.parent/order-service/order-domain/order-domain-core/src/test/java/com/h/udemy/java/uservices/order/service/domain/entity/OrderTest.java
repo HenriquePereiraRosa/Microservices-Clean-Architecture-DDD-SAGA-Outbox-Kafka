@@ -1,9 +1,9 @@
 package com.h.udemy.java.uservices.order.service.domain.entity;
 
 import com.h.udemy.java.uservices.domain.valueobject.*;
-import com.h.udemy.java.uservices.order.service.domain.ApiEnvTest;
+import com.h.udemy.java.uservices.order.service.domain.ApiEnvTestConfig;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainInitialStateException;
-import com.h.udemy.java.uservices.order.service.domain.exception.msg.I18n;
+import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
 import com.h.udemy.java.uservices.order.service.domain.validation.Valid;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.OrderItemId;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.StreetAddress;
@@ -18,24 +18,22 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class OrderTest extends ApiEnvTest {
+class OrderTest extends ApiEnvTestConfig {
 
     @Test
     void getId() {
         Order order = this.getOne();
-        assertTrue(Valid.isUUID(order.getId().getValue()));
-    }
-
-    @Test
-    void setId() {
-        Order order = this.getOne();
+        order.setId(new OrderId(UUID.randomUUID()));
         assertTrue(Valid.isUUID(order.getId().getValue()));
     }
 
     @Test
     void testEquals() {
         Order order1 = this.getOne();
+        order1.setId(new OrderId(UUID.randomUUID()));
         Order order2 = this.getOne();
+        order2.setId(new OrderId(UUID.randomUUID()));
+
         assertNotEquals(order1, order2);
     }
 
@@ -60,6 +58,9 @@ class OrderTest extends ApiEnvTest {
     @Test
     void getOrderStatus() {
         Order order = this.getOne();
+        order.initializeOrder();
+        order.pay();
+        order.approve();
         assertEquals(OrderStatus.APPROVED, order.getOrderStatus());
     }
 
@@ -72,13 +73,15 @@ class OrderTest extends ApiEnvTest {
     @Test
     void initializeOrder() {
         Order order = this.getOne();
-        order.initialeOrder();
+        order.initializeOrder();
         assertEquals(OrderStatus.PENDING, order.getOrderStatus());
     }
 
     @Test
     void validateOrder_nok_OrderDomainInitialStateException() {
         Order order = this.getOne();
+        order.initializeOrder();
+        order.pay();
 
         Throwable exceptionThatWasThrown =
                 assertThrows(OrderDomainInitialStateException.class, () -> {
@@ -92,8 +95,8 @@ class OrderTest extends ApiEnvTest {
     @Test
     void validateOrder_ok() {
         Order order = this.getOne();
-        order.initialeOrder();
         order.validateOrder();
+        order.initializeOrder();
     }
 
     @Test
@@ -121,14 +124,12 @@ class OrderTest extends ApiEnvTest {
                 .build();
 
         return Order.builder()
-                .orderId(new OrderId(UUID.randomUUID()))
                 .customerId(new CustomerId(UUID.randomUUID()))
                 .restaurantId(new RestaurantId(UUID.randomUUID()))
                 .deliveryAddress(address)
                 .price(new Money(new BigDecimal(54.95)))
                 .items(Arrays.asList(item))
                 .trackingId(new TrackingId(UUID.randomUUID()))
-                .orderStatus(OrderStatus.APPROVED)
                 .build();
     }
 }
