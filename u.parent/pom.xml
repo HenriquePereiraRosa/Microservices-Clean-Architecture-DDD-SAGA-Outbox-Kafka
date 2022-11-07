@@ -32,7 +32,8 @@
 	<modules>
 		<module>order-service</module>
 		<module>common</module>
-	</modules>
+        <module>infrastructure</module>
+    </modules>
 
 	<dependencyManagement>
 		<dependencies>
