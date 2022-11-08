@@ -2,10 +2,7 @@ package com.h.udemy.java.uservices.order.service.domain.exception.messages;
 
 import com.h.udemy.java.uservices.order.service.domain.ApiEnvTestConfig;
 import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Locale;
@@ -13,6 +10,7 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class I18nTest extends ApiEnvTestConfig {
 
     @Test

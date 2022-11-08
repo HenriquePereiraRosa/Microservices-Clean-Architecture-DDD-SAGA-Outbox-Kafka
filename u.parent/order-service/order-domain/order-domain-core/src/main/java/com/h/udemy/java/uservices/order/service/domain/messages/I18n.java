@@ -1,8 +1,9 @@
 package com.h.udemy.java.uservices.order.service.domain.messages;
 
 import lombok.Getter;
-import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+
+import java.util.ResourceBundle;
 
 
 @Getter
@@ -30,18 +31,14 @@ public enum I18n {
     ERR_RESTAURANT_NOT_FOUND("err.restaurant.not-found"),
     ERR_CUSTOMER_NOT_FOUND("err.customer.not-found");
 
-    private static MessageSource messageSource;
-
     String key;
     I18n(String key) {
         this.key = key;
     }
 
-    public static void setMessageSource(Object messageSource) {
-        I18n.messageSource = (MessageSource) messageSource;
-    }
-
     public String getMsg() {
-        return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
+        ResourceBundle bundle = ResourceBundle
+                .getBundle("messages.messages", LocaleContextHolder.getLocale());
+        return bundle.getString(key);
     }
 }
