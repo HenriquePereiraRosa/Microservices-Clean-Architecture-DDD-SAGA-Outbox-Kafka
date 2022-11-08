@@ -19,8 +19,6 @@ public class Main {
     public static void main(String[] args) {
         ApplicationContext context =  SpringApplication.run(Main.class, args);
 
-        // todo: fix @Autowireds resolution
-        I18n.setMessageSource(context.getBean("messageSource"));
         System.out.println(I18n.ERR_ORDER_ITEM_PRICE_INVALID.getMsg());
     }
 }

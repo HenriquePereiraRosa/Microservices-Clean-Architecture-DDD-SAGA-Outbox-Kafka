@@ -23,7 +23,7 @@ public class OrderDomainService implements IOrderDomainService {
     private static final ZoneId ZONE = ZoneId.of("UTC");
     @Override
     public OrderCreatedEvent validateAndInitiateOrder(Order order, Restaurant restaurant) {
-        validateResaurant(restaurant);
+        validateRestaurant(restaurant);
         setOrderProductInformation(order, restaurant);
         order.validateOrder();
         order.initializeOrder();
@@ -54,7 +54,7 @@ public class OrderDomainService implements IOrderDomainService {
         log.info(I18n.ORDER_ID_PAYMENT_CANCELLED.getMsg());
     }
 
-    private void validateResaurant(Restaurant restaurant) {
+    private void validateRestaurant(Restaurant restaurant) {
         if (!restaurant.isActive()) {
             throw new OrderDomainException(I18n.ERR_RESTAURANT_ID_NOT_ACTIVE.getMsg()
                     + restaurant.getId().getValue());
