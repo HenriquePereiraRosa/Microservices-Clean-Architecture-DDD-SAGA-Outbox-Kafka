@@ -21,19 +21,27 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-		<domain.core-version>1.0.0</domain.core-version>
-		<domain.core-version>1.0.0</domain.core-version>
-		<order.application-version>1.0.0</order.application-version>
-		<order.data_access-version>1.0.0</order.data_access-version>
-		<order.messaging-version>1.0.0</order.messaging-version>
-		<common-domain-version>1.0.0</common-domain-version>
+		<domain.core.version>1.0.0</domain.core.version>
+		<domain.core.version>1.0.0</domain.core.version>
+		<order.application.version>1.0.0</order.application.version>
+		<order.data_access.version>1.0.0</order.data_access.version>
+		<order.messaging.version>1.0.0</order.messaging.version>
+		<common-domain.version>1.0.0</common-domain.version>
+		<kafka-producer.version>1.0.0</kafka-producer.version>
+		<kafka-consumer.version>1.0.0</kafka-consumer.version>
+		<kafka-model.version>1.0.0</kafka-model.version>
+		<kafka-config-data.version>1.0.0</kafka-config-data.version>
+		<spring-kafka.version>2.8.2</spring-kafka.version>
+		<kafka-avro-serializer.version>7.0.1</kafka-avro-serializer.version>
+		<avro.version>1.11.0</avro.version>
 	</properties>
 
 	<modules>
 		<module>order-service</module>
 		<module>common</module>
         <module>infrastructure</module>
-    </modules>
+		<module>infrastructure/kafka</module>
+	</modules>
 
 	<dependencyManagement>
 		<dependencies>
@@ -41,31 +49,55 @@
 			<dependency>
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>order-domain-core</artifactId>
-				<version>${domain.core-version}</version>
+				<version>${domain.core.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>order-application</artifactId>
-				<version>${order.application-version}</version>
+				<version>${order.application.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>order-data_access</artifactId>
-				<version>${order.data_access-version}</version>
+				<version>${order.data_access.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>order-messaging</artifactId>
-				<version>${order.messaging-version}</version>
+				<version>${order.messaging.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>common-domain</artifactId>
-				<version>${common-domain-version}</version>
+				<version>${common-domain.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>kafka-producer</artifactId>
+				<version>${kafka-producer.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>kafka-consumer</artifactId>
+				<version>${kafka-consumer.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>kafka-model</artifactId>
+				<version>${kafka-model.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>kafka-config-data</artifactId>
+				<version>${kafka-config-data.version}</version>
 			</dependency>
 
 		</dependencies>
