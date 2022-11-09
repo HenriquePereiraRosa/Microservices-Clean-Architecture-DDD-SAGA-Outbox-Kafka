@@ -3,7 +3,7 @@
     <module name="order-domain-core" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.h.udemy.java.uservices.*" />
+        <option name="PATTERN" value="com.h.udemy.java.uservices.exception.handler.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
