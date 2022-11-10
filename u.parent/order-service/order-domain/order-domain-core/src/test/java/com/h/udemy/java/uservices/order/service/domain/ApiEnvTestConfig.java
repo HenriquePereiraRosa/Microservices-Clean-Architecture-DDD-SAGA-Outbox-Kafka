@@ -23,8 +23,10 @@ public abstract class ApiEnvTestConfig {
 
     @Test
     void contextLoads() {
-        log.info(I18n.ERR_ORDER_TOTAL_AND_ORDER_PRICES_DIFF.getMsg());
-
+        log.debug(I18n.APP_NAME_DESCRIPTION.getMsg());
+        log.info(I18n.APP_NAME_DESCRIPTION.getMsg());
+        log.warn(I18n.APP_NAME_DESCRIPTION.getMsg());
+        log.error(I18n.APP_NAME_DESCRIPTION.getMsg());
     }
 
 }
