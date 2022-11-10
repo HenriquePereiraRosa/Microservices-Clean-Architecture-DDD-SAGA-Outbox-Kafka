@@ -1,6 +1,7 @@
 package com.h.udemy.java.uservices.exception.handler;
 
-import com.h.udemy.java.uservices.exception.handler.model.ErrorDTO;
+import com.h.udemy.java.uservices.application.exception.handler.GlobalExceptionHandler;
+import com.h.udemy.java.uservices.application.exception.handler.model.ErrorDTO;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Slf4j
 @ControllerAdvice
-public class ApiExceptionHandler {
+public class OrderApplicationExceptionHandler extends GlobalExceptionHandler {
 
     @ExceptionHandler(value = {OrderDomainException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)

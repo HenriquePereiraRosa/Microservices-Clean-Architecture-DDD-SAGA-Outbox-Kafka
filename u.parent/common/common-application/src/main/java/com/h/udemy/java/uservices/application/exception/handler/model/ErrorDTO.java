@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.exception.handler.model;
+package com.h.udemy.java.uservices.application.exception.handler.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
