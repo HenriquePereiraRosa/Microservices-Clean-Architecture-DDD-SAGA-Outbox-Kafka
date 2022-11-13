@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.domain.valueobject;
+package com.h.udemy.java.uservices.data_access;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -11,8 +11,7 @@ import javax.annotation.PostConstruct;
 
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ApiEnvTestConfig {
-
+public abstract class ApiEnvTestConfig {
     public ObjectMapper mapper = new ObjectMapper();
 
     @PostConstruct
@@ -23,7 +22,10 @@ public class ApiEnvTestConfig {
 
     @Test
     void contextLoads() {
-//        log.info("-- contextLoads --");
+       log.debug(I18n.APP_NAME_DESCRIPTION.getMsg());
+       log.info(I18n.APP_NAME_DESCRIPTION.getMsg());
+       log.warn(I18n.APP_NAME_DESCRIPTION.getMsg());
+       log.error(I18n.APP_NAME_DESCRIPTION.getMsg());
     }
 
 }
