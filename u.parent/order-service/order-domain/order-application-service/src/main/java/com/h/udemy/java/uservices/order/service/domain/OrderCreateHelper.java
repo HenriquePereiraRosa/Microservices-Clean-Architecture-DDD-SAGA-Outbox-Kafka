@@ -23,20 +23,20 @@ import java.util.UUID;
 public class OrderCreateHelper {
 
     private final IOrderDomainService iOrderDomainService;
-    private final IOrderRepository iOrderRepository;
+    private final IOrderRepository orderRepository;
     private final ICustomerRepository iCustomerRepository;
-    private final IRestaurantRepository iRestaurantRepository;
+    private final IRestaurantRepository restaurantRepository;
     private final OrderDataMapper orderDataMapper;
 
-    public OrderCreateHelper(OrderDomainService orderDomainServiceImpl,
-                             IOrderRepository iOrderRepository,
+    public OrderCreateHelper(IOrderDomainService orderDomainService,
+                             IOrderRepository orderRepository,
                              ICustomerRepository iCustomerRepository,
-                             IRestaurantRepository iRestaurantRepository,
+                             IRestaurantRepository restaurantRepository,
                              OrderDataMapper orderDataMapper) {
-        this.iOrderDomainService = orderDomainServiceImpl;
-        this.iOrderRepository = iOrderRepository;
+        this.iOrderDomainService = orderDomainService;
+        this.orderRepository = orderRepository;
         this.iCustomerRepository = iCustomerRepository;
-        this.iRestaurantRepository = iRestaurantRepository;
+        this.restaurantRepository = restaurantRepository;
         this.orderDataMapper = orderDataMapper;
     }
     @Transactional
@@ -58,7 +58,7 @@ public class OrderCreateHelper {
     private Restaurant checkRestaurant(CreateOrderCommand createOrderCommand) {
         Restaurant restaurant = orderDataMapper
                 .createOrderCommandToRestaurant(createOrderCommand);
-        Optional<Restaurant> lRestaurant = iRestaurantRepository
+        Optional<Restaurant> lRestaurant = restaurantRepository
                 .findInformation(restaurant);
         if (lRestaurant.isEmpty()) {
             final String msg = I18n.ERR_RESTAURANT_NOT_FOUND.getMsg() +
@@ -79,7 +79,7 @@ public class OrderCreateHelper {
     }
 
     private Order insertOrder(Order order) {
-        Order orderCreated = iOrderRepository.insertOrder(order);
+        Order orderCreated = orderRepository.insertOrder(order);
         if (orderCreated == null) {
             final String msg = I18n.ERR_ORDER_COULD_NOT_BE_SAVED.getMsg() +
                     order.getId().getValue();

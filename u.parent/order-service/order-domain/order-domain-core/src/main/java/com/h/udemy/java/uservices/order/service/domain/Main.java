@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.h.udemy.java.uservices")
 public class Main {
 
     @Autowired

@@ -1,13 +1,13 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="order-domain-core" type="JUnit" factoryName="JUnit">
-    <module name="order-domain-core" />
+  <configuration default="false" name="order-dataaccess" type="JUnit" factoryName="JUnit">
+    <module name="order-data_access" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.h.udemy.java.uservices.*" />
+        <option name="PATTERN" value="com.h.udemy.java.uservices.dataaccess.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
-    <option name="PACKAGE_NAME" value="com.h.udemy.java.uservices.order.service.domain" />
+    <option name="PACKAGE_NAME" value="com.h.udemy.java.uservices.dataaccess" />
     <option name="MAIN_CLASS_NAME" value="" />
     <option name="METHOD_NAME" value="" />
     <option name="TEST_OBJECT" value="package" />

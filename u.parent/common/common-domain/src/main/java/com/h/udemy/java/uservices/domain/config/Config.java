@@ -9,6 +9,7 @@ import java.util.Locale;
 
 @Configuration
 public class Config {
+
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();

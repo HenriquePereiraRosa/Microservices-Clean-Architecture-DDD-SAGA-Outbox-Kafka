@@ -7,9 +7,11 @@ import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCancelledEvent;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderPaidEvent;
+import com.h.udemy.java.uservices.order.service.domain.event.publisher.DomainEventPublisher;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
 import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
+@Service
 public class OrderDomainService implements IOrderDomainService {
 
     private static final ZoneId ZONE = ZoneId.of("UTC");
@@ -32,13 +35,17 @@ public class OrderDomainService implements IOrderDomainService {
     }
 
     @Override
-    public OrderPaidEvent payOrder(Order order) {
-        return null;
+    public OrderPaidEvent payOrder(Order order,
+                                   DomainEventPublisher<OrderPaidEvent> orderPaidEventDomainEventPublisher) {
+        order.pay();
+        log.info("Order with id: {} is paid", order.getId().getValue());
+        return new OrderPaidEvent(order, ZonedDateTime.now(ZONE), orderPaidEventDomainEventPublisher);
     }
 
     @Override
     public void approveOrder(Order order) {
-
+        order.approve();
+        log.info("Order with id: {} is approved", order.getId().getValue());
     }
 
     @Override

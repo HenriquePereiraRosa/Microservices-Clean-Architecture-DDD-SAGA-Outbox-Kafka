@@ -21,13 +21,14 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-		<domain.core.version>1.0.0</domain.core.version>
+
 		<domain.core.version>1.0.0</domain.core.version>
 		<order.application.version>1.0.0</order.application.version>
 		<order.data_access.version>1.0.0</order.data_access.version>
 		<order.messaging.version>1.0.0</order.messaging.version>
 		<common-domain.version>1.0.0</common-domain.version>
 		<common-application.version>1.0.0</common-application.version>
+
 		<kafka-producer.version>1.0.0</kafka-producer.version>
 		<kafka-consumer.version>1.0.0</kafka-consumer.version>
 		<kafka-model.version>1.0.0</kafka-model.version>
@@ -35,6 +36,10 @@
 		<spring-kafka.version>2.9.0</spring-kafka.version>
 		<kafka-avro-serializer.version>7.0.1</kafka-avro-serializer.version>
 		<avro.version>1.11.0</avro.version>
+
+		<lombok-version>1.18.24</lombok-version>
+		<mapstruct-version>1.5.3.Final</mapstruct-version>
+
 	</properties>
 
 	<modules>
@@ -163,10 +168,34 @@
 			<artifactId>mockito-core</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+
+		<!-- MAP STRUCT --><!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${mapstruct-version}</version>
+		</dependency>
+
+		<!-- VAVR --><!-- https://mvnrepository.com/artifact/io.vavr/vavr -->
+		<dependency>
+			<groupId>io.vavr</groupId>
+			<artifactId>vavr</artifactId>
+			<version>0.10.4</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -175,6 +204,7 @@
 					<release>17</release>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 

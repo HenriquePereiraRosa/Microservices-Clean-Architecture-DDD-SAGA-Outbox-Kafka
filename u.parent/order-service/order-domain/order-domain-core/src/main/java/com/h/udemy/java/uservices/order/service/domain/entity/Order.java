@@ -20,6 +20,8 @@ import java.util.UUID;
 
 public class Order extends AggregateRoot<OrderId> {
 
+    public static final String FAILURE_MESSAGE_DELIMITER = ",";
+
     private final CustomerId customerId;
     private final RestaurantId restaurantId;
     private final StreetAddress deliveryAddress;
@@ -90,6 +92,12 @@ public class Order extends AggregateRoot<OrderId> {
     public List<String> getFailureMessages() {
         return failureMessages;
     }
+    public String concatFailureMessages() {
+        String concated = "".join(FAILURE_MESSAGE_DELIMITER, getFailureMessages());
+        return concated;
+    }
+
+
 
     public void initializeOrder() {
         setId(new OrderId(UUID.randomUUID()));

@@ -5,6 +5,7 @@ import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCancelledEvent;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderPaidEvent;
+import com.h.udemy.java.uservices.order.service.domain.event.publisher.DomainEventPublisher;
 
 import java.util.List;
 
@@ -12,7 +13,8 @@ public interface IOrderDomainService {
 
     OrderCreatedEvent validateAndInitiateOrder(Order order, Restaurant restaurant);
 
-    OrderPaidEvent payOrder(Order order);
+    OrderPaidEvent payOrder(Order order,
+                            DomainEventPublisher<OrderPaidEvent> orderPaidEventDomainEventPublisher);
 
     void approveOrder(Order order);
 
