@@ -93,8 +93,7 @@ public class Order extends AggregateRoot<OrderId> {
         return failureMessages;
     }
     public String concatFailureMessages() {
-        String concated = "".join(FAILURE_MESSAGE_DELIMITER, getFailureMessages());
-        return concated;
+        return "".join(FAILURE_MESSAGE_DELIMITER, getFailureMessages());
     }
 
 

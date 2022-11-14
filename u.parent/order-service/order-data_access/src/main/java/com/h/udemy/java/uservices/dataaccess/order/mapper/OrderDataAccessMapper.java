@@ -1,6 +1,5 @@
 package com.h.udemy.java.uservices.dataaccess.order.mapper;
 
-import com.h.udemy.java.uservices.dataaccess.order.entity.OrderAddressEntity;
 import com.h.udemy.java.uservices.dataaccess.order.entity.OrderEntity;
 import com.h.udemy.java.uservices.dataaccess.order.entity.OrderItemEntity;
 import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
@@ -12,13 +11,11 @@ import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import com.h.udemy.java.uservices.order.service.domain.entity.OrderItem;
 import com.h.udemy.java.uservices.order.service.domain.entity.Product;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.OrderItemId;
-import com.h.udemy.java.uservices.order.service.domain.valueobject.StreetAddress;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.TrackingId;
 import io.vavr.control.Try;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -29,6 +26,9 @@ import static com.h.udemy.java.uservices.order.service.domain.entity.Order.FAILU
 @Component
 public class OrderDataAccessMapper {
 
+    @Autowired
+    IOrderDataAccessMapper mapper;
+
     public OrderEntity orderToOrderEntity(Order order) {
 
         if(order == null) return null;
@@ -38,7 +38,7 @@ public class OrderDataAccessMapper {
                 .customerId(order.getCustomerId().getValue())
                 .restaurantId(order.getRestaurantId().getValue())
                 .trackingId(order.getTrackingId().getValue())
-                .address(deliveryAddressToAddressEntity(order.getDeliveryAddress()))
+                .address(mapper.deliveryAddressToAddressEntity(order.getDeliveryAddress()))
                 .price(order.getPrice().getAmount())
                 .items(orderItemsToOrderItemEntities(order.getItems()))
                 .orderStatus(order.getOrderStatus())
@@ -59,14 +59,12 @@ public class OrderDataAccessMapper {
                 .orderId(new OrderId(orderEntity.getId()))
                 .customerId(new CustomerId(orderEntity.getCustomerId()))
                 .restaurantId(new RestaurantId(orderEntity.getRestaurantId()))
-                .deliveryAddress(addressEntityToDeliveryAddress(orderEntity.getAddress()))
+                .deliveryAddress(mapper.addressEntityToDeliveryAddress(orderEntity.getAddress()))
                 .price(new Money(orderEntity.getPrice()))
                 .items(orderItemEntitiesToOrderItems(orderEntity.getItems()))
                 .trackingId(new TrackingId(orderEntity.getTrackingId()))
                 .orderStatus(orderEntity.getOrderStatus())
-                .failureMessages(orderEntity.getFailureMessages().isEmpty() ? new ArrayList<>() :
-                        new ArrayList<>(Arrays.asList(orderEntity.getFailureMessages()
-                                .split(FAILURE_MESSAGE_DELIMITER))))
+                .failureMessages(orderEntity.getFailureMessagesAsList())
                 .build();
     }
 
@@ -81,13 +79,6 @@ public class OrderDataAccessMapper {
                 .collect(Collectors.toList());
     }
 
-    private StreetAddress addressEntityToDeliveryAddress(OrderAddressEntity address) {
-        return new StreetAddress(address.getId(),
-                address.getStreet(),
-                address.getPostalCode(),
-                address.getCity());
-    }
-
     private List<OrderItemEntity> orderItemsToOrderItemEntities(List<OrderItem> items) {
         return items.stream()
                 .map(orderItem -> OrderItemEntity.builder()
@@ -97,14 +88,5 @@ public class OrderDataAccessMapper {
                         .quantity(orderItem.getQuantity())
                         .build())
                 .collect(Collectors.toList());
-    }
-
-    private OrderAddressEntity deliveryAddressToAddressEntity(StreetAddress deliveryAddress) {
-        return OrderAddressEntity.builder()
-                .id(deliveryAddress.id())
-                .street(deliveryAddress.street())
-                .postalCode(deliveryAddress.postalCode())
-                .city(deliveryAddress.city())
-                .build();
     }
 }

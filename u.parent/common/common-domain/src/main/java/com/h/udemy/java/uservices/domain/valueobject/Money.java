@@ -27,6 +27,12 @@ public class Money {
                 && this.amount.compareTo(pMoney.getAmount()) > 0;
     }
 
+    public boolean compareTo(BigDecimal price) {
+        if (price == null) return false;
+        price = this.setScale(price);
+        return this.amount.compareTo(price) == 0;
+    }
+
     public Money add(Money pMoney) {
         return new Money(setScale(
                 this.amount.add(pMoney.getAmount())
@@ -44,6 +50,7 @@ public class Money {
                 this.amount.multiply(new BigDecimal(pMultiplier))
         ));
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -17,9 +17,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
+import static com.h.udemy.java.uservices.order.service.domain.entity.Order.FAILURE_MESSAGE_DELIMITER;
 
 @Getter
 @Setter
@@ -57,5 +60,13 @@ public class OrderEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public List<String> getFailureMessagesAsList() {
+        if(this.failureMessages.isEmpty())
+            return new ArrayList<>();
+
+        return  new ArrayList<>(Arrays.asList(this.failureMessages
+                        .split(FAILURE_MESSAGE_DELIMITER)));
     }
 }

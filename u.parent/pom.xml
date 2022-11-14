@@ -202,6 +202,22 @@
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
 					<release>17</release>
+
+					<annotationProcessorPaths>
+
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${mapstruct-version}</version>
+						</path>
+
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 
