@@ -1,6 +1,6 @@
-package com.h.udemy.java.uservices.data_access.order.repository;
+package com.h.udemy.java.uservices.dataaccess.order.repository;
 
-import com.h.udemy.java.uservices.data_access.order.entity.OrderEntity;
+import com.h.udemy.java.uservices.dataaccess.order.entity.OrderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

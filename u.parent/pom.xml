@@ -37,6 +37,9 @@
 		<kafka-avro-serializer.version>7.0.1</kafka-avro-serializer.version>
 		<avro.version>1.11.0</avro.version>
 
+		<lombok-version>1.18.24</lombok-version>
+		<mapstruct-version>1.5.3.Final</mapstruct-version>
+
 	</properties>
 
 	<modules>
@@ -166,11 +169,18 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+
 		<!-- MAP STRUCT --><!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
-			<version>1.5.3.Final</version>
+			<version>${mapstruct-version}</version>
 		</dependency>
 
 		<!-- VAVR --><!-- https://mvnrepository.com/artifact/io.vavr/vavr -->
@@ -192,13 +202,6 @@
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
 					<release>17</release>
-					<annotationProcessorPaths>
-						<path>
-							<groupId>org.mapstruct</groupId>
-							<artifactId>mapstruct-processor</artifactId>
-							<version>1.4.2.Final</version>
-						</path>
-					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 

@@ -23,7 +23,7 @@ public class ApiEnvTestConfig {
 
     @Test
     void contextLoads() {
-//        log.info("-- contextLoads --");
+        log.info("-- contextLoads --");
     }
 
 }

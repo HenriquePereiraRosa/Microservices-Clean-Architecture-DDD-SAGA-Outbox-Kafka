@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.order.service.domain;
+package com.h.udemy.java.uservices.dataaccess;
 
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCancelledPaymentRequestRequestMessagePublisher;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCreatedPaymentRequestMessagePublisher;
@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.mockito.Mockito;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 
 @Slf4j
 @SpringBootApplication(scanBasePackages = "com.h.udemy.java.uservices")
@@ -31,11 +32,6 @@ public class BeanTestConfig {
     }
 
     @Bean
-    public IOrderRepository orderRepository() {
-        return Mockito.mock(IOrderRepository.class);
-    }
-
-    @Bean
     public ICustomerRepository customerRepository() {
         return Mockito.mock(ICustomerRepository.class);
     }
@@ -43,6 +39,12 @@ public class BeanTestConfig {
     @Bean
     public IRestaurantRepository restaurantRepository() {
         return Mockito.mock(IRestaurantRepository.class);
+    }
+
+    @Bean
+    @Primary
+    public IOrderRepository orderJpaRepository() {
+        return Mockito.mock(IOrderRepository.class);
     }
 
 }

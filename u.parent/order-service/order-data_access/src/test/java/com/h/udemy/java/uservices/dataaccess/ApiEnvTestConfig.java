@@ -1,8 +1,9 @@
-package com.h.udemy.java.uservices.data_access;
+package com.h.udemy.java.uservices.dataaccess;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.PostConstruct;
 
 @Slf4j
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = BeanTestConfig.class,
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class ApiEnvTestConfig {
     public ObjectMapper mapper = new ObjectMapper();
 

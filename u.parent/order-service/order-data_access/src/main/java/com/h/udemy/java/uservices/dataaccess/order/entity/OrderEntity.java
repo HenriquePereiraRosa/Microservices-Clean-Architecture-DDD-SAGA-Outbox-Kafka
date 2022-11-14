@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.data_access.order.entity;
+package com.h.udemy.java.uservices.dataaccess.order.entity;
 
 import com.h.udemy.java.uservices.domain.valueobject.OrderStatus;
 import lombok.AllArgsConstructor;
