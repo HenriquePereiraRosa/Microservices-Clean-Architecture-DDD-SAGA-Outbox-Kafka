@@ -23,4 +23,5 @@
 hs_err_pid*
 u.parent/infrastructure/docker-compose/volumes/kafka/
 u.parent/infrastructure/docker-compose/volumes/zookeeper/
-**LOG**
+
+**LOG_FILE_IS_UNDEFINED**
