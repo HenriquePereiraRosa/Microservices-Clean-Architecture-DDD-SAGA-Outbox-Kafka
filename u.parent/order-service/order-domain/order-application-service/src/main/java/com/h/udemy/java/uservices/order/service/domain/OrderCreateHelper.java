@@ -59,7 +59,7 @@ public class OrderCreateHelper {
         Restaurant restaurant = orderDataMapper
                 .createOrderCommandToRestaurant(createOrderCommand);
         Optional<Restaurant> lRestaurant = restaurantRepository
-                .findInformation(restaurant);
+                .findRestaurantInformation(restaurant);
         if (lRestaurant.isEmpty()) {
             final String msg = I18n.ERR_RESTAURANT_NOT_FOUND.getMsg() +
                     createOrderCommand.getRestaurantId().toString();

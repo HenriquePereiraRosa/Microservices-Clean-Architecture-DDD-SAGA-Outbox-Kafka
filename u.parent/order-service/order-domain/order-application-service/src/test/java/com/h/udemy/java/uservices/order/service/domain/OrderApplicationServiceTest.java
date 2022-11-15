@@ -1,6 +1,11 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
-import com.h.udemy.java.uservices.domain.valueobject.*;
+import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
+import com.h.udemy.java.uservices.domain.valueobject.Money;
+import com.h.udemy.java.uservices.domain.valueobject.OrderId;
+import com.h.udemy.java.uservices.domain.valueobject.OrderStatus;
+import com.h.udemy.java.uservices.domain.valueobject.ProductId;
+import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderResponse;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.OrderAddressDTO;
@@ -16,7 +21,11 @@ import com.h.udemy.java.uservices.order.service.domain.ports.input.service.IOrde
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.ICustomerRepository;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IRestaurantRepository;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
@@ -24,7 +33,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -123,8 +134,7 @@ class OrderApplicationServiceTest extends ApiEnvTestConfig {
                                 .build()))
                 .build();
 
-        Customer customer = new Customer();
-        customer.setId(new CustomerId(CUSTOMER_ID));
+        Customer customer = new Customer(new CustomerId(CUSTOMER_ID));
 
         Restaurant restaurantResponse = Restaurant.builder()
                 .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
@@ -143,7 +153,7 @@ class OrderApplicationServiceTest extends ApiEnvTestConfig {
         when(iCustomerRepository.findCustomer(CUSTOMER_ID))
                 .thenReturn(Optional.of(customer));
 
-        when(iRestaurantRepository.findInformation(orderDataMapper
+        when(iRestaurantRepository.findRestaurantInformation(orderDataMapper
                 .createOrderCommandToRestaurant(createOrderCommand)))
                 .thenReturn(Optional.of(restaurantResponse));
 
@@ -206,7 +216,7 @@ class OrderApplicationServiceTest extends ApiEnvTestConfig {
                 .active(false) // inactive restaurant
                 .build();
 
-        when(iRestaurantRepository.findInformation(orderDataMapper
+        when(iRestaurantRepository.findRestaurantInformation(orderDataMapper
                 .createOrderCommandToRestaurant(createOrderCommand)))
                 .thenReturn(Optional.of(restaurantResponse));
 

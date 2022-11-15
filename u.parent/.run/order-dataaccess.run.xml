@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="order-dataaccess" type="JUnit" factoryName="JUnit">
-    <module name="order-data_access" />
+    <module name="order-dataaccess" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.h.udemy.java.uservices.dataaccess.*" />
