@@ -16,11 +16,33 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>com.h.udemy.java.uservices</groupId>
             <artifactId>order-application-service</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>kafka-producer</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>kafka-consumer</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>kafka-config-data</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>kafka-model</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
