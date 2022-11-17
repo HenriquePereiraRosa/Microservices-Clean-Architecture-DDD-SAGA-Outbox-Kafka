@@ -10,15 +10,15 @@ import org.springframework.validation.annotation.Validated;
 @Slf4j
 @Validated
 @Service
-public class IPaymentResponseMessageListenerImpl implements IPaymentResponseMessageListener {
+public class PaymentResponseMessageListener implements IPaymentResponseMessageListener {
 
     @Override
-    public void PaymentCompleted(PaymentResponse paymentResponse) {
+    public void paymentCompleted(PaymentResponse paymentResponse) {
 
     }
 
     @Override
-    public void PaymentCancelled(PaymentResponse paymentResponse) {
+    public void paymentCancelled(PaymentResponse paymentResponse) {
 
     }
 }

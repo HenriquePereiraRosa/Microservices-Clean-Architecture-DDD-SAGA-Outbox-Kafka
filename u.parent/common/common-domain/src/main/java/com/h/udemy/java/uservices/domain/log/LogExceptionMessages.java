@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.application.exception.handler.messages.exception;
+package com.h.udemy.java.uservices.domain.log;
 
 import lombok.Getter;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -7,13 +7,13 @@ import java.util.ResourceBundle;
 
 
 @Getter
-public enum ExceptionMessages {
+public enum LogExceptionMessages {
 
     UNEXPECTED_ERROR("unexpected-error"),
     BAD_REQUEST("bad-request");
 
     String key;
-    ExceptionMessages(String key) {
+    LogExceptionMessages(String key) {
         this.key = key;
     }
 

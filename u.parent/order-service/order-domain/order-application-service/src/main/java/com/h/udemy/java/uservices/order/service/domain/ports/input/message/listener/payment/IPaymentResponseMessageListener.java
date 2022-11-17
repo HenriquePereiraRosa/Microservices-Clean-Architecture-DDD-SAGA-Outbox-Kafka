@@ -4,7 +4,7 @@ import com.h.udemy.java.uservices.order.service.domain.dto.message.PaymentRespon
 
 public interface IPaymentResponseMessageListener {
 
-    void PaymentCompleted(PaymentResponse paymentResponse);
+    void paymentCompleted(PaymentResponse paymentResponse);
 
-    void PaymentCancelled(PaymentResponse paymentResponse);
+    void paymentCancelled(PaymentResponse paymentResponse);
 }
