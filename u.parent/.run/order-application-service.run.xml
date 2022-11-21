@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="order-application-service" type="JUnit" factoryName="JUnit">
-    <module name="order-application-service" />
+    <module name="order-domain-api-service" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.h.udemy.java.uservices.*" />

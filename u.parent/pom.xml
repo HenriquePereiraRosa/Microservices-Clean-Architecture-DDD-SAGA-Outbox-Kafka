@@ -24,7 +24,7 @@
 
 		<domain.core.version>1.0.0</domain.core.version>
 		<order.application.version>1.0.0</order.application.version>
-		<order.data_access.version>1.0.0</order.data_access.version>
+		<order.dataaccess.version>1.0.0</order.dataaccess.version>
 		<order.messaging.version>1.0.0</order.messaging.version>
 		<common-domain.version>1.0.0</common-domain.version>
 		<common-application.version>1.0.0</common-application.version>
@@ -47,7 +47,8 @@
 		<module>common</module>
         <module>infrastructure</module>
 		<module>infrastructure/kafka</module>
-	</modules>
+        <module>customer-service</module>
+    </modules>
 
 	<dependencyManagement>
 		<dependencies>
@@ -67,7 +68,7 @@
 			<dependency>
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>order-data_access</artifactId>
-				<version>${order.data_access.version}</version>
+				<version>${order.dataaccess.version}</version>
 			</dependency>
 
 			<dependency>

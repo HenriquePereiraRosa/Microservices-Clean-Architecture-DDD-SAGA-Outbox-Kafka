@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Services" type="CompoundRunConfigurationType">
+    <toRun name="CustomerServiceApi" type="Application" />
+    <toRun name="OrderServiceApi" type="Application" />
+    <method v="2" />
+  </configuration>
+</component>

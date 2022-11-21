@@ -1,16 +1,13 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="order-domain-core" type="JUnit" factoryName="JUnit">
-    <module name="order-domain-core" />
+  <configuration default="false" name="OrderServiceApi" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="com.h.udemy.java.uservices.order.service.domain.OrderServiceApi" />
+    <module name="order-container" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.h.udemy.java.uservices.order.service.domain.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
-    <option name="PACKAGE_NAME" value="com.h.udemy.java.uservices.order.service.domain" />
-    <option name="MAIN_CLASS_NAME" value="" />
-    <option name="METHOD_NAME" value="" />
-    <option name="TEST_OBJECT" value="package" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
