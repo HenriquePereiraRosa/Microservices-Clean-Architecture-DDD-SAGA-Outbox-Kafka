@@ -12,6 +12,10 @@
             <list>
               <option value="clean" />
               <option value="install" />
+              <option value="generate-sources" />
+              <option value="package" />
+              <option value="-e" />
+              <option value="-U" />
             </list>
           </option>
           <option name="pomFileName" />

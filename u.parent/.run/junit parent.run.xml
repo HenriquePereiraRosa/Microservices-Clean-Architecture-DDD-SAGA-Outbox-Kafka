@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="junit parent" type="CompoundRunConfigurationType">
-    <toRun name="order-application-service" type="JUnit" />
+    <toRun name="order-domain-api-service" type="JUnit" />
     <toRun name="order-dataaccess" type="JUnit" />
     <toRun name="order-domain-core" type="JUnit" />
     <method v="2" />

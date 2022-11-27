@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.List;
+
 @Slf4j
 @Validated
 @Service
@@ -32,5 +34,10 @@ class OrderApplicationService implements IOrderApplicationService {
     @Override
     public TrackOrderResponse trackOrder(TrackOrderQuery trackOrderQuery) {
         return orderTrackCommandHandler.trackOrder(trackOrderQuery);
+    }
+
+    @Override
+    public List<TrackOrderResponse> fetchAllOrders() {
+        return orderTrackCommandHandler.fetchAll();
     }
 }

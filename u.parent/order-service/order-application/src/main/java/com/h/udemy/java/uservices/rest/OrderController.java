@@ -7,11 +7,20 @@ import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderRespo
 import com.h.udemy.java.uservices.order.service.domain.ports.input.service.IOrderApplicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
-import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.*;
+import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.ORDER_ID_CREATED_SUCCESSFULLY;
+import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.ORDER_ID_CREATING;
+import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.ORDER_TRACKING_ALL;
+import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.ORDER_TRACKING_BY_TRACKING_ID;
 
 @Slf4j
 @RestController
@@ -42,7 +51,7 @@ public class OrderController {
     }
 
     @GetMapping("/by-tracking-id")
-    public ResponseEntity<TrackOrderResponse> getOrderByTrackingId(@RequestParam UUID trackingId) {
+    public ResponseEntity<TrackOrderResponse> fetchOrderByTrackingId(@RequestParam UUID trackingId) {
 
         TrackOrderResponse trackOrderResponse = orderApplicationService
                 .trackOrder(TrackOrderQuery
@@ -53,6 +62,18 @@ public class OrderController {
         log.info(ORDER_TRACKING_BY_TRACKING_ID.get(), trackOrderResponse.getOrderTrackingId());
 
         return ResponseEntity.ok(trackOrderResponse);
+
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<TrackOrderResponse>> fetchAllOrder() {
+
+        List<TrackOrderResponse> trackOrderResponseList = orderApplicationService
+                .fetchAllOrders();
+
+        log.info(ORDER_TRACKING_ALL.get(), trackOrderResponseList.stream().count());
+
+        return ResponseEntity.ok(trackOrderResponseList);
 
     }
 }

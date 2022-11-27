@@ -7,6 +7,7 @@ import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.I
 import com.h.udemy.java.uservices.order.service.domain.valueobject.TrackingId;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -31,5 +32,13 @@ public class OrderRepository implements IOrderRepository {
     public Optional<Order> findByTrackingId(TrackingId trackingId) {
         return orderJpaRepository.findByTrackingId(trackingId.getValue())
                 .map(orderDataAccessMapper::orderEntityToOrder);
+    }
+
+    @Override
+    public List<Order> fetchAll() {
+        return orderJpaRepository.findAll()
+                .stream()
+                .map(orderDataAccessMapper::orderEntityToOrder)
+                .toList();
     }
 }

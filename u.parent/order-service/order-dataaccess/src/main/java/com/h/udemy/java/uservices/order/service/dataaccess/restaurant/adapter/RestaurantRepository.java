@@ -21,14 +21,6 @@ public class RestaurantRepository implements IRestaurantRepository {
     @Autowired
     private RestaurantDataAccessMapper restaurantDataAccessMapper;
 
-//    private final IRestaurantJpaRepository restaurantJpaRepository;
-//    private final RestaurantDataAccessMapper restaurantDataAccessMapper;
-//
-//    public RestaurantRepository(IRestaurantJpaRepository restaurantJpaRepository,
-//                                RestaurantDataAccessMapper restaurantDataAccessMapper) {
-//        this.restaurantJpaRepository = restaurantJpaRepository;
-//        this.restaurantDataAccessMapper = restaurantDataAccessMapper;
-//    }
 
     @Override
     public Optional<Restaurant> findRestaurantInformation(Restaurant restaurant) {

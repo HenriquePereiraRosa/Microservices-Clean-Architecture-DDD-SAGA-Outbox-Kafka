@@ -73,4 +73,14 @@ public class OrderDataMapper {
                 .failureMessages(order.getFailureMessages())
                 .build();
     }
+
+    public List<TrackOrderResponse> ordersToTrackOrderResponse(List<Order> orders) {
+        return orders.stream().map(order ->
+                TrackOrderResponse.builder()
+                        .orderTrackingId(order.getTrackingId().getValue())
+                        .orderStatus(order.getOrderStatus())
+                        .failureMessages(order.getFailureMessages())
+                        .build())
+                .collect(Collectors.toList());
+    }
 }

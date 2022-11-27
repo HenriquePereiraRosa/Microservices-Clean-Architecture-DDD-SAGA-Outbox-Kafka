@@ -6,10 +6,12 @@ import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderQuery
 import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderResponse;
 
 import javax.validation.Valid;
+import java.util.List;
 
 public interface IOrderApplicationService {
 
     CreateOrderResponse createOrder(@Valid CreateOrderCommand createOrderCommand);
 
     TrackOrderResponse trackOrder(@Valid TrackOrderQuery trackOrderQuery);
+    List<TrackOrderResponse> fetchAllOrders();
 }

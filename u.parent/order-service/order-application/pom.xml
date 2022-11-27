@@ -24,7 +24,7 @@
 
         <dependency>
             <groupId>com.h.udemy.java.uservices</groupId>
-            <artifactId>order-application-service</artifactId>
+            <artifactId>order-domain-api-service</artifactId>
             <version>1.0.0</version>
         </dependency>
 

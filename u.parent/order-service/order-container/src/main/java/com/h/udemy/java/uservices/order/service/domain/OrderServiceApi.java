@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Slf4j
-@EnableJpaRepositories(basePackages = "com.h.udemy.java.uservices.order.service.dataaccess")
-@EntityScan(basePackages = "com.h.udemy.java.uservices.order.service.dataaccess")
+@EnableJpaRepositories(basePackages = {"com.h.udemy.java.uservices"})
+@EntityScan(basePackages = "com.h.udemy.java.uservices")
 @SpringBootApplication(scanBasePackages = "com.h.udemy.java.uservices")
 public class OrderServiceApi {
     public static void main(String[] args) {

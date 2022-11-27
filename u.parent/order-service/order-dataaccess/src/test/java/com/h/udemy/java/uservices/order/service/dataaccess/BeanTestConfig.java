@@ -1,10 +1,10 @@
 package com.h.udemy.java.uservices.order.service.dataaccess;
 
+import com.h.udemy.java.uservices.dataaccess.restaurant.repository.IRestaurantJpaRepository;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCancelledPaymentRequestRequestMessagePublisher;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCreatedPaymentRequestMessagePublisher;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderPaidRestaurantRequestRequestMessagePublisher;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
-import com.h.udemy.java.uservices.dataaccess.restaurant.repository.IRestaurantJpaRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.Mockito;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

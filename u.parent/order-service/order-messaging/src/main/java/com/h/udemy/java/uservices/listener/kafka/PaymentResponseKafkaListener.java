@@ -22,8 +22,8 @@ import static com.h.udemy.java.uservices.domain.log.LogMessages.ORDER_KAFKA_NUMB
 public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentResponseAvroModel> {
 
     private final String MODEL_NAME = "PAYMENT";
-    private final String KAFKA_CONSUMER_GROUP_ID = "${kafka-consumer-config.restaurant-approval-consumer-group-id}";
-    private final String KAFKA_TOPIC_NAME = "${order-service.restaurant-approval-response-topic-name}";
+    private final String KAFKA_CONSUMER_GROUP_ID = "${kafka-consumer-config.payment-consumer-group-id}";
+    private final String KAFKA_TOPIC_NAME = "${order-service.payment-response-topic-name}";
     private final OrderMessagingDataMapper orderMessagingDataMapper;
     private final IPaymentResponseMessageListener paymentResponseMessageListener;
 
