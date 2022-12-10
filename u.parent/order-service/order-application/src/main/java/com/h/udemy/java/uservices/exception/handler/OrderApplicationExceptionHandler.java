@@ -2,10 +2,13 @@ package com.h.udemy.java.uservices.exception.handler;
 
 import com.h.udemy.java.uservices.application.exception.handler.GlobalExceptionHandler;
 import com.h.udemy.java.uservices.application.exception.handler.model.ErrorDTO;
+import com.h.udemy.java.uservices.order.service.domain.exception.CustomerNotFoundException;
+import com.h.udemy.java.uservices.order.service.domain.exception.OrderCouldNotBeSavedException;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -15,26 +18,54 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class OrderApplicationExceptionHandler extends GlobalExceptionHandler {
 
     @ExceptionHandler(value = {OrderDomainException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorDTO handleException(OrderDomainException orderDomainException) {
+    public ResponseEntity handleOrderDomainException(OrderDomainException orderDomainException) {
 
         log.error(orderDomainException.getMessage(), orderDomainException);
 
-        return ErrorDTO.builder()
+        ErrorDTO errorbody = ErrorDTO.builder()
                 .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
                 .message(orderDomainException.getMessage())
                 .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorbody);
     }
 
     @ExceptionHandler(value = {OrderNotFoundException.class})
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorDTO handleException(OrderNotFoundException orderNotFoundException) {
+    public ResponseEntity handleOrderNotFoundException(OrderNotFoundException orderNotFoundException) {
 
         log.error(orderNotFoundException.getMessage(), orderNotFoundException);
 
-        return ErrorDTO.builder()
+        ErrorDTO errorbody = ErrorDTO.builder()
                 .code(HttpStatus.NOT_FOUND.getReasonPhrase())
                 .message(orderNotFoundException.getMessage())
                 .build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorbody);
+    }
+
+    @ExceptionHandler(value = {OrderCouldNotBeSavedException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity handleOrderCouldNotBeSavedException(OrderCouldNotBeSavedException exception) {
+
+        log.error(exception.getMessage(), exception);
+
+        ErrorDTO errorbody = ErrorDTO.builder()
+                .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .message(exception.getMessage())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorbody);
+    }
+
+    @ExceptionHandler(value = {CustomerNotFoundException.class})
+    public ResponseEntity handleCustomerNotFoundException(CustomerNotFoundException exception) {
+
+        log.error(exception.getMessage(), exception);
+
+        ErrorDTO errorbody = ErrorDTO.builder()
+                .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .message(exception.getMessage())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorbody);
     }
 }

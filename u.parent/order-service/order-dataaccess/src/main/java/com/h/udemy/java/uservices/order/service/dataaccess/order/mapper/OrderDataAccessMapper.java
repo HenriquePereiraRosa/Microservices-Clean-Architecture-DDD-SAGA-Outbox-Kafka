@@ -27,9 +27,6 @@ import static com.h.udemy.java.uservices.order.service.domain.entity.Order.FAILU
 @Component
 public class OrderDataAccessMapper {
 
-//    @Autowired
-//    IOrderDataAccessMapper mapper;
-
     public OrderEntity orderToOrderEntity(Order order) {
 
         if(order == null) return null;

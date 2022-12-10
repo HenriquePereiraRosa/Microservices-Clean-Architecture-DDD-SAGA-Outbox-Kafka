@@ -10,7 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.annotation.PostConstruct;
 
 @Slf4j
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = BeanTestConfig.class,
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ApiEnvTestConfig {
 
     public ObjectMapper mapper = new ObjectMapper();
@@ -23,7 +24,7 @@ public class ApiEnvTestConfig {
 
     @Test
     void contextLoads() {
-        log.info("-- contextLoads --");
+        log.info("common-domain ApiEnvTestConfig -- contextLoads --");
     }
 
 }

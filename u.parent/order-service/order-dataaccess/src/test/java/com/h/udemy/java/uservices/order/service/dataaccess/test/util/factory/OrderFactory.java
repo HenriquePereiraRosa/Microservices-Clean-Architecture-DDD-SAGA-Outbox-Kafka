@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.order.service.dataaccess.test.util.builder;
+package com.h.udemy.java.uservices.order.service.dataaccess.test.util.factory;
 
 import com.h.udemy.java.uservices.order.service.dataaccess.order.entity.OrderAddressEntity;
 import com.h.udemy.java.uservices.order.service.dataaccess.order.entity.OrderEntity;
@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.UUID;
 
-public class OrderBuilder {
+public class OrderFactory {
 
     public static final OrderId ORDER_ID = new OrderId(UUID.randomUUID());
     public static final UUID ORDER_ENTITY_ID = ORDER_ID.getValue();

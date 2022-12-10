@@ -5,6 +5,8 @@ import com.h.udemy.java.uservices.order.service.domain.entity.Customer;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
+import com.h.udemy.java.uservices.order.service.domain.exception.CustomerNotFoundException;
+import com.h.udemy.java.uservices.order.service.domain.exception.OrderCouldNotBeSavedException;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
 import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
 import com.h.udemy.java.uservices.order.service.domain.mapper.OrderDataMapper;
@@ -41,7 +43,7 @@ public class OrderCreateHelper {
     }
     @Transactional
     public OrderCreatedEvent persistOrder(CreateOrderCommand createOrderCommand) {
-        checkCustomer(createOrderCommand.getCustomerId());
+        checkCustomer(createOrderCommand.customerId());
         Restaurant restaurant = checkRestaurant(createOrderCommand);
         Order order = orderDataMapper.createOrderCommandToOrder(createOrderCommand);
         OrderCreatedEvent orderCreatedEvent = iOrderDomainService
@@ -62,7 +64,7 @@ public class OrderCreateHelper {
                 .findRestaurantInformation(restaurant);
         if (lRestaurant.isEmpty()) {
             final String msg = I18n.ERR_RESTAURANT_NOT_FOUND.getMsg() +
-                    createOrderCommand.getRestaurantId().toString();
+                    createOrderCommand.restaurantId().toString();
             log.warn(msg);
             throw new OrderDomainException(msg);
         }
@@ -74,7 +76,7 @@ public class OrderCreateHelper {
         if (customer.isEmpty()) {
             final String msg = I18n.ERR_CUSTOMER_NOT_FOUND.getMsg() + customerId;
             log.warn(msg);
-            throw new OrderDomainException(msg);
+            throw new CustomerNotFoundException(customerId);
         }
     }
 
@@ -84,7 +86,7 @@ public class OrderCreateHelper {
             final String msg = I18n.ERR_ORDER_COULD_NOT_BE_SAVED.getMsg() +
                     order.getId().getValue();
             log.warn(msg);
-            throw new OrderDomainException(msg);
+            throw new OrderCouldNotBeSavedException(order.getId().getValue());
         }
         return orderCreated;
     }

@@ -38,7 +38,7 @@ public enum I18n {
 
     public String getMsg() {
         ResourceBundle bundle = ResourceBundle
-                .getBundle("messages.messages", LocaleContextHolder.getLocale());
+                .getBundle("messages_order_domain.messages", LocaleContextHolder.getLocale());
         return bundle.getString(key);
     }
 }

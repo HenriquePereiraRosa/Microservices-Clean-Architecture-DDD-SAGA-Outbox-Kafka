@@ -1,0 +1,11 @@
+diff a/u.parent/infrastructure/kafka/kafka-consumer/src/main/java/com/h/udemy/java/uservices/kafka/consumer/config/KafkaConsumerConfig.java b/u.parent/infrastructure/kafka/kafka-consumer/src/main/java/com/h/udemy/java/uservices/kafka/consumer/config/KafkaConsumerConfig.java	(rejected hunks)
+@@ -59,9 +59,7 @@
+         factory.setBatchListener(kafkaConsumerConfigData.getBatchListener());
+         factory.setConcurrency(kafkaConsumerConfigData.getConcurrencyLevel());
+         factory.setAutoStartup(kafkaConsumerConfigData.getAutoStartup());
+         factory.getContainerProperties().setPollTimeout(kafkaConsumerConfigData.getPollTimeoutMs());
+         return factory;
+     }
+-
+-
+ }

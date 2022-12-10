@@ -3,15 +3,14 @@ package com.h.udemy.java.uservices.application.exception.handler;
 import com.h.udemy.java.uservices.application.exception.handler.model.ErrorDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
-
 import java.util.stream.Collectors;
 
 import static com.h.udemy.java.uservices.domain.log.LogExceptionMessages.UNEXPECTED_ERROR;
@@ -23,37 +22,45 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler(value = {Exception.class})
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorDTO handleException(Exception exception) {
+    public ResponseEntity handleException(Exception exception) {
 
         log.error(exception.getMessage(), exception);
 
-        return ErrorDTO.builder()
+        ErrorDTO errorbody = ErrorDTO.builder()
                 .code(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                 .message(UNEXPECTED_ERROR.get())
                 .build();
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(errorbody);
     }
 
     @ResponseBody
     @ExceptionHandler(value = {ValidationException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorDTO handleException(ValidationException exception) {
+    public ResponseEntity handleValidationException(ValidationException exception) {
 
         if(exception instanceof ConstraintViolationException) {
-            final String violations = extractViolations((ConstraintViolationException) exception);
+            final String violations = this.extractViolations((ConstraintViolationException) exception);
             log.error(exception.getMessage(), exception);
 
-            return ErrorDTO.builder()
+            ErrorDTO errorbody = ErrorDTO.builder()
                     .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
                     .message(violations)
                     .build();
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorbody);
         } else {
             log.error(exception.getMessage(), exception);
 
-            return ErrorDTO.builder()
+            ErrorDTO errorbody = ErrorDTO.builder()
                     .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
                     .message(exception.getMessage())
                     .build();
+
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(errorbody);
 
         }
     }

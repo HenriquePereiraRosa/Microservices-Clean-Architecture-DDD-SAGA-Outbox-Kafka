@@ -19,7 +19,8 @@ public enum LogExceptionMessages {
 
     public String get() {
         ResourceBundle bundle = ResourceBundle
-                .getBundle("messages.error.exception-messages", LocaleContextHolder.getLocale());
+                .getBundle("messages_common_domain.error.exception-messages",
+                        LocaleContextHolder.getLocale());
         return bundle.getString(key);
     }
 }

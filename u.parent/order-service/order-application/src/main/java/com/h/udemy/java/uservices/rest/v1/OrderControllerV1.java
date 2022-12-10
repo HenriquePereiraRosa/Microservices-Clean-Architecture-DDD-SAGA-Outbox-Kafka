@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.rest;
+package com.h.udemy.java.uservices.rest.v1;
 
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderResponse;
@@ -6,6 +6,7 @@ import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderQuery
 import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderResponse;
 import com.h.udemy.java.uservices.order.service.domain.ports.input.service.IOrderApplicationService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,13 +25,13 @@ import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMe
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/orders",
+@RequestMapping(value = "/v1/orders",
     produces = "application/vnd.api.v1+json")
-public class OrderController {
+public class OrderControllerV1 {
 
     private final IOrderApplicationService orderApplicationService;
 
-    public OrderController(IOrderApplicationService orderApplicationService) {
+    public OrderControllerV1(IOrderApplicationService orderApplicationService) {
         this.orderApplicationService = orderApplicationService;
     }
 
@@ -38,8 +39,8 @@ public class OrderController {
     public ResponseEntity<CreateOrderResponse> createOrder(@RequestBody CreateOrderCommand createOrderCommand) {
 
         log.info(ORDER_ID_CREATING.get(),
-                createOrderCommand.getCustomerId(),
-                createOrderCommand.getRestaurantId());
+                createOrderCommand.customerId(),
+                createOrderCommand.restaurantId());
 
         CreateOrderResponse createOrderResponse = orderApplicationService
                 .createOrder(createOrderCommand);
@@ -47,7 +48,9 @@ public class OrderController {
         log.info(ORDER_ID_CREATED_SUCCESSFULLY.get(),
                 createOrderResponse.getTrackingId());
 
-        return ResponseEntity.ok(createOrderResponse);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createOrderResponse);
     }
 
     @GetMapping("/by-tracking-id")

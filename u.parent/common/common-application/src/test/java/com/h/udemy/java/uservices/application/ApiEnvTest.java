@@ -1,9 +1,8 @@
-package com.h.udemy.java.uservices.order.service.domain;
+package com.h.udemy.java.uservices.application;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +12,7 @@ import javax.annotation.PostConstruct;
 @Slf4j
 @SpringBootTest(classes = BeanTestConfig.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public abstract class ApiEnvTestConfig {
+public abstract class ApiEnvTest {
     public ObjectMapper mapper = new ObjectMapper();
 
     @PostConstruct
@@ -24,6 +23,7 @@ public abstract class ApiEnvTestConfig {
 
     @Test
     void contextLoads() {
-        log.info(I18n.APP_NAME_DESCRIPTION.getMsg());
+       log.info("GlobalExceptionHandlerTest ApiEnvTest");
     }
+
 }

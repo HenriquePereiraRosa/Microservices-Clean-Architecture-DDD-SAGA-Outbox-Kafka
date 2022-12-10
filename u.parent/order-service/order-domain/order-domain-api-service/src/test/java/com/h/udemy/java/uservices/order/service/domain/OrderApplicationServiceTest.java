@@ -137,7 +137,7 @@ class OrderApplicationServiceTest extends ApiEnvTestConfig {
         Customer customer = new Customer(new CustomerId(CUSTOMER_ID));
 
         Restaurant restaurantResponse = Restaurant.builder()
-                .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
+                .restaurantId(new RestaurantId(createOrderCommand.restaurantId()))
                 .products(List.of(new Product(new ProductId(PRODUCT_ID),
                                 "product-1",
                                 new Money(new BigDecimal("50.00"))),
@@ -204,7 +204,7 @@ class OrderApplicationServiceTest extends ApiEnvTestConfig {
     public void createOrder_ok_WithPassiveRestaurant() {
 
         Restaurant restaurantResponse = Restaurant.builder()
-                .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
+                .restaurantId(new RestaurantId(createOrderCommand.restaurantId()))
                 .products(List.of(new Product(new ProductId(PRODUCT_ID),
                                 "product-1",
                                 new Money(new BigDecimal("50.00"))),

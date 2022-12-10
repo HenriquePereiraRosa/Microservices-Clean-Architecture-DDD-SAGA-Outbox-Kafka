@@ -28,7 +28,8 @@ public enum LogMessages {
 
     public String get() {
         ResourceBundle bundle = ResourceBundle
-                .getBundle("messages.log.log-messages", LocaleContextHolder.getLocale());
+                .getBundle("messages_common_domain.log.log-messages",
+                        LocaleContextHolder.getLocale());
         return bundle.getString(key);
     }
 }

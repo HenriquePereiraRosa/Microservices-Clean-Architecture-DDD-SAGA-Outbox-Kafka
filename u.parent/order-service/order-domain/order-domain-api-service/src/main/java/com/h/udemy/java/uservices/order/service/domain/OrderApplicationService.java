@@ -14,6 +14,7 @@ import java.util.List;
 @Slf4j
 @Validated
 @Service
+public
 class OrderApplicationService implements IOrderApplicationService {
 
     private final OrderCreateCommandHandler orderCreateCommandHandler;

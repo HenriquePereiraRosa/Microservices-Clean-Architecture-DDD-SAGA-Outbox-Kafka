@@ -2,7 +2,7 @@ package com.h.udemy.java.uservices.order.service.dataaccess.order.mapper;
 
 import com.h.udemy.java.uservices.order.service.dataaccess.ApiEnvTestConfig;
 import com.h.udemy.java.uservices.order.service.dataaccess.order.entity.OrderEntity;
-import com.h.udemy.java.uservices.order.service.dataaccess.test.util.builder.OrderBuilder;
+import com.h.udemy.java.uservices.order.service.dataaccess.test.util.factory.OrderFactory;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RestaurantDataAccessMapperTest extends ApiEnvTestConfig {
 
-    private final Order order = OrderBuilder.createOrder();
-    private final OrderEntity orderEntity = OrderBuilder.createOrderEntity();
+    private final Order order = OrderFactory.createOrder();
+    private final OrderEntity orderEntity = OrderFactory.createOrderEntity();
 
     @Autowired
     OrderDataAccessMapper orderMapper;

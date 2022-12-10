@@ -22,29 +22,29 @@ public class OrderDataMapper {
 
     public Restaurant createOrderCommandToRestaurant(CreateOrderCommand createOrderCommand) {
         return Restaurant.builder()
-                .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
-                .products(createOrderCommand.getItems().stream()
-                        .map(orderItem -> new Product(orderItem.getProductId()))
+                .restaurantId(new RestaurantId(createOrderCommand.restaurantId()))
+                .products(createOrderCommand.items().stream()
+                        .map(orderItem -> new Product(orderItem.productId()))
                         .collect(Collectors.toList()))
                 .build();
     }
 
     public Order createOrderCommandToOrder(CreateOrderCommand createOrderCommand) {
         return Order.builder()
-                .customerId(createOrderCommand.getCustomerId())
-                .restaurantId(createOrderCommand.getRestaurantId())
-                .deliveryAddress(orderAddressToStreetAddress(createOrderCommand.getAddress()))
-                .price(createOrderCommand.getPrice())
-                .items(orderItemsToOrderItemsEntities(createOrderCommand.getItems()))
+                .customerId(createOrderCommand.customerId())
+                .restaurantId(createOrderCommand.restaurantId())
+                .deliveryAddress(orderAddressToStreetAddress(createOrderCommand.address()))
+                .price(createOrderCommand.price())
+                .items(orderItemsToOrderItemsEntities(createOrderCommand.items()))
                 .build();
     }
 
     private List<OrderItem> orderItemsToOrderItemsEntities(List<OrderItemDTO> itemsDTO) {
         return itemsDTO.stream().map(orderItemDTO ->
                         OrderItem.builder()
-                                .product(orderItemDTO.getProductId())
-                                .price(orderItemDTO.getPrice())
-                                .quantity(orderItemDTO.getQuantity())
+                                .product(orderItemDTO.productId())
+                                .price(orderItemDTO.price())
+                                .quantity(orderItemDTO.quantity())
                                 .build())
                 .collect(Collectors.toList());
     }

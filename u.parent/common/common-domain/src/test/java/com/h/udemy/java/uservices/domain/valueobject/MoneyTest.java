@@ -3,11 +3,15 @@ package com.h.udemy.java.uservices.domain.valueobject;
 import com.h.udemy.java.uservices.domain.util.numbers.Numbers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.SpringBootConfiguration;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootConfiguration
 class MoneyTest {
 
     @BeforeEach
