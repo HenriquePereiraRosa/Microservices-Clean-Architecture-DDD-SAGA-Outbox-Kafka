@@ -7,7 +7,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 DROP TYPE IF EXISTS order_status;
 CREATE TYPE order_status AS ENUM ('PENDING', 'PAID', 'APPROVED', 'CANCELLED', 'CANCELLING');
 
-DROP TABLE IF EXISTS "order".orders CASCADE;
+DROP TABLE IF EXISTS "order".tb_orders CASCADE;
 
 CREATE TABLE "order".tb_orders
 (

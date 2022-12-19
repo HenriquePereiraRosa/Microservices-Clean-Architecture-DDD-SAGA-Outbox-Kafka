@@ -68,7 +68,7 @@ public class OrderControllerV1 {
 
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<TrackOrderResponse>> fetchAllOrder() {
 
         List<TrackOrderResponse> trackOrderResponseList = orderApplicationService

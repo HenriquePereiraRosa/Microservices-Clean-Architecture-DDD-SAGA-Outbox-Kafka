@@ -9,6 +9,7 @@ import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.ICustomerRepository;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IRestaurantRepository;
+import com.h.udemy.java.uservices.order.service.domain.valueobject.TrackingId;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,7 +19,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import static com.h.udemy.java.uservices.factory.CustomerFactory.createCustomer;
@@ -26,8 +29,10 @@ import static com.h.udemy.java.uservices.factory.OrderFactory.createCreateOrderC
 import static com.h.udemy.java.uservices.factory.OrderFactory.createOrderCreatedEvent;
 import static com.h.udemy.java.uservices.factory.OrderFactory.createOrderSaved;
 import static com.h.udemy.java.uservices.factory.RestaurantFactory.createRestaurant;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -70,8 +75,6 @@ class OrderControllerV1Test extends ApiEnvTest {
 
     @Test
     void when_createOrder_should_return_201() throws Exception {
-        when(this.customerRepository.findCustomer(any()))
-                .thenReturn(Optional.of(customer));
 
         mockMvc.perform(post(baseUrl)
                         .headers(new HttpHeaders())
@@ -87,10 +90,42 @@ class OrderControllerV1Test extends ApiEnvTest {
     }
 
     @Test
-    void fetchOrderByTrackingId() {
+    void when_fetchOrderByTrackingId_should_return_200() throws Exception {
+        when(this.orderRepository.findByTrackingId(any(TrackingId.class)))
+                .thenReturn(Optional.ofNullable(orderSaved));
+
+        MvcResult res = mockMvc.perform(get(baseUrl + "/by-tracking-id?trackingId=" +
+                        orderSaved.getTrackingId().getValue())
+                        .headers(new HttpHeaders())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.ALL))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.orderTrackingId").isNotEmpty())
+                // todo: solve UUID not equal problem
+//                .andExpect(jsonPath("$.orderTrackingId")
+//                        .value(orderSaved.getTrackingId().getValue()))
+                .andReturn();
+
+        assertTrue(res.getResponse().getContentAsString()
+                .contains(orderSaved.getTrackingId().getValue().toString()));
     }
 
     @Test
-    void fetchAllOrder() {
+    void when_fetchAllOrder_should_return_200() throws Exception {
+        when(this.orderRepository.fetchAll())
+                .thenReturn(Arrays.asList(orderSaved));
+
+        MvcResult res = mockMvc.perform(get(baseUrl)
+                        .headers(new HttpHeaders())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.ALL))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("[0].orderTrackingId").isNotEmpty())
+                .andReturn();
+
+        assertTrue(res.getResponse().getContentAsString()
+                .contains(orderSaved.getTrackingId().getValue().toString()));
     }
 }
