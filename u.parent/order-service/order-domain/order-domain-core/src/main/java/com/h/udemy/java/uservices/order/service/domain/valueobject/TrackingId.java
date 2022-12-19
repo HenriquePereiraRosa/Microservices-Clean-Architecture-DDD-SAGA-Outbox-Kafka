@@ -8,4 +8,9 @@ public class TrackingId extends BaseId<UUID> {
     public TrackingId(UUID pValue) {
         super(pValue);
     }
+
+    @Override
+    public String toString() {
+        return this.getValue().toString();
+    }
 }
