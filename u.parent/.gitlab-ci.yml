@@ -27,7 +27,7 @@ build:
     - pom.xml
     - sos.auth/target/*.jar
     - sos.brand/target/*.jar
-    - sos.core/target/*.jar
+    - sos.payment/target/*.jar
     - sos.discovery/target/*.jar
     - sos.gateway/target/*.jar
     - sos.user/target/*.jar

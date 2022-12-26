@@ -26,7 +26,8 @@ public enum Msgs {
     ERR_ORDER_COULD_NOT_BE_SAVED("err.order.could-not-be-saved"),
     ERR_RESTAURANT_ID_NOT_ACTIVE("err.restaurant.id.not-active"),
     ERR_RESTAURANT_NOT_FOUND("err.restaurant.not-found"),
-    ERR_CUSTOMER_NOT_FOUND("err.customer.not-found");
+    ERR_CUSTOMER_NOT_FOUND("err.customer.not-found"),
+    ERR_TOTAL_PRICE_MUST_BE_GRATER_THAN_ZERO("Total price must be greater than Zero");
 
     String key;
     Msgs(String key) {

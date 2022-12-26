@@ -1,15 +1,18 @@
-package com.h.udemy.java.uservices.entity;
+package com.h.udemy.java.uservices.payment.domain.core.entity;
 
 import com.h.udemy.java.uservices.domain.entity.AggregateRoot;
 import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.domain.valueobject.OrderId;
 import com.h.udemy.java.uservices.domain.valueobject.PaymentStatus;
+import com.h.udemy.java.uservices.payment.domain.core.valueobject.PaymentId;
 import com.h.udemy.java.uservices.valueobject.PaymentId;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.UUID;
+
+import static com.h.udemy.java.uservices.domain.messages.Msgs.ERR_TOTAL_PRICE_MUST_BE_GRATER_THAN_ZERO;
 
 public class Payment extends AggregateRoot<PaymentId> {
 
@@ -27,19 +30,16 @@ public class Payment extends AggregateRoot<PaymentId> {
     }
 
     public String validatePaymentReturningFailuresMsgs() {
-        if(price == null ||
-                !price.isGreaterThanZero())
-            return "Total price must be greater than Zero";
+        if(price == null || !price.isGreaterThanZero()) {
+            return ERR_TOTAL_PRICE_MUST_BE_GRATER_THAN_ZERO.get();
+        }
+
         return null;
     }
 
     public void updateStatus(PaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
-
-
-
-
 
 
     private Payment(Builder builder) {
@@ -62,7 +62,7 @@ public class Payment extends AggregateRoot<PaymentId> {
         private Builder() {
         }
 
-        public static Builder newBuilder() {
+        public static Builder builder() {
             return new Builder();
         }
 
