@@ -1,5 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
+import com.h.udemy.java.uservices.domain.messages.Msgs;
 import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.domain.valueobject.OrderId;
@@ -16,7 +17,6 @@ import com.h.udemy.java.uservices.order.service.domain.entity.Product;
 import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
 import com.h.udemy.java.uservices.order.service.domain.mapper.OrderDataMapper;
-import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
 import com.h.udemy.java.uservices.order.service.domain.ports.input.service.IOrderApplicationService;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.ICustomerRepository;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
@@ -168,7 +168,7 @@ class OrderApplicationServiceTest extends ApiEnvTestConfig {
         CreateOrderResponse createOrderResponse = iOrderAplicationService.createOrder(createOrderCommand);
 
         assertEquals(OrderStatus.PENDING, createOrderResponse.getOrderStatus());
-        assertEquals(I18n.ORDER_CREATED_SUCCESSFULLY.getMsg(), createOrderResponse.getMessage());
+        assertEquals(Msgs.ORDER_CREATED_SUCCESSFULLY.get(), createOrderResponse.getMessage());
         assertNotNull(createOrderResponse.getTrackingId());
     }
 
@@ -180,7 +180,7 @@ class OrderApplicationServiceTest extends ApiEnvTestConfig {
                     iOrderAplicationService.createOrder(createOrderCommandWrongPrice);
                 });
 
-        final String exceptionMsg = I18n.ERR_ORDER_TOTAL_AND_ORDER_PRICES_DIFF.getMsg()
+        final String exceptionMsg = Msgs.ERR_ORDER_TOTAL_AND_ORDER_PRICES_DIFF.get()
                 + ": (price) 250.00 != (orderItemsTotal) 200.00";
 
         assertEquals(exceptionMsg, orderDomainException.getMessage());
@@ -194,7 +194,7 @@ class OrderApplicationServiceTest extends ApiEnvTestConfig {
                     iOrderAplicationService.createOrder(createOrderCommandWrongProductPrice);
                 });
 
-        final String exceptionMsg = I18n.ERR_ORDER_ITEM_PRICE_INVALID.getMsg() + ": 210.00";
+        final String exceptionMsg = Msgs.ERR_ORDER_ITEM_PRICE_INVALID.get() + ": 210.00";
 
         assertEquals(exceptionMsg, orderDomainException.getMessage());
     }
@@ -225,7 +225,7 @@ class OrderApplicationServiceTest extends ApiEnvTestConfig {
                     iOrderAplicationService.createOrder(createOrderCommand);
                 });
 
-        final String exceptionMsg = I18n.ERR_RESTAURANT_ID_NOT_ACTIVE.getMsg() + RESTAURANT_ID;
+        final String exceptionMsg = Msgs.ERR_RESTAURANT_ID_NOT_ACTIVE.get() + RESTAURANT_ID;
 
         assertEquals(exceptionMsg, orderDomainException.getMessage());
     }

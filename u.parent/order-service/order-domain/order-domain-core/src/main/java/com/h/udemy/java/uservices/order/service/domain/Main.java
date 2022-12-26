@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
-import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
+import com.h.udemy.java.uservices.domain.messages.Msgs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,6 +19,6 @@ public class Main {
     public static void main(String[] args) {
         ApplicationContext context =  SpringApplication.run(Main.class, args);
 
-        System.out.println(I18n.ERR_ORDER_ITEM_PRICE_INVALID.getMsg());
+        System.out.println(Msgs.ERR_ORDER_ITEM_PRICE_INVALID.get());
     }
 }

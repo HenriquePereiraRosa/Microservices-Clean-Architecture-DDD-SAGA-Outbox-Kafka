@@ -51,7 +51,8 @@
         <module>infrastructure</module>
 		<module>infrastructure/kafka</module>
         <module>customer-service</module>
-    </modules>
+        <module>payment-service</module>
+	</modules>
 
 	<dependencyManagement>
 		<dependencies>

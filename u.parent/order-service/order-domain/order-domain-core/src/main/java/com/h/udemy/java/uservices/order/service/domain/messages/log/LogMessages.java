@@ -9,12 +9,15 @@ import java.util.ResourceBundle;
 @Getter
 public enum LogMessages {
 
+
+    APP_NAME_DESCRIPTION("app.name.description"),
     ORDER_ID_CREATED_SUCCESSFULLY("order.id.created.successfully"),
     ORDER_ID_CREATING("order.id.creating"),
 
     ORDER_TRACKING_ALL("order.id.all-track-order"),
     ORDER_TRACKING_BY_TRACKING_ID("order.id.track-order-by-tracking-id");
 
+    final static String FILE_PATH = "messages_order_domain.log.log-messages";
     String key;
     LogMessages(String key) {
         this.key = key;
@@ -22,7 +25,7 @@ public enum LogMessages {
 
     public String get() {
         ResourceBundle bundle = ResourceBundle
-                .getBundle("messages_order_domain.log.log-messages",
+                .getBundle(FILE_PATH,
                         LocaleContextHolder.getLocale());
         return bundle.getString(key);
     }

@@ -12,7 +12,7 @@
     <artifactId>order-container</artifactId>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <docker.skip>true</docker.skip>
     </properties>
 
     <dependencies>
@@ -56,6 +56,22 @@
 
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>enableDocker-linux</id>
+            <properties>
+                <docker.skip>false</docker.skip>
+            </properties>
+<!--            <activation>-->
+<!--                &lt;!&ndash; Activate on Linux systems. Assume presence of docker.pid file indicates Docker is available &ndash;&gt;-->
+<!--                <file>-->
+<!--                     <exists>/var/run/docker.pid</exists>-->
+<!--&lt;!&ndash;                    <exists>\\.\pipe\docker_engine</exists>&ndash;&gt;-->
+<!--                </file>-->
+<!--            </activation>-->
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
@@ -72,10 +88,12 @@
                         <goals>
                             <goal>build-image</goal>
                         </goals>
+                        <configuration>
+                            <skip>${docker.skip}</skip>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-
 </project>

@@ -1,5 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
+import com.h.udemy.java.uservices.domain.messages.Msgs;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.entity.Customer;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
@@ -8,7 +9,6 @@ import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
 import com.h.udemy.java.uservices.order.service.domain.exception.CustomerNotFoundException;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderCouldNotBeSavedException;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
-import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
 import com.h.udemy.java.uservices.order.service.domain.mapper.OrderDataMapper;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.ICustomerRepository;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
@@ -50,7 +50,7 @@ public class OrderCreateHelper {
                 .validateAndInitiateOrder(order, restaurant);
         insertOrder(order);
 
-        final String msg = I18n.ORDER_ID_CREATED.getMsg() +
+        final String msg = Msgs.ORDER_ID_CREATED.get() +
                 orderCreatedEvent.getOrder().getId().getValue();
         log.warn(msg);
 
@@ -63,7 +63,7 @@ public class OrderCreateHelper {
         Optional<Restaurant> lRestaurant = restaurantRepository
                 .findRestaurantInformation(restaurant);
         if (lRestaurant.isEmpty()) {
-            final String msg = I18n.ERR_RESTAURANT_NOT_FOUND.getMsg() +
+            final String msg = Msgs.ERR_RESTAURANT_NOT_FOUND.get() +
                     createOrderCommand.restaurantId().toString();
             log.warn(msg);
             throw new OrderDomainException(msg);
@@ -74,7 +74,7 @@ public class OrderCreateHelper {
     private void checkCustomer(UUID customerId) {
         Optional<Customer> customer = iCustomerRepository.findCustomer(customerId);
         if (customer.isEmpty()) {
-            final String msg = I18n.ERR_CUSTOMER_NOT_FOUND.getMsg() + customerId;
+            final String msg = Msgs.ERR_CUSTOMER_NOT_FOUND.get() + customerId;
             log.warn(msg);
             throw new CustomerNotFoundException(customerId);
         }
@@ -83,7 +83,7 @@ public class OrderCreateHelper {
     private Order insertOrder(Order order) {
         Order orderCreated = orderRepository.insertOrder(order);
         if (orderCreated == null) {
-            final String msg = I18n.ERR_ORDER_COULD_NOT_BE_SAVED.getMsg() +
+            final String msg = Msgs.ERR_ORDER_COULD_NOT_BE_SAVED.get() +
                     order.getId().getValue();
             log.warn(msg);
             throw new OrderCouldNotBeSavedException(order.getId().getValue());

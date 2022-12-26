@@ -1,10 +1,10 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
+import com.h.udemy.java.uservices.domain.messages.Msgs;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderResponse;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
 import com.h.udemy.java.uservices.order.service.domain.mapper.OrderDataMapper;
-import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCreatedPaymentRequestMessagePublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -34,7 +34,7 @@ public class OrderCreateCommandHandler {
         IOrderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
 
         return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder(),
-                I18n.ORDER_CREATED_SUCCESSFULLY.getMsg());
+                Msgs.ORDER_CREATED_SUCCESSFULLY.get());
 
     }
 }

@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.h.udemy.java.uservices.domain.log.LogMessages.ORDER_ID_PROCESSED_FAILED;
-import static com.h.udemy.java.uservices.domain.log.LogMessages.ORDER_ID_PROCESSED_SUCCESS;
-import static com.h.udemy.java.uservices.domain.log.LogMessages.ORDER_KAFKA_NUMBER_MODEL_RESPONSES_RECEIVED;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_ID_PROCESSED_FAILED;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_ID_PROCESSED_SUCCESS;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_KAFKA_NUMBER_MODEL_RESPONSES_RECEIVED;
 
 @Slf4j
 @Component

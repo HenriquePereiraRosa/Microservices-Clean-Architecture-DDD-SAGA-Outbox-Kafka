@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.order.service.domain.messages;
+package com.h.udemy.java.uservices.domain.messages;
 
 import lombok.Getter;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -7,10 +7,7 @@ import java.util.ResourceBundle;
 
 
 @Getter
-public enum I18n {
-
-    APP_NAME_DESCRIPTION("app.name.description"),
-
+public enum Msgs {
     ORDER_CREATED_SUCCESSFULLY("order.created.successfully"),
     ORDER_ID_INITIATED("order.id.initiated"),
     ORDER_ID_PAYMENT_CANCELLING("order.id.payment-cancelling"),
@@ -32,13 +29,13 @@ public enum I18n {
     ERR_CUSTOMER_NOT_FOUND("err.customer.not-found");
 
     String key;
-    I18n(String key) {
+    Msgs(String key) {
         this.key = key;
     }
 
-    public String getMsg() {
+    public String get() {
         ResourceBundle bundle = ResourceBundle
-                .getBundle("messages_order_domain.messages", LocaleContextHolder.getLocale());
+                .getBundle("messages_common_domain.messages", LocaleContextHolder.getLocale());
         return bundle.getString(key);
     }
 }

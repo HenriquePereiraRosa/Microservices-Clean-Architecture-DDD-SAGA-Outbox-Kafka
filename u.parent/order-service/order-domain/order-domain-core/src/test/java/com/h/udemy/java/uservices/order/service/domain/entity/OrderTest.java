@@ -1,9 +1,13 @@
 package com.h.udemy.java.uservices.order.service.domain.entity;
 
-import com.h.udemy.java.uservices.domain.valueobject.*;
+import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
+import com.h.udemy.java.uservices.domain.valueobject.Money;
+import com.h.udemy.java.uservices.domain.valueobject.OrderId;
+import com.h.udemy.java.uservices.domain.valueobject.OrderStatus;
+import com.h.udemy.java.uservices.domain.valueobject.ProductId;
+import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
 import com.h.udemy.java.uservices.order.service.domain.ApiEnvTestConfig;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainInitialStateException;
-import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
 import com.h.udemy.java.uservices.order.service.domain.validation.Valid;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.OrderItemId;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.StreetAddress;
@@ -15,7 +19,11 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static com.h.udemy.java.uservices.domain.messages.Msgs.ERR_ORDER_NOT_CORRECT_INIT_STATE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class OrderTest extends ApiEnvTestConfig {
@@ -89,7 +97,7 @@ class OrderTest extends ApiEnvTestConfig {
                 });
 
         assertEquals(exceptionThatWasThrown.getMessage(),
-                I18n.ERR_ORDER_NOT_CORRECT_INIT_STATE.getMsg());
+                ERR_ORDER_NOT_CORRECT_INIT_STATE.get());
     }
 
     @Test

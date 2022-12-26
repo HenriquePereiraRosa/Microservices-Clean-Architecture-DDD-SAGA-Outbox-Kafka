@@ -6,8 +6,8 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-import static com.h.udemy.java.uservices.domain.log.LogMessages.ORDER_ERROR_WHILE_SENDING_REQUEST_AVRO;
-import static com.h.udemy.java.uservices.domain.log.LogMessages.ORDER_SUCCESSFUL_RESPONSE_KAFKA;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_ERROR_WHILE_SENDING_REQUEST_AVRO;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_SUCCESSFUL_RESPONSE_KAFKA;
 
 @Slf4j
 @Component

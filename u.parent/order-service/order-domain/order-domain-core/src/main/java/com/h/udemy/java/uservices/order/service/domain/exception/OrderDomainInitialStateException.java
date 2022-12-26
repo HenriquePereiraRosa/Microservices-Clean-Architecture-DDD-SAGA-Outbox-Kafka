@@ -1,14 +1,15 @@
 package com.h.udemy.java.uservices.order.service.domain.exception;
 
-import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
+import static com.h.udemy.java.uservices.domain.messages.Msgs.ERR_ORDER_NOT_CORRECT_INIT_STATE;
+import static com.h.udemy.java.uservices.domain.messages.Msgs.ERR_ORDER_PRICE_MUST_GREATER_ZERO;
 
 public class OrderDomainInitialStateException extends OrderDomainException {
     public OrderDomainInitialStateException() {
-        super(I18n.ERR_ORDER_NOT_CORRECT_INIT_STATE.getMsg());
+        super(ERR_ORDER_NOT_CORRECT_INIT_STATE.get());
     }
 
     public OrderDomainInitialStateException(Throwable cause) {
-        super(I18n.ERR_ORDER_PRICE_MUST_GREATER_ZERO.getMsg(),
+        super(ERR_ORDER_PRICE_MUST_GREATER_ZERO.get(),
                 cause);
     }
 }

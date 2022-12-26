@@ -9,9 +9,9 @@ import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publ
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import static com.h.udemy.java.uservices.domain.log.LogMessages.ORDER_CANCEL_RECEIVED_ID;
-import static com.h.udemy.java.uservices.domain.log.LogMessages.ORDER_ERROR_MSG_SENDING_REQ_AVRO_KAFKA;
-import static com.h.udemy.java.uservices.domain.log.LogMessages.ORDER_SENT_REQUEST_KAFKA;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_CANCEL_RECEIVED_ID;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_ERROR_MSG_SENDING_REQ_AVRO_KAFKA;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_SENT_REQUEST_KAFKA;
 
 @Slf4j
 @Component

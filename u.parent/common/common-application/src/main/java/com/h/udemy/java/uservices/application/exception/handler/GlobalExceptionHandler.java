@@ -13,7 +13,7 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import java.util.stream.Collectors;
 
-import static com.h.udemy.java.uservices.domain.log.LogExceptionMessages.UNEXPECTED_ERROR;
+import static com.h.udemy.java.uservices.domain.messages.log.LogExceptionMessages.UNEXPECTED_ERROR;
 
 
 @Slf4j

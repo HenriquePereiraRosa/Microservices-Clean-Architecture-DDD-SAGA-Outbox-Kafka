@@ -3,12 +3,13 @@ package com.h.udemy.java.uservices.order.service.dataaccess;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.h.udemy.java.uservices.order.service.domain.messages.I18n;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.PostConstruct;
+
+import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.APP_NAME_DESCRIPTION;
 
 @Slf4j
 @SpringBootTest(classes = BeanTestConfig.class,
@@ -24,10 +25,10 @@ public abstract class ApiEnvTestConfig {
 
     @Test
     void contextLoads() {
-       log.debug(I18n.APP_NAME_DESCRIPTION.getMsg());
-       log.info(I18n.APP_NAME_DESCRIPTION.getMsg());
-       log.warn(I18n.APP_NAME_DESCRIPTION.getMsg());
-       log.error(I18n.APP_NAME_DESCRIPTION.getMsg());
+       log.debug(APP_NAME_DESCRIPTION.get());
+       log.info(APP_NAME_DESCRIPTION.get());
+       log.warn(APP_NAME_DESCRIPTION.get());
+       log.error(APP_NAME_DESCRIPTION.get());
     }
 
 }

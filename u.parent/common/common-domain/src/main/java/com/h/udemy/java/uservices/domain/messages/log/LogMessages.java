@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.domain.log;
+package com.h.udemy.java.uservices.domain.messages.log;
 
 import lombok.Getter;
 import org.springframework.context.i18n.LocaleContextHolder;
