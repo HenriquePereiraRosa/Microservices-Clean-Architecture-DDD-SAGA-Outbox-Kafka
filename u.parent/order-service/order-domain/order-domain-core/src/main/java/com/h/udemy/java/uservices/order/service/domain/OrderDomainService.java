@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.h.udemy.java.uservices.domain.Const.ZONED_UTC;
+
 @Slf4j
 @Service
 public class OrderDomainService implements IOrderDomainService {
@@ -31,7 +33,7 @@ public class OrderDomainService implements IOrderDomainService {
         order.validateOrder();
         order.initializeOrder();
         log.info(Msgs.ORDER_ID_INITIATED.get(), order.getId().getValue());
-        return new OrderCreatedEvent(order, ZonedDateTime.now(ZONE));
+        return new OrderCreatedEvent(order, ZonedDateTime.now(ZONED_UTC));
     }
 
     @Override
@@ -39,7 +41,7 @@ public class OrderDomainService implements IOrderDomainService {
                                    DomainEventPublisher<OrderPaidEvent> orderPaidEventDomainEventPublisher) {
         order.pay();
         log.info("Order with id: {} is paid", order.getId().getValue());
-        return new OrderPaidEvent(order, ZonedDateTime.now(ZONE), orderPaidEventDomainEventPublisher);
+        return new OrderPaidEvent(order, ZonedDateTime.now(ZONED_UTC), orderPaidEventDomainEventPublisher);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class OrderDomainService implements IOrderDomainService {
     public OrderCancelledEvent cancelOrderPayment(Order order, List<String> failureMessages) {
         order.initCancel(failureMessages);
         log.info(Msgs.ORDER_ID_PAYMENT_CANCELLING.get());
-        return new OrderCancelledEvent(order, ZonedDateTime.now(ZONE));
+        return new OrderCancelledEvent(order, ZonedDateTime.now(ZONED_UTC));
     }
 
     @Override

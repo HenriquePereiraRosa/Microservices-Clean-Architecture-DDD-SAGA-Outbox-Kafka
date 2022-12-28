@@ -19,7 +19,13 @@ public enum LogMessages {
     ORDER_KAFKA_NUMBER_MODEL_RESPONSES_RECEIVED("order.kafka.number-model-responses-received"),
 
     ORDER_ERROR_WHILE_SENDING_REQUEST_AVRO("order.error.while-sending-request-avro-model"),
-    ORDER_ERROR_MSG_SENDING_REQ_AVRO_KAFKA("order.error.msg.sending.request-avro-model-kafka");
+    ORDER_ERROR_MSG_SENDING_REQ_AVRO_KAFKA("order.error.msg.sending.request-avro-model-kafka"),
+
+    PAYMENT_REQUEST_SUCCESS_FOR_ID("payment.success.for-order-id"),
+    PAYMENT_REQUEST_CANCELED_FOR_ID("payment.canceled.for-order-id"),
+    PAYMENT_ERR_NOT_ENOUGH_CREDIT("payment.error.not-enough-credit"),
+    PAYMENT_ERR_CREDIT_HISTORY_NOT_EQUALS("payment.error.credit-history-not-equals"),
+    PAYMENT_ERR_FAILED_FOR_ORDER_ID("payment.error.failed-for-order-id");
 
     String key;
     LogMessages(String key) {

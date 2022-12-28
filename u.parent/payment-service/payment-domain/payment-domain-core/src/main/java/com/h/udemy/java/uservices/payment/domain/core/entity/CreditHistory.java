@@ -5,9 +5,9 @@ import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.payment.domain.core.valueobject.CreditEntryId;
 import com.h.udemy.java.uservices.payment.domain.core.valueobject.TransacionType;
-import com.h.udemy.java.uservices.valueobject.TransacionType;
-import com.h.udemy.java.uservices.valueobject.CreditEntryId;
+import lombok.Getter;
 
+@Getter
 public class CreditHistory extends BaseEntity<CreditEntryId> {
 
     private final CustomerId customerId;
@@ -35,7 +35,7 @@ public class CreditHistory extends BaseEntity<CreditEntryId> {
             return new Builder();
         }
 
-        public Builder id(CreditEntryId val) {
+        public Builder creditEntryId(CreditEntryId val) {
             creditEntryId = val;
             return this;
         }

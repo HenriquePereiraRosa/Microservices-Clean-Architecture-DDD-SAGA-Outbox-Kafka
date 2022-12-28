@@ -12,8 +12,10 @@ import com.h.udemy.java.uservices.order.service.domain.valueobject.OrderItemId;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.StreetAddress;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 
+import static com.h.udemy.java.uservices.domain.Const.ZONED_UTC;
 import static com.h.udemy.java.uservices.test.util.ConstTestUtils.*;
 
 public class OrderFactory {
@@ -67,6 +69,6 @@ public class OrderFactory {
     }
 
     static public OrderCreatedEvent createOrderCreatedEvent(Order order) {
-        return new OrderCreatedEvent(order, TIME_ZONE);
+        return new OrderCreatedEvent(order, ZonedDateTime.now(ZONED_UTC));
     }
 }

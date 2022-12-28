@@ -6,14 +6,15 @@ import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.domain.valueobject.OrderId;
 import com.h.udemy.java.uservices.domain.valueobject.PaymentStatus;
 import com.h.udemy.java.uservices.payment.domain.core.valueobject.PaymentId;
-import com.h.udemy.java.uservices.valueobject.PaymentId;
+import lombok.Getter;
 
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
+import static com.h.udemy.java.uservices.domain.Const.ZONED_UTC;
 import static com.h.udemy.java.uservices.domain.messages.Msgs.ERR_TOTAL_PRICE_MUST_BE_GRATER_THAN_ZERO;
 
+@Getter
 public class Payment extends AggregateRoot<PaymentId> {
 
     private final OrderId orderId;
@@ -26,7 +27,7 @@ public class Payment extends AggregateRoot<PaymentId> {
 
     public void initializePayment() {
         setId(new PaymentId(UUID.randomUUID()));
-        createdAt = ZonedDateTime.now(ZoneId.of("UTC"));
+        createdAt = ZonedDateTime.now(ZONED_UTC);
     }
 
     public String validatePaymentReturningFailuresMsgs() {

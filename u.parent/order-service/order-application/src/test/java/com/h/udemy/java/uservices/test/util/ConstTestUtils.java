@@ -6,8 +6,6 @@ import com.h.udemy.java.uservices.domain.valueobject.ProductId;
 import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.TrackingId;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.UUID;
 
 public class ConstTestUtils {
@@ -24,6 +22,4 @@ public class ConstTestUtils {
             .fromString("e42502d3-6099-44ad-bcbe-e30f85ec9d9e"));
     public static final ProductId PRODUCT_ID = new ProductId(UUID
             .fromString("ae15c1e1-86a9-48cf-87fd-11f5b16c404a"));
-
-    public static final ZonedDateTime TIME_ZONE = ZonedDateTime.now(ZoneId.of("UTC"));
 }

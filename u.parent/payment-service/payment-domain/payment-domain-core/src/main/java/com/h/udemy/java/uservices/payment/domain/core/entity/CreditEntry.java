@@ -4,9 +4,10 @@ import com.h.udemy.java.uservices.domain.entity.BaseEntity;
 import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.payment.domain.core.valueobject.CreditEntryId;
-import com.h.udemy.java.uservices.valueobject.CreditEntryId;
+import lombok.Getter;
 
-public class CreditEntity extends BaseEntity<CreditEntryId> {
+@Getter
+public class CreditEntry extends BaseEntity<CreditEntryId> {
 
     private final CustomerId customerId;
     private Money toralCreditAmount;
@@ -22,7 +23,7 @@ public class CreditEntity extends BaseEntity<CreditEntryId> {
 
 
 
-    private CreditEntity(Builder builder) {
+    private CreditEntry(Builder builder) {
         setId(builder.creditEntryId);
         customerId = builder.customerId;
         toralCreditAmount = builder.toralCreditAmount;
@@ -56,8 +57,8 @@ public class CreditEntity extends BaseEntity<CreditEntryId> {
             return this;
         }
 
-        public CreditEntity build() {
-            return new CreditEntity(this);
+        public CreditEntry build() {
+            return new CreditEntry(this);
         }
     }
 }
