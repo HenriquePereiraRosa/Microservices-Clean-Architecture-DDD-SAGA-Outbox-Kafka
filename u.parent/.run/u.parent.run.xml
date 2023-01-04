@@ -32,6 +32,8 @@
               <option value="install" />
               <option value="generate-sources" />
               <option value="package" />
+              <option value="-Dreport" />
+              <option value="-DskipTests=false" />
               <option value="-e" />
               <option value="-U" />
               <option value="-X" />
