@@ -21,7 +21,7 @@ class MoneyTest extends ApiEnvTestConfig {
 
     @Test
     void getAmount() {
-        Money money1 = new Money(new BigDecimal(2.02));
+        final Money money1 = new Money(new BigDecimal(2.02));
         BigDecimal amount = money1.getAmount();
 
         assertEquals(money1, new Money(amount));
@@ -29,7 +29,7 @@ class MoneyTest extends ApiEnvTestConfig {
 
     @Test
     void isGreaterThanZero() {
-        Money money1 = new Money(new BigDecimal(0.01));
+        final Money money1 = new Money(new BigDecimal(0.01));
 
         assertTrue(money1.isGreaterThanZero());
     }
@@ -52,8 +52,8 @@ class MoneyTest extends ApiEnvTestConfig {
 
     @Test
     void isGreaterThan() {
-        Money money1 = new Money(new BigDecimal(2.02));
-        Money money2 = new Money(new BigDecimal(0.02));
+        final Money money1 = new Money(new BigDecimal(2.02));
+        final Money money2 = new Money(new BigDecimal(0.02));
 
         assertTrue(money1.isGreaterThan(money2));
     }
@@ -61,7 +61,7 @@ class MoneyTest extends ApiEnvTestConfig {
     @Test
     void add() {
         Money money1 = new Money(new BigDecimal(2.02));
-        Money money2 = new Money(new BigDecimal(0.02));
+        final Money money2 = new Money(new BigDecimal(0.02));
         money1 = money1.add(money2);
 
         assertEquals(money1, new Money(new BigDecimal(2.04)));
@@ -70,7 +70,7 @@ class MoneyTest extends ApiEnvTestConfig {
     @Test
     void substract() {
         Money money1 = new Money(new BigDecimal(2.02));
-        Money money2 = new Money(new BigDecimal(0.02));
+        final Money money2 = new Money(new BigDecimal(0.02));
         money1 = money1.substract(money2);
 
         assertEquals(money1, new Money(new BigDecimal(2.00)));
@@ -86,16 +86,16 @@ class MoneyTest extends ApiEnvTestConfig {
 
     @Test
     void testEquals() {
-        Money money1 = new Money(new BigDecimal(1000.999));
-        Money money2 = new Money(new BigDecimal(1000.999));
+        final Money money1 = new Money(new BigDecimal(1000.999));
+        final Money money2 = new Money(new BigDecimal(1000.999));
 
         assertEquals(money1, money2);
     }
 
     @Test
     void testNotEquals() {
-        Money money1 = new Money(new BigDecimal(1000.999));
-        Money money2 = new Money(new BigDecimal(1000.988));
+        final Money money1 = new Money(new BigDecimal(1000.999));
+        final Money money2 = new Money(new BigDecimal(1000.988));
 
         assertFalse(money1.equals(money2));
 
@@ -103,7 +103,7 @@ class MoneyTest extends ApiEnvTestConfig {
 
     @Test
     void testHashCode() {
-        Money money = new Money(new BigDecimal(333));
+        final Money money = new Money(new BigDecimal(333));
         assertTrue(Numbers.isInteger(money.hashCode()));
     }
 
