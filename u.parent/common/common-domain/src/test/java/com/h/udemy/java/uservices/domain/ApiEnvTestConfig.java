@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.domain.valueobject;
+package com.h.udemy.java.uservices.domain;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

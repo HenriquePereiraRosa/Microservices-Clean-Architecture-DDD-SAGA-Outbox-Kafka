@@ -1,5 +1,6 @@
 package com.h.udemy.java.uservices.domain.valueobject;
 
+import com.h.udemy.java.uservices.domain.ApiEnvTestConfig;
 import com.h.udemy.java.uservices.domain.util.numbers.Numbers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootConfiguration
-class MoneyTest {
+class MoneyTest extends ApiEnvTestConfig {
 
     @BeforeEach
     void setUp() {
@@ -31,6 +32,22 @@ class MoneyTest {
         Money money1 = new Money(new BigDecimal(0.01));
 
         assertTrue(money1.isGreaterThanZero());
+    }
+
+    @Test
+    void compareTo_ok() {
+        final Money money1 = new Money(new BigDecimal(0.01));
+        final Money money2 = new Money(new BigDecimal(0.01));
+
+        assertTrue(money1.compareTo(money2.getAmount()));
+    }
+
+    @Test
+    void compareTo_ko() {
+        final Money money1 = new Money(new BigDecimal(0.01));
+        final Money money2 = new Money(new BigDecimal(0.02));
+
+        assertTrue(!money1.compareTo(money2.getAmount()));
     }
 
     @Test
@@ -88,6 +105,11 @@ class MoneyTest {
     void testHashCode() {
         Money money = new Money(new BigDecimal(333));
         assertTrue(Numbers.isInteger(money.hashCode()));
+    }
+
+    @Test
+    void testException() {
+        assertFalse(Numbers.isInteger(null));
     }
 
 }

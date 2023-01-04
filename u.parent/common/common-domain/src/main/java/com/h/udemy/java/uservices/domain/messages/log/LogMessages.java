@@ -27,13 +27,13 @@ public enum LogMessages {
     PAYMENT_ERR_CREDIT_HISTORY_NOT_EQUALS("payment.error.credit-history-not-equals"),
     PAYMENT_ERR_FAILED_FOR_ORDER_ID("payment.error.failed-for-order-id");
 
-    String key;
-    LogMessages(String key) {
+    final String key;
+    LogMessages(final String key) {
         this.key = key;
     }
 
     public String get() {
-        ResourceBundle bundle = ResourceBundle
+        final ResourceBundle bundle = ResourceBundle
                 .getBundle("messages_common_domain.log.log-messages",
                         LocaleContextHolder.getLocale());
         return bundle.getString(key);

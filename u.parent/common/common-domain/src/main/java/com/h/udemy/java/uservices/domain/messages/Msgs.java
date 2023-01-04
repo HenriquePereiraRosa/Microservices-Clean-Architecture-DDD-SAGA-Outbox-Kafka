@@ -32,13 +32,13 @@ public enum Msgs {
     ERR_PAYMENT_NOT_ENOUGH_CREDIT("err.payment.not-enough-credit"),
     ERR_PAYMENT_CREDIT_HISTORY_NOT_EQUALS("err.payment.credit-history-not-equals");
 
-    String key;
-    Msgs(String key) {
+    final String key;
+    Msgs(final String key) {
         this.key = key;
     }
 
     public String get() {
-        ResourceBundle bundle = ResourceBundle
+        final ResourceBundle bundle = ResourceBundle
                 .getBundle("messages_common_domain.messages", LocaleContextHolder.getLocale());
         return bundle.getString(key);
     }

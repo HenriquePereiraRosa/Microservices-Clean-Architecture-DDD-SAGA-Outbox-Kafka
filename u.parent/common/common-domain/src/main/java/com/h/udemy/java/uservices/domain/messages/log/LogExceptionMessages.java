@@ -12,13 +12,13 @@ public enum LogExceptionMessages {
     UNEXPECTED_ERROR("unexpected-error"),
     BAD_REQUEST("bad-request");
 
-    String key;
-    LogExceptionMessages(String key) {
+    final String key;
+    LogExceptionMessages(final String key) {
         this.key = key;
     }
 
     public String get() {
-        ResourceBundle bundle = ResourceBundle
+        final ResourceBundle bundle = ResourceBundle
                 .getBundle("messages_common_domain.error.exception-messages",
                         LocaleContextHolder.getLocale());
         return bundle.getString(key);

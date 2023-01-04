@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.domain.valueobject;
+package com.h.udemy.java.uservices.domain;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
