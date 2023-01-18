@@ -53,14 +53,14 @@ public class GlobalExceptionHandler {
         } else {
             log.error(exception.getMessage(), exception);
 
-            ErrorDTO errorbody = ErrorDTO.builder()
+            ErrorDTO errorBody = ErrorDTO.builder()
                     .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
                     .message(exception.getMessage())
                     .build();
 
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body(errorbody);
+                    .body(errorBody);
 
         }
     }

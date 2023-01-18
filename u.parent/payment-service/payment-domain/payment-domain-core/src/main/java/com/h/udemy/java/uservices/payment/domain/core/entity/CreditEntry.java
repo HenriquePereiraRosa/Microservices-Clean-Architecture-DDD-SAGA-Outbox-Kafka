@@ -10,15 +10,15 @@ import lombok.Getter;
 public class CreditEntry extends BaseEntity<CreditEntryId> {
 
     private final CustomerId customerId;
-    private Money toralCreditAmount;
+    private Money totalCreditAmount;
 
 
     public void addCreditAmount(Money money) {
-        toralCreditAmount = toralCreditAmount.add(money);
+        totalCreditAmount = totalCreditAmount.add(money);
     }
 
     public void subtractCreditAmount(Money money) {
-        toralCreditAmount = toralCreditAmount.substract(money);
+        totalCreditAmount = totalCreditAmount.substract(money);
     }
 
 
@@ -26,9 +26,12 @@ public class CreditEntry extends BaseEntity<CreditEntryId> {
     private CreditEntry(Builder builder) {
         setId(builder.creditEntryId);
         customerId = builder.customerId;
-        toralCreditAmount = builder.toralCreditAmount;
+        totalCreditAmount = builder.toralCreditAmount;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
 
     public static final class Builder {
         private CreditEntryId creditEntryId;

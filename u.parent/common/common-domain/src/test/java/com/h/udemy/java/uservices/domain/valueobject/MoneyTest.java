@@ -39,7 +39,7 @@ class MoneyTest extends ApiEnvTestConfig {
         final Money money1 = new Money(new BigDecimal(0.01));
         final Money money2 = new Money(new BigDecimal(0.01));
 
-        assertTrue(money1.compareTo(money2.getAmount()));
+        assertTrue(money1.isEqual(money2.getAmount()));
     }
 
     @Test
@@ -47,7 +47,7 @@ class MoneyTest extends ApiEnvTestConfig {
         final Money money1 = new Money(new BigDecimal(0.01));
         final Money money2 = new Money(new BigDecimal(0.02));
 
-        assertTrue(!money1.compareTo(money2.getAmount()));
+        assertTrue(!money1.isEqual(money2.getAmount()));
     }
 
     @Test
@@ -85,7 +85,7 @@ class MoneyTest extends ApiEnvTestConfig {
     }
 
     @Test
-    void testEquals() {
+    void should_be_equal() {
         final Money money1 = new Money(new BigDecimal(1000.999));
         final Money money2 = new Money(new BigDecimal(1000.999));
 
@@ -93,12 +93,19 @@ class MoneyTest extends ApiEnvTestConfig {
     }
 
     @Test
-    void testNotEquals() {
+    void should_be_equal_with_scale_2() {
+        final Money money1 = new Money(new BigDecimal(1000.999));
+        final Money money2 = new Money(new BigDecimal(1000.998));
+
+        assertEquals(money1, money2);
+    }
+
+    @Test
+    void should_NOT_be_equal() {
         final Money money1 = new Money(new BigDecimal(1000.999));
         final Money money2 = new Money(new BigDecimal(1000.988));
 
         assertFalse(money1.equals(money2));
-
     }
 
     @Test

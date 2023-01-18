@@ -41,7 +41,7 @@ class RestaurantDataAccessMapperTest extends ApiEnvTestConfig {
         Order order1 = orderMapper.orderEntityToOrder(orderEntity);
 
         assertEquals(orderEntity.getOrderStatus(), order1.getOrderStatus());
-        assertTrue(order1.getPrice().compareTo(orderEntity.getPrice()));
+        assertTrue(order1.getPrice().isEqual(orderEntity.getPrice()));
         assertEquals(orderEntity.getAddress().getStreet(), order1.getDeliveryAddress().street());
     }
 }

@@ -16,12 +16,17 @@ public class CreditHistory extends BaseEntity<CreditEntryId> {
 
     private CreditHistory(Builder builder) {
         setId(builder.creditEntryId);
-        customerId = builder.customerId;
-        amount = builder.amount;
-        transacionType = builder.transacionType;
+        this.customerId = builder.customerId;
+        this.amount = builder.amount;
+        this.transacionType = builder.transacionType;
     }
 
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    // InnerBuilder
     public static final class Builder {
         private CreditEntryId creditEntryId;
         private CustomerId customerId;

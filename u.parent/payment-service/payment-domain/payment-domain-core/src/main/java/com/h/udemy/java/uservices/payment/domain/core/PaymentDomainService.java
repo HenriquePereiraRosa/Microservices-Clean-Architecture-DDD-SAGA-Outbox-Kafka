@@ -12,17 +12,22 @@ import com.h.udemy.java.uservices.payment.domain.core.event.PaymentFailedEvent;
 import com.h.udemy.java.uservices.payment.domain.core.valueobject.CreditEntryId;
 import com.h.udemy.java.uservices.payment.domain.core.valueobject.TransacionType;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 import static com.h.udemy.java.uservices.domain.Const.ZONED_UTC;
 import static com.h.udemy.java.uservices.domain.messages.Msgs.ERR_PAYMENT_NOT_ENOUGH_CREDIT;
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.*;
+import static org.apache.logging.log4j.util.Strings.isBlank;
 
 @Slf4j
+@Component
 public class PaymentDomainService implements IPaymentDomainService {
 
     @Override
@@ -30,14 +35,13 @@ public class PaymentDomainService implements IPaymentDomainService {
                                                    CreditEntry creditEntry,
                                                    List<CreditHistory> creditHistories,
                                                    List<String> failureMessages) {
-
-        failureMessages.add(payment.validatePaymentReturningFailuresMsgs());
+        failureMessages = validateAndAddMessages(payment);
         payment.initializePayment();
         validateCreditEntry(payment, creditEntry, failureMessages);
         creditEntry.subtractCreditAmount(payment.getPrice());
         validateCreditHistory(creditEntry, creditHistories, failureMessages);
 
-        if(CollectionUtils.isEmpty(failureMessages)) {
+        if (CollectionUtils.isEmpty(failureMessages)) {
             log.info(PAYMENT_REQUEST_SUCCESS_FOR_ID.get(), payment.getOrderId().getValue());
             payment.updateStatus(PaymentStatus.COMPLETED);
 
@@ -56,13 +60,13 @@ public class PaymentDomainService implements IPaymentDomainService {
                                                  List<CreditHistory> creditHistories,
                                                  List<String> failureMessages) {
 
-        failureMessages.add(payment.validatePaymentReturningFailuresMsgs());
+        failureMessages = validateAndAddMessages(payment);
         creditEntry.addCreditAmount(payment.getPrice());
         updateCreditHistory(payment, creditHistories, TransacionType.CREDIT);
 
-        if(CollectionUtils.isEmpty(failureMessages)) {
+        if (CollectionUtils.isEmpty(failureMessages)) {
             log.info(PAYMENT_REQUEST_CANCELED_FOR_ID.get(), payment.getOrderId().getValue());
-            payment.updateStatus(PaymentStatus.COMPLETED);
+            payment.updateStatus(PaymentStatus.CANCELLED);
 
             return new PaymentCancelledEvent(payment, ZonedDateTime.now(ZONED_UTC));
         }
@@ -73,9 +77,18 @@ public class PaymentDomainService implements IPaymentDomainService {
         return new PaymentFailedEvent(payment, ZonedDateTime.now(ZONED_UTC), failureMessages);
     }
 
+    private static List<String> validateAndAddMessages(Payment payment) {
+        String failureMsg = payment.validatePaymentReturningFailuresMsgs();
+        if(isBlank(failureMsg)) {
+            return new ArrayList<>();
+        }
+
+        return Arrays.asList(payment.validatePaymentReturningFailuresMsgs());
+    }
+
 
     private void validateCreditEntry(Payment payment, CreditEntry creditEntry, List<String> failureMessages) {
-        if (payment.getPrice().isGreaterThan(creditEntry.getToralCreditAmount())) {
+        if (payment.getPrice().isGreaterThan(creditEntry.getTotalCreditAmount())) {
             log.error(PAYMENT_ERR_NOT_ENOUGH_CREDIT.get(), payment.getCustomerId().getValue());
 
             failureMessages.add(ERR_PAYMENT_NOT_ENOUGH_CREDIT.get() + payment.getCustomerId());
@@ -105,11 +118,15 @@ public class PaymentDomainService implements IPaymentDomainService {
         }
 
         Money danglingDebit = totalCreditHistory.substract(totalDebitHistory);
-        if (!creditEntry.getToralCreditAmount().equals(danglingDebit)) {
+        if (isCreditNotEntryEnough(creditEntry, danglingDebit)) {
             log.error(PAYMENT_ERR_CREDIT_HISTORY_NOT_EQUALS.get(), creditEntry.getCustomerId().getValue());
 
             failureMessages.add(ERR_PAYMENT_NOT_ENOUGH_CREDIT.get() + creditEntry.getCustomerId());
         }
+    }
+
+    private static boolean isCreditNotEntryEnough(CreditEntry creditEntry, Money danglingDebit) {
+        return !creditEntry.getTotalCreditAmount().isGreaterThan(danglingDebit);
     }
 
     private Money getTotalHistoryAmount(List<CreditHistory> creditHistories, TransacionType transacionType) {

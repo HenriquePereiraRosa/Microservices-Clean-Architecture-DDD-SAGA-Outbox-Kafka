@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.factory;
+package com.h.udemy.java.uservices.test.util.factory;
 
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;

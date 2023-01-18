@@ -1,24 +1,21 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="order-dataaccess" type="JUnit" factoryName="JUnit">
-    <module name="order-dataaccess" />
+  <configuration default="false" name="common-domain" type="JUnit" factoryName="JUnit">
+    <module name="common-domain" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.h.udemy.java.uservices.dataaccess.*" />
+        <option name="PATTERN" value="com.h.udemy.java.uservices.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
-    <option name="PACKAGE_NAME" value="com.h.udemy.java.uservices.dataaccess" />
+    <option name="PACKAGE_NAME" value="com.h.udemy.java.uservices" />
     <option name="MAIN_CLASS_NAME" value="" />
     <option name="METHOD_NAME" value="" />
     <option name="TEST_OBJECT" value="package" />
-    <option name="TEST_SEARCH_SCOPE">
-      <value defaultName="moduleWithDependencies" />
-    </option>
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
   </configuration>
-  <configuration default="false" name="order-dataaccess" type="MavenRunConfiguration" factoryName="Maven">
+  <configuration default="false" name="common-domain" type="MavenRunConfiguration" factoryName="Maven">
     <MavenSettings>
       <option name="myGeneralSettings" />
       <option name="myRunnerSettings" />
@@ -40,7 +37,7 @@
             <map />
           </option>
           <option name="resolveToWorkspace" value="false" />
-          <option name="workingDirPath" value="$PROJECT_DIR$/order-service/order-dataaccess" />
+          <option name="workingDirPath" value="$PROJECT_DIR$/common/common-domain" />
         </MavenRunnerParameters>
       </option>
     </MavenSettings>
