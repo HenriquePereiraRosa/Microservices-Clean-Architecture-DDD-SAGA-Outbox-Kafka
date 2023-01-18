@@ -12,6 +12,9 @@ public class Money {
     public Money(BigDecimal pAmount) {
         this.amount = setScale(pAmount);
     }
+    public Money(double pAmount) {
+        this.amount = setScale(BigDecimal.valueOf(pAmount));
+    }
 
     public BigDecimal getAmount() {
         return this.amount;
@@ -27,7 +30,7 @@ public class Money {
                 && this.amount.compareTo(pMoney.getAmount()) > 0;
     }
 
-    public boolean compareTo(BigDecimal price) {
+    public boolean isEqual(BigDecimal price) {
         if (price == null) return false;
         price = this.setScale(price);
         return this.amount.compareTo(price) == 0;
@@ -57,7 +60,7 @@ public class Money {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Money money = (Money) o;
-        return this.amount.compareTo(money.getAmount()) == 0;
+        return this.isEqual(money.getAmount());
     }
 
     @Override

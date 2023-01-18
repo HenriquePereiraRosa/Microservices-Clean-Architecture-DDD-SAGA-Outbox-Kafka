@@ -8,6 +8,7 @@
     <toRun name="order-container" type="JUnit" />
     <toRun name="order-dataaccess" type="JUnit" />
     <toRun name="order-domain-core" type="JUnit" />
+    <toRun name="payment-domain-core" type="JUnit" />
     <method v="2" />
   </configuration>
 </component>

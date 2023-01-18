@@ -23,11 +23,11 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.h.udemy.java.uservices.factory.CustomerFactory.createCustomer;
-import static com.h.udemy.java.uservices.factory.OrderFactory.createCreateOrderCommand;
-import static com.h.udemy.java.uservices.factory.OrderFactory.createOrderCreatedEvent;
-import static com.h.udemy.java.uservices.factory.OrderFactory.createOrderSaved;
-import static com.h.udemy.java.uservices.factory.RestaurantFactory.createRestaurant;
+import static com.h.udemy.java.uservices.test.util.factory.CustomerFactory.createCustomer;
+import static com.h.udemy.java.uservices.test.util.factory.OrderFactory.createCreateOrderCommand;
+import static com.h.udemy.java.uservices.test.util.factory.OrderFactory.createOrderCreatedEvent;
+import static com.h.udemy.java.uservices.test.util.factory.OrderFactory.createOrderSaved;
+import static com.h.udemy.java.uservices.test.util.factory.RestaurantFactory.createRestaurant;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

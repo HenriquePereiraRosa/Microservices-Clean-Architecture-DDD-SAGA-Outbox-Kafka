@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 import static com.h.udemy.java.uservices.domain.Const.ZONED_UTC;
-import static com.h.udemy.java.uservices.domain.messages.Msgs.ERR_TOTAL_PRICE_MUST_BE_GRATER_THAN_ZERO;
+import static com.h.udemy.java.uservices.domain.messages.Msgs.ERR_PAYMENT_TOTAL_PRICE_MUST_BE_GRATER_THAN_ZERO;
 
 @Getter
 public class Payment extends AggregateRoot<PaymentId> {
@@ -24,25 +24,6 @@ public class Payment extends AggregateRoot<PaymentId> {
     private PaymentStatus paymentStatus;
     private ZonedDateTime createdAt;
 
-
-    public void initializePayment() {
-        setId(new PaymentId(UUID.randomUUID()));
-        createdAt = ZonedDateTime.now(ZONED_UTC);
-    }
-
-    public String validatePaymentReturningFailuresMsgs() {
-        if(price == null || !price.isGreaterThanZero()) {
-            return ERR_TOTAL_PRICE_MUST_BE_GRATER_THAN_ZERO.get();
-        }
-
-        return null;
-    }
-
-    public void updateStatus(PaymentStatus paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
-
     private Payment(Builder builder) {
         setId(builder.paymentId);
         orderId = builder.orderId;
@@ -52,6 +33,11 @@ public class Payment extends AggregateRoot<PaymentId> {
         createdAt = builder.createdAt;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    // InnerBuilder
     public static final class Builder {
         private PaymentId paymentId;
         private OrderId orderId;
@@ -101,4 +87,23 @@ public class Payment extends AggregateRoot<PaymentId> {
             return new Payment(this);
         }
     }
+
+
+    public void initializePayment() {
+        setId(new PaymentId(UUID.randomUUID()));
+        createdAt = ZonedDateTime.now(ZONED_UTC);
+    }
+
+    public String validatePaymentReturningFailuresMsgs() {
+        if(price == null || !price.isGreaterThanZero()) {
+            return ERR_PAYMENT_TOTAL_PRICE_MUST_BE_GRATER_THAN_ZERO.get();
+        }
+
+        return null;
+    }
+
+    public void updateStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
 }
