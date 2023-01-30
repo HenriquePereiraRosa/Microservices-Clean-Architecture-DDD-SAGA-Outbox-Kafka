@@ -7,19 +7,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.annotation.PostConstruct;
 
-import static com.h.udemy.java.uservices.payment.domain.core.log.LogMessages.APP_NAME_DESCRIPTION;
-
 @Slf4j
 @SpringBootTest(classes = BeanTestConfig.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 public abstract class ApiEnvTest {
+    @Value( "${app.name.description}" )
+    private String APP_NAME_DESCRIPTION;
     public ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
@@ -36,10 +37,10 @@ public abstract class ApiEnvTest {
 
     @Test
     void contextLoads() {
-       log.debug(APP_NAME_DESCRIPTION.get());
-       log.info(APP_NAME_DESCRIPTION.get());
-       log.warn(APP_NAME_DESCRIPTION.get());
-       log.error(APP_NAME_DESCRIPTION.get());
+       log.debug(APP_NAME_DESCRIPTION);
+       log.info(APP_NAME_DESCRIPTION);
+       log.warn(APP_NAME_DESCRIPTION);
+       log.error(APP_NAME_DESCRIPTION);
     }
 
 }

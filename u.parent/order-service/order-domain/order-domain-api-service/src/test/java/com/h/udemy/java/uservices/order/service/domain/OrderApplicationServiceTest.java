@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
-import com.h.udemy.java.uservices.domain.messages.Msgs;
+import com.h.udemy.java.uservices.domain.messages.Messages;
 import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.domain.valueobject.OrderId;
@@ -168,7 +168,7 @@ class OrderApplicationServiceTest extends ApiEnvTestConfig {
         CreateOrderResponse createOrderResponse = iOrderAplicationService.createOrder(createOrderCommand);
 
         assertEquals(OrderStatus.PENDING, createOrderResponse.getOrderStatus());
-        assertEquals(Msgs.ORDER_CREATED_SUCCESSFULLY.get(), createOrderResponse.getMessage());
+        assertEquals(Messages.ORDER_CREATED_SUCCESSFULLY.get(), createOrderResponse.getMessage());
         assertNotNull(createOrderResponse.getTrackingId());
     }
 
@@ -180,7 +180,7 @@ class OrderApplicationServiceTest extends ApiEnvTestConfig {
                     iOrderAplicationService.createOrder(createOrderCommandWrongPrice);
                 });
 
-        final String exceptionMsg = Msgs.ERR_ORDER_TOTAL_AND_ORDER_PRICES_DIFF.get()
+        final String exceptionMsg = Messages.ERR_ORDER_TOTAL_AND_ORDER_PRICES_DIFF.get()
                 + ": (price) 250.00 != (orderItemsTotal) 200.00";
 
         assertEquals(exceptionMsg, orderDomainException.getMessage());
@@ -194,7 +194,7 @@ class OrderApplicationServiceTest extends ApiEnvTestConfig {
                     iOrderAplicationService.createOrder(createOrderCommandWrongProductPrice);
                 });
 
-        final String exceptionMsg = Msgs.ERR_ORDER_ITEM_PRICE_INVALID.get() + ": 210.00";
+        final String exceptionMsg = Messages.ERR_ORDER_ITEM_PRICE_INVALID.get() + ": 210.00";
 
         assertEquals(exceptionMsg, orderDomainException.getMessage());
     }
@@ -225,7 +225,7 @@ class OrderApplicationServiceTest extends ApiEnvTestConfig {
                     iOrderAplicationService.createOrder(createOrderCommand);
                 });
 
-        final String exceptionMsg = Msgs.ERR_RESTAURANT_ID_NOT_ACTIVE.get() + RESTAURANT_ID;
+        final String exceptionMsg = Messages.ERR_RESTAURANT_ID_NOT_ACTIVE.get() + RESTAURANT_ID;
 
         assertEquals(exceptionMsg, orderDomainException.getMessage());
     }

@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 
 @Getter
-public enum Msgs {
+public enum Messages {
     ORDER_CREATED_SUCCESSFULLY("order.created.successfully"),
     ORDER_ID_INITIATED("order.id.initiated"),
     ORDER_ID_PAYMENT_CANCELLING("order.id.payment-cancelling"),
@@ -27,12 +27,21 @@ public enum Msgs {
     ERR_RESTAURANT_ID_NOT_ACTIVE("err.restaurant.id.not-active"),
     ERR_RESTAURANT_NOT_FOUND("err.restaurant.not-found"),
     ERR_CUSTOMER_NOT_FOUND("err.customer.not-found"),
+
+
+    PAYMENT_SUCCESSFULLY_RECEIVED_COMPLETE_EVENT_FOR_ID("payment.success.received-payment-complete-event"),
+    PAYMENT_SUCCESSFULLY_RECEIVED_CANCEL_EVENT_FOR_ID("payment.success.received-payment-cancel-event"),
+    PAYMENT_PUB_EVENT_PAYMENT_AND_ORDER_FOR_ID("payment.event.publishing.pub-for-payment-and-order-w-id"),
+
     ERR_PAYMENT_TOTAL_PRICE_MUST_BE_GRATER_THAN_ZERO("err.payment.total-price-must-be-greater-than-zero"),
+    ERR_PAYMENT_COULD_NOT_FIND_CREDIT_ENTRY_FOR_CUSTOMER_ID("err.payment.could-not-find-credit-entry-for-customer-id"),
+    ERR_PAYMENT_COULD_NOT_FIND_CREDIT_HISTORY_FOR_CUSTOMER_ID("err.payment.could-not-find-credit-history-for-customer-id"),
     ERR_PAYMENT_NOT_ENOUGH_CREDIT("err.payment.not-enough-credit"),
-    ERR_PAYMENT_CREDIT_HISTORY_NOT_EQUALS("err.payment.credit-history-not-equals");
+    ERR_PAYMENT_CREDIT_HISTORY_NOT_EQUALS("err.payment.credit-history-not-equals"),
+    ERR_PAYMENT_COULD_NOT_BE_FOUND_WITH_ORDER_ID("err.payment.order-could-not-be-found-with-id");
 
     final String key;
-    Msgs(final String key) {
+    Messages(final String key) {
         this.key = key;
     }
 

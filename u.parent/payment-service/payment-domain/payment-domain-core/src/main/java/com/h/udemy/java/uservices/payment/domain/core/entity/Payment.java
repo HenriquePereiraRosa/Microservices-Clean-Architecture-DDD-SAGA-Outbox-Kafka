@@ -11,8 +11,8 @@ import lombok.Getter;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-import static com.h.udemy.java.uservices.domain.Const.ZONED_UTC;
-import static com.h.udemy.java.uservices.domain.messages.Msgs.ERR_PAYMENT_TOTAL_PRICE_MUST_BE_GRATER_THAN_ZERO;
+import static com.h.udemy.java.uservices.domain.Constants.ZONED_UTC;
+import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_PAYMENT_TOTAL_PRICE_MUST_BE_GRATER_THAN_ZERO;
 
 @Getter
 public class Payment extends AggregateRoot<PaymentId> {
@@ -20,7 +20,6 @@ public class Payment extends AggregateRoot<PaymentId> {
     private final OrderId orderId;
     private final CustomerId customerId;
     private final Money price;
-
     private PaymentStatus paymentStatus;
     private ZonedDateTime createdAt;
 

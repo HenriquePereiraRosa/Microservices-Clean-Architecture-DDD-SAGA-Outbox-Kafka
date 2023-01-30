@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 @Getter
 public enum LogMessages {
 
-
     APP_NAME_DESCRIPTION("app.name.description");
 
     final static String FILE_PATH = "messages_payment_domain.log.log-messages";

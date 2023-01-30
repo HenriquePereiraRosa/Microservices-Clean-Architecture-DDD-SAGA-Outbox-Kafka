@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
-import com.h.udemy.java.uservices.domain.messages.Msgs;
+import com.h.udemy.java.uservices.domain.messages.Messages;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderResponse;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
@@ -34,7 +34,7 @@ public class OrderCreateCommandHandler {
         IOrderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
 
         return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder(),
-                Msgs.ORDER_CREATED_SUCCESSFULLY.get());
+                Messages.ORDER_CREATED_SUCCESSFULLY.get());
 
     }
 }

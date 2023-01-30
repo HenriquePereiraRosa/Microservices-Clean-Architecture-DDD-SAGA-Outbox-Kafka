@@ -1,6 +1,7 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
-import com.h.udemy.java.uservices.domain.messages.Msgs;
+import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
+import com.h.udemy.java.uservices.domain.messages.Messages;
 import com.h.udemy.java.uservices.domain.valueobject.ProductId;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import com.h.udemy.java.uservices.order.service.domain.entity.Product;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.h.udemy.java.uservices.domain.Const.ZONED_UTC;
+import static com.h.udemy.java.uservices.domain.Constants.ZONED_UTC;
 
 @Slf4j
 @Service
@@ -27,20 +28,26 @@ public class OrderDomainService implements IOrderDomainService {
 
     private static final ZoneId ZONE = ZoneId.of("UTC");
     @Override
-    public OrderCreatedEvent validateAndInitiateOrder(Order order, Restaurant restaurant) {
+    public OrderCreatedEvent validateAndInitiateOrder(Order order,
+                                                      Restaurant restaurant,
+                                                      IDomainEventPublisher<OrderCreatedEvent> createdEventPublisher) {
         validateRestaurant(restaurant);
         setOrderProductInformation(order, restaurant);
         order.validateOrder();
         order.initializeOrder();
-        log.info(Msgs.ORDER_ID_INITIATED.get(), order.getId().getValue());
-        return new OrderCreatedEvent(order, ZonedDateTime.now(ZONED_UTC));
+
+        log.info(Messages.ORDER_ID_INITIATED.get(), order.getId().getValue());
+
+        return new OrderCreatedEvent(order,
+                ZonedDateTime.now(ZONED_UTC),
+                createdEventPublisher);
     }
 
     @Override
     public OrderPaidEvent payOrder(Order order,
                                    DomainEventPublisher<OrderPaidEvent> orderPaidEventDomainEventPublisher) {
         order.pay();
-        log.info("Order with id: {} is paid", order.getId().getValue());
+        log.info("Order with id: {} is paid", order.getId().getValue()); // todo: change this messages
         return new OrderPaidEvent(order, ZonedDateTime.now(ZONED_UTC), orderPaidEventDomainEventPublisher);
     }
 
@@ -51,21 +58,23 @@ public class OrderDomainService implements IOrderDomainService {
     }
 
     @Override
-    public OrderCancelledEvent cancelOrderPayment(Order order, List<String> failureMessages) {
+    public OrderCancelledEvent cancelOrderPayment(Order order,
+                                                  List<String> failureMessages,
+                                                  IDomainEventPublisher<OrderCancelledEvent> cancelledEventPublisher) {
         order.initCancel(failureMessages);
-        log.info(Msgs.ORDER_ID_PAYMENT_CANCELLING.get());
-        return new OrderCancelledEvent(order, ZonedDateTime.now(ZONED_UTC));
+        log.info(Messages.ORDER_ID_PAYMENT_CANCELLING.get());
+        return new OrderCancelledEvent(order, ZonedDateTime.now(ZONED_UTC), cancelledEventPublisher);
     }
 
     @Override
     public void cancelOrder(Order order, List<String> failureMessages) {
         order.cancel(failureMessages);
-        log.info(Msgs.ORDER_ID_PAYMENT_CANCELLED.get());
+        log.info(Messages.ORDER_ID_PAYMENT_CANCELLED.get());
     }
 
     private void validateRestaurant(Restaurant restaurant) {
         if (!restaurant.isActive()) {
-            throw new OrderDomainException(Msgs.ERR_RESTAURANT_ID_NOT_ACTIVE.get()
+            throw new OrderDomainException(Messages.ERR_RESTAURANT_ID_NOT_ACTIVE.get()
                     + restaurant.getId().getValue());
         }
     }

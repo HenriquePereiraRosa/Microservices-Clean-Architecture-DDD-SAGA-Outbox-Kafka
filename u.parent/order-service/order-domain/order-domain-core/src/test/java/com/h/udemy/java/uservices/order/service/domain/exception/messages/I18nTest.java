@@ -11,7 +11,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Locale;
 
-import static com.h.udemy.java.uservices.domain.messages.Msgs.ORDER_CREATED_SUCCESSFULLY;
+import static com.h.udemy.java.uservices.domain.messages.Messages.ORDER_CREATED_SUCCESSFULLY;
 import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.APP_NAME_DESCRIPTION;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

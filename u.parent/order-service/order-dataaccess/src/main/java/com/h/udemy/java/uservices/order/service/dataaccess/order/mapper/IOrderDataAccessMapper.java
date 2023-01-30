@@ -6,11 +6,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.NullValueMappingStrategy;
 
 
-@Mapper(componentModel = "spring",
-        nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
-public abstract class IOrderDataAccessMapper {
-
-    abstract StreetAddress addressEntityToDeliveryAddress(OrderAddressEntity address);
-
-    abstract OrderAddressEntity deliveryAddressToAddressEntity(StreetAddress deliveryAddress);
-}
+//@Mapper(componentModel = "spring",
+//        nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
+//public abstract class IOrderDataAccessMapper {
+//
+//    abstract StreetAddress addressEntityToDeliveryAddress(OrderAddressEntity address);
+//
+//    abstract OrderAddressEntity deliveryAddressToAddressEntity(StreetAddress deliveryAddress);
+//}

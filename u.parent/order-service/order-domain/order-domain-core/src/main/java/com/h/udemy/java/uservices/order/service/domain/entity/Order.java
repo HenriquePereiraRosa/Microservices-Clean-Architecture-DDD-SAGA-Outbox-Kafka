@@ -1,7 +1,7 @@
 package com.h.udemy.java.uservices.order.service.domain.entity;
 
 import com.h.udemy.java.uservices.domain.entity.AggregateRoot;
-import com.h.udemy.java.uservices.domain.messages.Msgs;
+import com.h.udemy.java.uservices.domain.messages.Messages;
 import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.domain.valueobject.OrderId;
@@ -142,7 +142,7 @@ public class Order extends AggregateRoot<OrderId> {
         }).reduce(Money.ZERO, Money::add);
 
         if (!orderItemsTotal.equals(price)) {
-            throw new OrderDomainException(Msgs.ERR_ORDER_TOTAL_AND_ORDER_PRICES_DIFF.get()
+            throw new OrderDomainException(Messages.ERR_ORDER_TOTAL_AND_ORDER_PRICES_DIFF.get()
                     + ": (price) " + price.getAmount()
                     + " != "
                     + "(orderItemsTotal) " + orderItemsTotal.getAmount());
@@ -151,14 +151,14 @@ public class Order extends AggregateRoot<OrderId> {
 
     private void validateItemPrice(OrderItem orderItem) {
         if (!orderItem.isPriceValid()) {
-            throw new OrderDomainException(Msgs.ERR_ORDER_ITEM_PRICE_INVALID.get()
+            throw new OrderDomainException(Messages.ERR_ORDER_ITEM_PRICE_INVALID.get()
                     + ": " + price.getAmount());
         }
     }
 
     public void pay() {
         if (orderStatus != OrderStatus.PENDING) {
-            throw new OrderDomainException(Msgs.ERR_ORDER_NOT_CORRECT_STATE_F_PAY.get());
+            throw new OrderDomainException(Messages.ERR_ORDER_NOT_CORRECT_STATE_F_PAY.get());
         }
 
         orderStatus = OrderStatus.PAID;
@@ -166,7 +166,7 @@ public class Order extends AggregateRoot<OrderId> {
 
     public void approve() {
         if (orderStatus != OrderStatus.PAID) {
-            throw new OrderDomainException(Msgs.ERR_ORDER_NOT_CORRECT_STATE_F_APPROVE.get());
+            throw new OrderDomainException(Messages.ERR_ORDER_NOT_CORRECT_STATE_F_APPROVE.get());
         }
 
         orderStatus = OrderStatus.APPROVED;
@@ -174,7 +174,7 @@ public class Order extends AggregateRoot<OrderId> {
 
     public void initCancel(List<String> failureMessages) {
         if (orderStatus != OrderStatus.PAID) {
-            throw new OrderDomainException(Msgs.ERR_ORDER_NOT_CORRECT_STATE_F_INIT_CANCEL.get());
+            throw new OrderDomainException(Messages.ERR_ORDER_NOT_CORRECT_STATE_F_INIT_CANCEL.get());
         }
 
         orderStatus = OrderStatus.CANCELLING;
@@ -183,7 +183,7 @@ public class Order extends AggregateRoot<OrderId> {
 
     public void cancel(List<String> failureMessages) {
         if (orderStatus != OrderStatus.CANCELLING || orderStatus != OrderStatus.PENDING) {
-            throw new OrderDomainException(Msgs.ERR_ORDER_NOT_CORRECT_STATE_F_CANCEL.get());
+            throw new OrderDomainException(Messages.ERR_ORDER_NOT_CORRECT_STATE_F_CANCEL.get());
         }
 
         orderStatus = OrderStatus.CANCELLED;

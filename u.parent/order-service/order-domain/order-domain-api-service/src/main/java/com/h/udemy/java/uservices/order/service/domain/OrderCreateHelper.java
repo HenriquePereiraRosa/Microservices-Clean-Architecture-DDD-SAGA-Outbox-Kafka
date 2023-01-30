@@ -1,6 +1,7 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
-import com.h.udemy.java.uservices.domain.messages.Msgs;
+import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
+import com.h.udemy.java.uservices.domain.messages.Messages;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.entity.Customer;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
@@ -29,17 +30,20 @@ public class OrderCreateHelper {
     private final ICustomerRepository iCustomerRepository;
     private final IRestaurantRepository restaurantRepository;
     private final OrderDataMapper orderDataMapper;
+    private final IDomainEventPublisher<OrderCreatedEvent> createdEventPublisher;
 
     public OrderCreateHelper(IOrderDomainService orderDomainService,
                              IOrderRepository orderRepository,
                              ICustomerRepository iCustomerRepository,
                              IRestaurantRepository restaurantRepository,
-                             OrderDataMapper orderDataMapper) {
+                             OrderDataMapper orderDataMapper,
+                             IDomainEventPublisher<OrderCreatedEvent> createdEventPublisher) {
         this.iOrderDomainService = orderDomainService;
         this.orderRepository = orderRepository;
         this.iCustomerRepository = iCustomerRepository;
         this.restaurantRepository = restaurantRepository;
         this.orderDataMapper = orderDataMapper;
+        this.createdEventPublisher = createdEventPublisher;
     }
     @Transactional
     public OrderCreatedEvent persistOrder(CreateOrderCommand createOrderCommand) {
@@ -47,10 +51,10 @@ public class OrderCreateHelper {
         Restaurant restaurant = checkRestaurant(createOrderCommand);
         Order order = orderDataMapper.createOrderCommandToOrder(createOrderCommand);
         OrderCreatedEvent orderCreatedEvent = iOrderDomainService
-                .validateAndInitiateOrder(order, restaurant);
+                .validateAndInitiateOrder(order, restaurant, createdEventPublisher);
         insertOrder(order);
 
-        final String msg = Msgs.ORDER_ID_CREATED.get() +
+        final String msg = Messages.ORDER_ID_CREATED.get() +
                 orderCreatedEvent.getOrder().getId().getValue();
         log.warn(msg);
 
@@ -63,7 +67,7 @@ public class OrderCreateHelper {
         Optional<Restaurant> lRestaurant = restaurantRepository
                 .findRestaurantInformation(restaurant);
         if (lRestaurant.isEmpty()) {
-            final String msg = Msgs.ERR_RESTAURANT_NOT_FOUND.get() +
+            final String msg = Messages.ERR_RESTAURANT_NOT_FOUND.get() +
                     createOrderCommand.restaurantId().toString();
             log.warn(msg);
             throw new OrderDomainException(msg);
@@ -74,7 +78,7 @@ public class OrderCreateHelper {
     private void checkCustomer(UUID customerId) {
         Optional<Customer> customer = iCustomerRepository.findCustomer(customerId);
         if (customer.isEmpty()) {
-            final String msg = Msgs.ERR_CUSTOMER_NOT_FOUND.get() + customerId;
+            final String msg = Messages.ERR_CUSTOMER_NOT_FOUND.get() + customerId;
             log.warn(msg);
             throw new CustomerNotFoundException(customerId);
         }
@@ -83,7 +87,7 @@ public class OrderCreateHelper {
     private Order insertOrder(Order order) {
         Order orderCreated = orderRepository.insertOrder(order);
         if (orderCreated == null) {
-            final String msg = Msgs.ERR_ORDER_COULD_NOT_BE_SAVED.get() +
+            final String msg = Messages.ERR_ORDER_COULD_NOT_BE_SAVED.get() +
                     order.getId().getValue();
             log.warn(msg);
             throw new OrderCouldNotBeSavedException(order.getId().getValue());

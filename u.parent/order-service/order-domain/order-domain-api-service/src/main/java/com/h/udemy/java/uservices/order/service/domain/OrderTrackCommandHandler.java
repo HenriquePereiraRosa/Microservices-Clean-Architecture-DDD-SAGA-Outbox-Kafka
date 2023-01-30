@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
-import com.h.udemy.java.uservices.domain.messages.Msgs;
+import com.h.udemy.java.uservices.domain.messages.Messages;
 import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderQuery;
 import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderResponse;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
@@ -32,7 +32,7 @@ public class OrderTrackCommandHandler {
         final TrackingId trackingId = new TrackingId(trackOrderQuery.getOrderTrackingId());
         Optional<Order> orderOp = IOrderRepository.findByTrackingId(trackingId);
         if(orderOp.isEmpty()) {
-            final String msg = Msgs.ORDER_TRACKING_ID_NOT_FOUND.get() + trackingId;
+            final String msg = Messages.ORDER_TRACKING_ID_NOT_FOUND.get() + trackingId;
             log.warn(msg);
             throw new OrderNotFoundException(msg);
         }

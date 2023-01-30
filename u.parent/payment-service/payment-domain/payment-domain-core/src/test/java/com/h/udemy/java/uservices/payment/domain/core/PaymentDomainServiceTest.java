@@ -1,10 +1,14 @@
 package com.h.udemy.java.uservices.payment.domain.core;
 
+import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
 import com.h.udemy.java.uservices.domain.valueobject.PaymentStatus;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditEntry;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditHistory;
 import com.h.udemy.java.uservices.payment.domain.core.entity.Payment;
+import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCancelledEvent;
+import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCompletedEvent;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentEvent;
+import com.h.udemy.java.uservices.payment.domain.core.event.PaymentFailedEvent;
 import com.h.udemy.java.uservices.payment.domain.core.test.config.ApiEnvTest;
 import com.h.udemy.java.uservices.payment.domain.core.test.util.factory.CreditEntryFactory;
 import com.h.udemy.java.uservices.payment.domain.core.test.util.factory.CreditHistoryFactory;
@@ -25,8 +29,15 @@ class PaymentDomainServiceTest extends ApiEnvTest {
 
     public static final double ERROR_PRICE = -99.999;
     public static final double PRICE = 99_999.999;
+
     @Autowired
     PaymentDomainService paymentDomainService;
+    @Autowired
+    IDomainEventPublisher<PaymentCompletedEvent> completedEventPublisher;
+    @Autowired
+    IDomainEventPublisher<PaymentCancelledEvent> cancelledEventPublisher;
+    @Autowired
+    IDomainEventPublisher<PaymentFailedEvent> failedEventPublisher;
 
     @Test
     void should_validateAndInitiatePayment() {
@@ -37,7 +48,9 @@ class PaymentDomainServiceTest extends ApiEnvTest {
                 .validateAndInitiatePayment(payment,
                         creditEntry,
                         new ArrayList<>(),
-                        new ArrayList<>());
+                        new ArrayList<>(),
+                        completedEventPublisher,
+                        failedEventPublisher);
 
         assertEquals(PaymentStatus.COMPLETED, paymentEvent.getPayment().getPaymentStatus());
         assertTrue(CollectionUtils.isEmpty(paymentEvent.getFailureMessages()));
@@ -53,7 +66,9 @@ class PaymentDomainServiceTest extends ApiEnvTest {
                 .validateAndInitiatePayment(payment,
                         creditEntry,
                         new ArrayList<>(),
-                        new ArrayList<>());
+                        new ArrayList<>(),
+                        completedEventPublisher,
+                        failedEventPublisher);
 
         assertEquals(PaymentStatus.FAILED, paymentEvent.getPayment().getPaymentStatus());
     }
@@ -70,7 +85,9 @@ class PaymentDomainServiceTest extends ApiEnvTest {
                 .validateAndInitiatePayment(payment,
                         creditEntry,
                         historyList,
-                        new ArrayList<>());
+                        new ArrayList<>(),
+                        completedEventPublisher,
+                        failedEventPublisher);
 
         assertEquals(PaymentStatus.FAILED, paymentEvent.getPayment().getPaymentStatus());
     }
@@ -84,7 +101,9 @@ class PaymentDomainServiceTest extends ApiEnvTest {
                 .validateAndCancelPayment(payment,
                         creditEntry,
                         new ArrayList<>(),
-                        new ArrayList<>());
+                        new ArrayList<>(),
+                        cancelledEventPublisher,
+                        failedEventPublisher);
 
         assertEquals(PaymentStatus.CANCELLED, paymentEvent.getPayment().getPaymentStatus());
     }
@@ -98,7 +117,9 @@ class PaymentDomainServiceTest extends ApiEnvTest {
                 .validateAndCancelPayment(payment,
                         creditEntry,
                         new ArrayList<>(),
-                        new ArrayList<>());
+                        new ArrayList<>(),
+                        cancelledEventPublisher,
+                        failedEventPublisher);
 
         assertEquals(PaymentStatus.FAILED, paymentEvent.getPayment().getPaymentStatus());
     }

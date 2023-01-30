@@ -2,7 +2,7 @@ package com.h.udemy.java.uservices.order.service.dataaccess.restaurant.mapper;
 
 import com.h.udemy.java.uservices.dataaccess.restaurant.entity.RestaurantEntity;
 import com.h.udemy.java.uservices.dataaccess.restaurant.exception.RestaurantDataAccessException;
-import com.h.udemy.java.uservices.domain.messages.Msgs;
+import com.h.udemy.java.uservices.domain.messages.Messages;
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.domain.valueobject.ProductId;
 import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
@@ -31,7 +31,7 @@ public class RestaurantDataAccessMapper {
                         .stream()
                         .findFirst()
                         .orElseThrow(() ->
-                        new RestaurantDataAccessException(Msgs.ERR_RESTAURANT_NOT_FOUND.get()));
+                        new RestaurantDataAccessException(Messages.ERR_RESTAURANT_NOT_FOUND.get()));
 
         List<Product> restaurantProducts = restaurantEntities.stream().map(entity ->
                 new Product(new ProductId(entity.getProductId()), entity.getProductName(),

@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.UUID;
 
-import static com.h.udemy.java.uservices.domain.messages.Msgs.ERR_ORDER_NOT_CORRECT_INIT_STATE;
+import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_ORDER_NOT_CORRECT_INIT_STATE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

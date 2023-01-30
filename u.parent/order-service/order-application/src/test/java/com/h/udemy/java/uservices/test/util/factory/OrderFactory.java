@@ -1,5 +1,6 @@
 package com.h.udemy.java.uservices.test.util.factory;
 
+import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.OrderAddressDTO;
@@ -10,15 +11,19 @@ import com.h.udemy.java.uservices.order.service.domain.entity.Product;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.OrderItemId;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.StreetAddress;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 
-import static com.h.udemy.java.uservices.domain.Const.ZONED_UTC;
+import static com.h.udemy.java.uservices.domain.Constants.ZONED_UTC;
 import static com.h.udemy.java.uservices.test.util.ConstTestUtils.*;
 
 public class OrderFactory {
+
+    @Autowired
+    private static IDomainEventPublisher<OrderCreatedEvent> createdEventPublisher;
 
     static public CreateOrderCommand createCreateOrderCommand() {
 
@@ -69,6 +74,6 @@ public class OrderFactory {
     }
 
     static public OrderCreatedEvent createOrderCreatedEvent(Order order) {
-        return new OrderCreatedEvent(order, ZonedDateTime.now(ZONED_UTC));
+        return new OrderCreatedEvent(order, ZonedDateTime.now(ZONED_UTC), createdEventPublisher);
     }
 }

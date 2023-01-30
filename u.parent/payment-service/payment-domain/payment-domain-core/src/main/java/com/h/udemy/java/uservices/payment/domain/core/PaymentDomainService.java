@@ -1,5 +1,6 @@
 package com.h.udemy.java.uservices.payment.domain.core;
 
+import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.domain.valueobject.PaymentStatus;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditEntry;
@@ -21,8 +22,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import static com.h.udemy.java.uservices.domain.Const.ZONED_UTC;
-import static com.h.udemy.java.uservices.domain.messages.Msgs.ERR_PAYMENT_NOT_ENOUGH_CREDIT;
+import static com.h.udemy.java.uservices.domain.Constants.ZONED_UTC;
+import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_PAYMENT_NOT_ENOUGH_CREDIT;
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.*;
 import static org.apache.logging.log4j.util.Strings.isBlank;
 
@@ -34,7 +35,9 @@ public class PaymentDomainService implements IPaymentDomainService {
     public PaymentEvent validateAndInitiatePayment(Payment payment,
                                                    CreditEntry creditEntry,
                                                    List<CreditHistory> creditHistories,
-                                                   List<String> failureMessages) {
+                                                   List<String> failureMessages,
+                                                   IDomainEventPublisher<PaymentCompletedEvent> completedEventPublisher,
+                                                   IDomainEventPublisher<PaymentFailedEvent> failedEventPublisher) {
         failureMessages = validateAndAddMessages(payment);
         payment.initializePayment();
         validateCreditEntry(payment, creditEntry, failureMessages);
@@ -45,20 +48,27 @@ public class PaymentDomainService implements IPaymentDomainService {
             log.info(PAYMENT_REQUEST_SUCCESS_FOR_ID.get(), payment.getOrderId().getValue());
             payment.updateStatus(PaymentStatus.COMPLETED);
 
-            return new PaymentCompletedEvent(payment, ZonedDateTime.now(ZONED_UTC));
+            return new PaymentCompletedEvent(payment,
+                    ZonedDateTime.now(ZONED_UTC),
+                    completedEventPublisher);
         }
 
         log.info(PAYMENT_ERR_FAILED_FOR_ORDER_ID.get(), payment.getOrderId().getValue());
         payment.updateStatus(PaymentStatus.FAILED);
 
-        return new PaymentFailedEvent(payment, ZonedDateTime.now(ZONED_UTC), failureMessages);
+        return new PaymentFailedEvent(payment,
+                ZonedDateTime.now(ZONED_UTC),
+                failureMessages,
+                failedEventPublisher);
     }
 
     @Override
     public PaymentEvent validateAndCancelPayment(Payment payment,
                                                  CreditEntry creditEntry,
                                                  List<CreditHistory> creditHistories,
-                                                 List<String> failureMessages) {
+                                                 List<String> failureMessages,
+                                                 IDomainEventPublisher<PaymentCancelledEvent> cancelledEventPublisher,
+                                                 IDomainEventPublisher<PaymentFailedEvent> failedEventPublisher) {
 
         failureMessages = validateAndAddMessages(payment);
         creditEntry.addCreditAmount(payment.getPrice());
@@ -68,18 +78,23 @@ public class PaymentDomainService implements IPaymentDomainService {
             log.info(PAYMENT_REQUEST_CANCELED_FOR_ID.get(), payment.getOrderId().getValue());
             payment.updateStatus(PaymentStatus.CANCELLED);
 
-            return new PaymentCancelledEvent(payment, ZonedDateTime.now(ZONED_UTC));
+            return new PaymentCancelledEvent(payment,
+                    ZonedDateTime.now(ZONED_UTC),
+                    cancelledEventPublisher);
         }
 
         log.info(PAYMENT_ERR_FAILED_FOR_ORDER_ID.get(), payment.getOrderId().getValue());
         payment.updateStatus(PaymentStatus.FAILED);
 
-        return new PaymentFailedEvent(payment, ZonedDateTime.now(ZONED_UTC), failureMessages);
+        return new PaymentFailedEvent(payment,
+                ZonedDateTime.now(ZONED_UTC),
+                failureMessages,
+                failedEventPublisher);
     }
 
     private static List<String> validateAndAddMessages(Payment payment) {
         String failureMsg = payment.validatePaymentReturningFailuresMsgs();
-        if(isBlank(failureMsg)) {
+        if (isBlank(failureMsg)) {
             return new ArrayList<>();
         }
 

@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 
 import static com.h.udemy.java.uservices.order.service.domain.entity.Order.FAILURE_MESSAGE_DELIMITER;
 
-
 @Component
 public class OrderDataAccessMapper {
 
