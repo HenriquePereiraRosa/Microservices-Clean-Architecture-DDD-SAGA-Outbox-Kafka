@@ -6,9 +6,4 @@ public class OrderDomainTotalPriceException extends OrderDomainException {
     public OrderDomainTotalPriceException() {
         super(Messages.ERR_ORDER_PRICE_MUST_GREATER_ZERO.get());
     }
-
-    public OrderDomainTotalPriceException(Throwable cause) {
-        super(Messages.ERR_ORDER_PRICE_MUST_GREATER_ZERO.get(),
-                cause);
-    }
 }
