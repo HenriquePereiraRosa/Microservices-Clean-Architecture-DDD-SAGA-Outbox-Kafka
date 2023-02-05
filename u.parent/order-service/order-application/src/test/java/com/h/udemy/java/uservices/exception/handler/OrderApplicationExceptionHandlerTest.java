@@ -1,11 +1,10 @@
 package com.h.udemy.java.uservices.exception.handler;
 
-import com.h.udemy.java.uservices.ApiEnvTest;
-import com.h.udemy.java.uservices.BeanTestConfig;
 import com.h.udemy.java.uservices.order.service.domain.exception.CustomerNotFoundException;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderCouldNotBeSavedException;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderNotFoundException;
+import com.h.udemy.java.uservices.test.util.config.BeanTestConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.test.context.SpringBootTest;

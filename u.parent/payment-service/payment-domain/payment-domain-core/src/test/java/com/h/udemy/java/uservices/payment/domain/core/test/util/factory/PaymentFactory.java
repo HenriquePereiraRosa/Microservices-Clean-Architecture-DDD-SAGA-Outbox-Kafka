@@ -8,14 +8,15 @@ import com.h.udemy.java.uservices.payment.domain.core.entity.Payment;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import static com.h.udemy.java.uservices.payment.domain.core.test.Const.ORDER_ID;
+import static com.h.udemy.java.uservices.domain.test.constants.ConstantsTest.ORDER_UUID;
+
 
 public class PaymentFactory {
     private static final double PRICE_VALUE = 102.22;
     static public Payment createPayment(double price) {
 
         return Payment.builder()
-                .orderId(new OrderId(ORDER_ID))
+                .orderId(new OrderId(ORDER_UUID))
                 .customerId(new CustomerId(UUID.randomUUID()))
                 .price(new Money(new BigDecimal(price)))
                 .build();
@@ -24,7 +25,7 @@ public class PaymentFactory {
     static public Payment createPayment() {
 
         return Payment.builder()
-                .orderId(new OrderId(ORDER_ID))
+                .orderId(new OrderId(ORDER_UUID))
                 .customerId(new CustomerId(UUID.randomUUID()))
                 .price(new Money(new BigDecimal(PRICE_VALUE)))
                 .build();
@@ -32,7 +33,7 @@ public class PaymentFactory {
     static public Payment createPayment(UUID customerId) {
 
         return Payment.builder()
-                .orderId(new OrderId(ORDER_ID))
+                .orderId(new OrderId(ORDER_UUID))
                 .customerId(new CustomerId(customerId))
                 .price(new Money(new BigDecimal(PRICE_VALUE)))
                 .build();

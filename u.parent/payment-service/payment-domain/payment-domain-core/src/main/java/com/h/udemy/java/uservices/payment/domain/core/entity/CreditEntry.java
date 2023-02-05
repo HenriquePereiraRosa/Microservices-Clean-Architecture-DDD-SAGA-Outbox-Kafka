@@ -45,7 +45,7 @@ public class CreditEntry extends BaseEntity<CreditEntryId> {
             return new Builder();
         }
 
-        public Builder id(CreditEntryId val) {
+        public Builder creditEntryId(CreditEntryId val) {
             creditEntryId = val;
             return this;
         }
@@ -55,7 +55,7 @@ public class CreditEntry extends BaseEntity<CreditEntryId> {
             return this;
         }
 
-        public Builder toralCreditAmount(Money val) {
+        public Builder totalCreditAmount(Money val) {
             toralCreditAmount = val;
             return this;
         }

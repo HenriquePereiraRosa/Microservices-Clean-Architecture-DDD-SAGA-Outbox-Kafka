@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices;
+package com.h.udemy.java.uservices.test.util.config;
 
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.ICustomerRepository;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;

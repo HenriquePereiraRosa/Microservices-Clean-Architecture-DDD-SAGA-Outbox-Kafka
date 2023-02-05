@@ -3,7 +3,7 @@
     <module name="order-application" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.h.udemy.java.uservices.*" />
+        <option name="PATTERN" value="domain.config.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

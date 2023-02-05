@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices;
+package com.h.udemy.java.uservices.test.util.config;
 
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCancelledPaymentRequestRequestMessagePublisher;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCreatedPaymentRequestMessagePublisher;

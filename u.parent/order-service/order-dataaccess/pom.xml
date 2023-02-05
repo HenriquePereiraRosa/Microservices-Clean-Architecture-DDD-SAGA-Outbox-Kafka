@@ -20,13 +20,11 @@
         <dependency>
             <groupId>com.h.udemy.java.uservices</groupId>
             <artifactId>common-dataaccess</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.h.udemy.java.uservices</groupId>
             <artifactId>order-domain-api-service</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
     </dependencies>

@@ -20,7 +20,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.h.udemy.java.uservices.payment.domain.core.test.Const.CUSTOMER_ID;
+import static com.h.udemy.java.uservices.domain.test.constants.ConstantsTest.CUSTOMER_UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -41,8 +41,8 @@ class PaymentDomainServiceTest extends ApiEnvTest {
 
     @Test
     void should_validateAndInitiatePayment() {
-        Payment payment = PaymentFactory.createPayment(CUSTOMER_ID);
-        CreditEntry creditEntry = CreditEntryFactory.createOne(CUSTOMER_ID);
+        Payment payment = PaymentFactory.createPayment(CUSTOMER_UUID);
+        CreditEntry creditEntry = CreditEntryFactory.createOne(CUSTOMER_UUID);
 
         PaymentEvent paymentEvent = paymentDomainService
                 .validateAndInitiatePayment(payment,

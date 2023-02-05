@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.rest;
 
-import com.h.udemy.java.uservices.ApiEnvTest;
+import com.h.udemy.java.uservices.test.util.config.ApiEnvTestConfig;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.entity.Customer;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
@@ -40,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
-class OrderControllerV1Test extends ApiEnvTest {
+class OrderControllerV1Test extends ApiEnvTestConfig {
 
     private final String baseUrl = "/v1/orders";
 

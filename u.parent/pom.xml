@@ -22,17 +22,24 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
 
-		<domain.core.version>1.0.0</domain.core.version>
-		<order.application.version>1.0.0</order.application.version>
-		<order.dataaccess.version>1.0.0</order.dataaccess.version>
-		<order.messaging.version>1.0.0</order.messaging.version>
-		<common-domain.version>1.0.0</common-domain.version>
-		<common-application.version>1.0.0</common-application.version>
-
 		<kafka-producer.version>1.0.0</kafka-producer.version>
 		<kafka-consumer.version>1.0.0</kafka-consumer.version>
 		<kafka-model.version>1.0.0</kafka-model.version>
 		<kafka-config-data.version>1.0.0</kafka-config-data.version>
+
+		<common-domain.version>1.0.0</common-domain.version>
+		<common-dataaccess.version>1.0.0</common-dataaccess.version>
+		<common-application.version>1.0.0</common-application.version>
+
+		<domain.core.version>1.0.0</domain.core.version>
+		<domain.api.service.version>1.0.0</domain.api.service.version>
+
+		<order.application.version>1.0.0</order.application.version>
+		<order.dataaccess.version>1.0.0</order.dataaccess.version>
+		<order.messaging.version>1.0.0</order.messaging.version>
+
+		<payment.domain.core.version>1.0.0</payment.domain.core.version>
+		<payment.domain.service.version>1.0.0</payment.domain.service.version>
 
 		<spring-boot-starter-validation.version>3.0.0</spring-boot-starter-validation.version>
 
@@ -59,42 +66,6 @@
 
 			<dependency>
 				<groupId>com.h.udemy.java.uservices</groupId>
-				<artifactId>order-domain-core</artifactId>
-				<version>${domain.core.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.h.udemy.java.uservices</groupId>
-				<artifactId>order-application</artifactId>
-				<version>${order.application.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.h.udemy.java.uservices</groupId>
-				<artifactId>order-data_access</artifactId>
-				<version>${order.dataaccess.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.h.udemy.java.uservices</groupId>
-				<artifactId>order-messaging</artifactId>
-				<version>${order.messaging.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.h.udemy.java.uservices</groupId>
-				<artifactId>common-domain</artifactId>
-				<version>${common-domain.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.h.udemy.java.uservices</groupId>
-				<artifactId>common-application</artifactId>
-				<version>${common-application.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>kafka-producer</artifactId>
 				<version>${kafka-producer.version}</version>
 			</dependency>
@@ -115,6 +86,66 @@
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>kafka-config-data</artifactId>
 				<version>${kafka-config-data.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>common-domain</artifactId>
+				<version>${common-domain.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>common-dataaccess</artifactId>
+				<version>${common-dataaccess.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>common-application</artifactId>
+				<version>${common-application.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>order-domain-core</artifactId>
+				<version>${domain.core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>order-domain-api-service</artifactId>
+				<version>${domain.api.service.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>order-application</artifactId>
+				<version>${order.application.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>order-dataaccess</artifactId>
+				<version>${order.dataaccess.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>order-messaging</artifactId>
+				<version>${order.messaging.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>payment-domain-core</artifactId>
+				<version>${payment.domain.core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>payment-domain-service</artifactId>
+				<version>${payment.domain.service.version}</version>
 			</dependency>
 
 		</dependencies>

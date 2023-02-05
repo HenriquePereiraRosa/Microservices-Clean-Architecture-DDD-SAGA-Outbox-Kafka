@@ -15,7 +15,7 @@ public class CreditEntryFactory {
 
         return CreditEntry.builder()
                 .customerId(new CustomerId(UUID.randomUUID()))
-                .toralCreditAmount(new Money(new BigDecimal(CREDIT_VALUE)))
+                .totalCreditAmount(new Money(new BigDecimal(CREDIT_VALUE)))
                 .build();
     }
 
@@ -23,7 +23,7 @@ public class CreditEntryFactory {
 
         return CreditEntry.builder()
                 .customerId(new CustomerId(UUID.randomUUID()))
-                .toralCreditAmount(new Money(new BigDecimal(value)))
+                .totalCreditAmount(new Money(new BigDecimal(value)))
                 .build();
     }
 
@@ -31,7 +31,7 @@ public class CreditEntryFactory {
 
         return CreditEntry.builder()
                 .customerId(new CustomerId(pCustomerId))
-                .toralCreditAmount(new Money(new BigDecimal(CREDIT_VALUE)))
+                .totalCreditAmount(new Money(new BigDecimal(CREDIT_VALUE)))
                 .build();
     }
 }

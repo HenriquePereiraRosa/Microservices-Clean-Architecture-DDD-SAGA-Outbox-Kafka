@@ -10,8 +10,8 @@ import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCancelledEven
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCompletedEvent;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentEvent;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentFailedEvent;
-import com.h.udemy.java.uservices.payment.domain.core.valueobject.CreditEntryId;
-import com.h.udemy.java.uservices.payment.domain.core.valueobject.TransacionType;
+import com.h.udemy.java.uservices.payment.domain.core.valueobject.CreditHistoryId;
+import com.h.udemy.java.uservices.payment.domain.core.valueobject.TransactionType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -72,7 +72,7 @@ public class PaymentDomainService implements IPaymentDomainService {
 
         failureMessages = validateAndAddMessages(payment);
         creditEntry.addCreditAmount(payment.getPrice());
-        updateCreditHistory(payment, creditHistories, TransacionType.CREDIT);
+        updateCreditHistory(payment, creditHistories, TransactionType.CREDIT);
 
         if (CollectionUtils.isEmpty(failureMessages)) {
             log.info(PAYMENT_REQUEST_CANCELED_FOR_ID.get(), payment.getOrderId().getValue());
@@ -112,19 +112,19 @@ public class PaymentDomainService implements IPaymentDomainService {
 
     private void updateCreditHistory(Payment payment,
                                      List<CreditHistory> creditHistories,
-                                     TransacionType transacionType) {
+                                     TransactionType transactionType) {
         creditHistories.add(CreditHistory.Builder.builder()
-                .creditEntryId(new CreditEntryId(UUID.randomUUID()))
+                .creditHistoryId(new CreditHistoryId(UUID.randomUUID()))
                 .customerId(payment.getCustomerId())
                 .amount(payment.getPrice())
-                .transacionType(transacionType)
+                .transactionType(transactionType)
                 .build());
     }
 
     private void validateCreditHistory(CreditEntry creditEntry, List<CreditHistory> creditHistories, List<String> failureMessages) {
-        Money totalCreditHistory = getTotalHistoryAmount(creditHistories, TransacionType.CREDIT);
+        Money totalCreditHistory = getTotalHistoryAmount(creditHistories, TransactionType.CREDIT);
 
-        Money totalDebitHistory = getTotalHistoryAmount(creditHistories, TransacionType.DEBIT);
+        Money totalDebitHistory = getTotalHistoryAmount(creditHistories, TransactionType.DEBIT);
 
         if (totalDebitHistory.isGreaterThan(totalCreditHistory)) {
             log.error(PAYMENT_ERR_NOT_ENOUGH_CREDIT.get(), creditEntry.getCustomerId().getValue());
@@ -144,9 +144,9 @@ public class PaymentDomainService implements IPaymentDomainService {
         return !creditEntry.getTotalCreditAmount().isGreaterThan(danglingDebit);
     }
 
-    private Money getTotalHistoryAmount(List<CreditHistory> creditHistories, TransacionType transacionType) {
+    private Money getTotalHistoryAmount(List<CreditHistory> creditHistories, TransactionType transactionType) {
         return creditHistories.stream()
-                .filter(creditHistory -> transacionType == creditHistory.getTransacionType())
+                .filter(creditHistory -> transactionType == creditHistory.getTransactionType())
                 .map(CreditHistory::getAmount)
                 .reduce(Money.ZERO, Money::add);
     }

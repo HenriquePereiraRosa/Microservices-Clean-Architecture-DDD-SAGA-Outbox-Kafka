@@ -21,14 +21,7 @@
 
         <dependency>
             <groupId>com.h.udemy.java.uservices</groupId>
-            <artifactId>common-domain</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.h.udemy.java.uservices</groupId>
             <artifactId>payment-domain-core</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
