@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>order-domain-api-service</artifactId>
+    <artifactId>order-domain-service</artifactId>
 
     <dependencies>
     <dependency>

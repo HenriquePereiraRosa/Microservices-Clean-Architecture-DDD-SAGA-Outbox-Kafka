@@ -114,7 +114,7 @@
 
 			<dependency>
 				<groupId>com.h.udemy.java.uservices</groupId>
-				<artifactId>order-domain-api-service</artifactId>
+				<artifactId>order-domain-service</artifactId>
 				<version>${domain.api.service.version}</version>
 			</dependency>
 

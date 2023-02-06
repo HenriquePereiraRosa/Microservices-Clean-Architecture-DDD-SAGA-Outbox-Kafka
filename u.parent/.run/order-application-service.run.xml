@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="order-application-service" type="JUnit" factoryName="JUnit">
-    <module name="order-domain-api-service" />
+    <module name="order-domain-service" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="domain.config.*" />
