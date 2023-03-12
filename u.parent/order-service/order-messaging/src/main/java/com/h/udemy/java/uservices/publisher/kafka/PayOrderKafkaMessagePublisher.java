@@ -1,6 +1,7 @@
 package com.h.udemy.java.uservices.publisher.kafka;
 
 import com.h.udemy.java.uservices.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
+import com.h.udemy.java.uservices.kafka.producer.KafkaMessageHelper;
 import com.h.udemy.java.uservices.kafka.producer.service.impl.KafkaProducer;
 import com.h.udemy.java.uservices.mapper.OrderMessagingDataMapper;
 import com.h.udemy.java.uservices.order.service.domain.config.OrderServiceConfigData;
@@ -17,20 +18,21 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_S
 @Component
 public class PayOrderKafkaMessagePublisher implements IOrderPaidRestaurantRequestRequestMessagePublisher {
 
-    private final String AVRO_MODEL_NAME= "RestaurantApprovalRequestAvroModel";
+    private static final String AVRO_MODEL_NAME= "RestaurantApprovalRequestAvroModel";
+
     private final OrderMessagingDataMapper orderMessagingDataMapper;
     private final OrderServiceConfigData orderServiceConfigData;
     private final KafkaProducer<String, RestaurantApprovalRequestAvroModel> kafkaProducer;
-    private final OrderKafkaMessageHelper orderKafkaMessageHelper;
+    private final KafkaMessageHelper kafkaMessageHelper;
 
     public PayOrderKafkaMessagePublisher(OrderMessagingDataMapper orderMessagingDataMapper,
                                          OrderServiceConfigData orderServiceConfigData,
                                          KafkaProducer<String, RestaurantApprovalRequestAvroModel> kafkaProducer,
-                                         OrderKafkaMessageHelper orderKafkaMessageHelper) {
+                                         KafkaMessageHelper kafkaMessageHelper) {
         this.orderMessagingDataMapper = orderMessagingDataMapper;
         this.orderServiceConfigData = orderServiceConfigData;
         this.kafkaProducer = kafkaProducer;
-        this.orderKafkaMessageHelper = orderKafkaMessageHelper;
+        this.kafkaMessageHelper = kafkaMessageHelper;
     }
 
     @Override
@@ -40,7 +42,7 @@ public class PayOrderKafkaMessagePublisher implements IOrderPaidRestaurantReques
 
         try {
             orderId = domainEvent.getOrder().getId().getValue().toString();
-            log.info(ORDER_RECEIVED_ID.get(), orderId);
+            log.info(ORDER_RECEIVED_ID.build(orderId));
 
             RestaurantApprovalRequestAvroModel avroModel = orderMessagingDataMapper
                     .orderPaidEventToRestaurantApprovalRequestAvroModel(domainEvent);
@@ -48,21 +50,21 @@ public class PayOrderKafkaMessagePublisher implements IOrderPaidRestaurantReques
             kafkaProducer.send(orderServiceConfigData.getPaymentRequestTopicName(),
                     orderId,
                     avroModel,
-                    orderKafkaMessageHelper.getKafkaCallback(orderServiceConfigData
+                    kafkaMessageHelper.getKafkaCallback(orderServiceConfigData
                                     .getPaymentResponseTopicName(),
                             avroModel,
                             AVRO_MODEL_NAME,
                             orderId)
             );
 
-            log.info(ORDER_SENT_REQUEST_KAFKA.get(),
-                    avroModel.getOrderId());
+            log.info(ORDER_SENT_REQUEST_KAFKA.build(avroModel.getOrderId(),
+                    orderServiceConfigData.getPaymentResponseTopicName(),
+                    avroModel.getCreatedAt()));
 
         } catch (Exception e) {
-            log.error(ORDER_ERROR_MSG_SENDING_REQ_AVRO_KAFKA.get(),
-                    AVRO_MODEL_NAME,
+            log.error(ORDER_ERROR_MSG_SENDING_REQ_AVRO_KAFKA.build(AVRO_MODEL_NAME,
                     orderId,
-                    e.getMessage());
+                    e.getMessage()));
         }
     }
 

@@ -39,12 +39,12 @@ public class RestaurantApprovalResponseKafkaListener implements KafkaConsumer<Re
                         @Header List<String> keys,
                         @Header List<Integer> partitions,
                         @Header List<Long> offsets) {
-        log.info(ORDER_KAFKA_NUMBER_MODEL_RESPONSES_RECEIVED.get(),
+        log.info(ORDER_KAFKA_NUMBER_MODEL_RESPONSES_RECEIVED.build(
                 messages.size(),
                 MODEL_NAME,
                 keys.toString(),
                 partitions.toString(),
-                offsets.toString());
+                offsets.toString()));
 
         messages.forEach(avroModel -> {
             if (OrderApprovalStatus.APPROVED == avroModel.getOrderApprovalStatus()) {
@@ -52,14 +52,14 @@ public class RestaurantApprovalResponseKafkaListener implements KafkaConsumer<Re
                 restaurantApprovalMessageListener.orderApproval(orderMessagingDataMapper
                         .approvalResponseAvroModelToApprovalResponse(avroModel));
 
-                log.info(ORDER_ID_PROCESSED_SUCCESS.get(), avroModel.getOrderId());
+                log.info(ORDER_ID_PROCESSED_SUCCESS.build(avroModel.getOrderId()));
 
             } else if (OrderApprovalStatus.REJECTED == avroModel.getOrderApprovalStatus()) {
 
                 restaurantApprovalMessageListener.orderRejected(orderMessagingDataMapper
                         .approvalResponseAvroModelToApprovalResponse(avroModel));
 
-                log.info(ORDER_ID_PROCESSED_FAILED.get(), avroModel.getOrderId());
+                log.info(ORDER_ID_PROCESSED_FAILED.build(avroModel.getOrderId()));
             }
         });
     }

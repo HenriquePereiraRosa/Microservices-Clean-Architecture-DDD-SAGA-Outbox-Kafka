@@ -15,7 +15,6 @@ import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository
 import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.ICreditHistoryRepository;
 import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.IPaymentRepository;
 import com.h.udemy.java.uservices.payment.domain.service.test.config.ApiEnvTest;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -71,9 +70,6 @@ class PaymentRequestHelperTest extends ApiEnvTest {
     @Autowired
     ICreditHistoryRepository iCreditHistoryRepository;
 
-    @BeforeAll
-    public void setup(){
-    }
 
     @Test
     @Order(0)
@@ -120,7 +116,7 @@ class PaymentRequestHelperTest extends ApiEnvTest {
     }
 
     @Test
-    @Order(2)
+    @Order(3)
     void should_persistPayment_when_request_is_right() {
 
         when(iCreditHistoryRepository.findByCustomerId(new CustomerId(UUID
@@ -133,7 +129,7 @@ class PaymentRequestHelperTest extends ApiEnvTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     void should_persistCancelPayment_when_request_is_right() {
 
         when(iPaymentRepository.findByOrderId(UUID.fromString(paymentRequest.getOrderId())))

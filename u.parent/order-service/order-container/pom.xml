@@ -42,11 +42,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.h.udemy.java.uservices</groupId>
-            <artifactId>common-dataaccess</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
@@ -59,13 +54,6 @@
             <properties>
                 <docker.skip>false</docker.skip>
             </properties>
-<!--            <activation>-->
-<!--                &lt;!&ndash; Activate on Linux systems. Assume presence of docker.pid file indicates Docker is available &ndash;&gt;-->
-<!--                <file>-->
-<!--                     <exists>/var/run/docker.pid</exists>-->
-<!--&lt;!&ndash;                    <exists>\\.\pipe\docker_engine</exists>&ndash;&gt;-->
-<!--                </file>-->
-<!--            </activation>-->
         </profile>
     </profiles>
 

@@ -40,6 +40,8 @@
 
 		<payment.domain.core.version>1.0.0</payment.domain.core.version>
 		<payment.domain.service.version>1.0.0</payment.domain.service.version>
+		<payment.dataaccess.version>1.0.0</payment.dataaccess.version>
+		<payment.messaging.version>1.0.0</payment.messaging.version>
 
 		<spring-boot-starter-validation.version>3.0.0</spring-boot-starter-validation.version>
 
@@ -88,6 +90,9 @@
 				<version>${kafka-config-data.version}</version>
 			</dependency>
 
+
+			<!-- COMMON -->
+
 			<dependency>
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>common-domain</artifactId>
@@ -105,6 +110,9 @@
 				<artifactId>common-application</artifactId>
 				<version>${common-application.version}</version>
 			</dependency>
+
+
+			<!-- ORDER -->
 
 			<dependency>
 				<groupId>com.h.udemy.java.uservices</groupId>
@@ -136,6 +144,9 @@
 				<version>${order.messaging.version}</version>
 			</dependency>
 
+
+			<!-- PAYMENT -->
+
 			<dependency>
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>payment-domain-core</artifactId>
@@ -146,6 +157,18 @@
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>payment-domain-service</artifactId>
 				<version>${payment.domain.service.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>payment-dataaccess</artifactId>
+				<version>${payment.dataaccess.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>payment-messaging</artifactId>
+				<version>${payment.messaging.version}</version>
 			</dependency>
 
 		</dependencies>
