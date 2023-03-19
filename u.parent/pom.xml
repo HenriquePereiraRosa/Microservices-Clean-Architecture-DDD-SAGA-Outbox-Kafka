@@ -43,6 +43,11 @@
 		<payment.dataaccess.version>1.0.0</payment.dataaccess.version>
 		<payment.messaging.version>1.0.0</payment.messaging.version>
 
+		<restaurant.domain.core.version>1.0.0</restaurant.domain.core.version>
+		<restaurant.domain.service.version>1.0.0</restaurant.domain.service.version>
+		<restaurant.dataaccess.version>1.0.0</restaurant.dataaccess.version>
+		<restaurant.messaging.version>1.0.0</restaurant.messaging.version>
+
 		<spring-boot-starter-validation.version>3.0.0</spring-boot-starter-validation.version>
 
 		<spring-kafka.version>2.9.3</spring-kafka.version>
@@ -170,6 +175,33 @@
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>payment-messaging</artifactId>
 				<version>${payment.messaging.version}</version>
+			</dependency>
+
+
+			<!-- RESTAURANT -->
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>restaurant-domain-core</artifactId>
+				<version>${restaurant.domain.core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>restaurant-domain-service</artifactId>
+				<version>${restaurant.domain.core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>restaurant-dataaccess</artifactId>
+				<version>${restaurant.domain.core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>restaurant-messaging</artifactId>
+				<version>${restaurant.domain.core.version}</version>
 			</dependency>
 
 		</dependencies>
