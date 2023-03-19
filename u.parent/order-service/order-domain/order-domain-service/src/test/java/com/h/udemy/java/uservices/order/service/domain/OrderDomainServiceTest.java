@@ -41,7 +41,7 @@ import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class OrderApplicationServiceTest extends ApiEnvTestConfig {
+class OrderDomainServiceTest extends ApiEnvTestConfig {
 
     @Autowired
     private IOrderApplicationService iOrderAplicationService;

@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 @Slf4j
 @Validated
 @Service
-public class IRestaurantApprovalResponseMessageListener implements IRestaurantApprovalMessageListener {
+public class RestaurantApprovalResponseMessageListener implements IRestaurantApprovalMessageListener {
     
     @Override
     public void orderApproval(RestaurantApprovalResponse restaurantApprovalResponse) {

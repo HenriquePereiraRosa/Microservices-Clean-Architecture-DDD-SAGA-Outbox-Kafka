@@ -7,6 +7,8 @@ import static java.text.MessageFormat.format;
 @Getter
 public enum LogMessages {
 
+
+    // ORDER
     ORDER_RECEIVED_ID("Received OrderCreatedEvent. orderId: {0}"),
     ORDER_CANCEL_RECEIVED_ID("Received OrderCancelEvent. orderId: {0}"),
     ORDER_SUCCESSFUL_RESPONSE_KAFKA("PaymentRequestAvroModel sent to Kafka for order id: {0}"),
@@ -21,6 +23,8 @@ public enum LogMessages {
     ORDER_ERROR_WHILE_SENDING_REQUEST_AVRO("Error while sending {0} message {1} to topic {2}"),
     ORDER_ERROR_MSG_SENDING_REQ_AVRO_KAFKA("Error while sending {0} message to Kafka. orderId {1}, error: {2}"),
 
+
+    // PAYMENT
     PAYMENT_REQUEST_PROCESSING_FOR_ID("Processing payment for order id: {0}"),
     PAYMENT_REQUEST_CANCELLING_FOR_ID("Cancelling payment for order id: {0}"),
     PAYMENT_REQUEST_SUCCESS_FOR_ID("Payment request success for order id: {0}!"),
@@ -30,6 +34,15 @@ public enum LogMessages {
     PAYMENT_ERR_CREDIT_HISTORY_NOT_EQUALS("Credit history total and Current credit is not equal for CustomerId: {0}!"),
     PAYMENT_ERR_FAILED_FOR_ORDER_ID("Payment request failed for order id: {0}!"),
     PAYMENT_ERR_STATUS_UNSUPPORTED("Unsupported payment order status: {0}"),
+
+
+    // RESTAURANT
+    RESTAURANT_VALIDATING_ORDER_ID("Validating Order Id {0}"),
+    RESTAURANT_APPROVED_ORDER_ID("Order id {0} APPROVED."),
+    RESTAURANT_REJECTED_ORDER_ID("Order id {0} REJECTED."),
+    RESTAURANT_PAYMENT_NOT_COMPLETED("Payment is not completed for order: {0}"),
+    RESTAURANT_PRODUCT_NOT_AVAILABLE("Product with id: {0} is not available"),
+    RESTAURANT_PRODUCT_PRICE_INCORRECT("Price total is not correct for order: {0}"),
 
     EVENT_RECEIVED("Received {0} for {1} id: {2}"),
     EVENT_SENT_TO_KAFKA("{0} sent to KAFKA for {1} id: {2}"),
