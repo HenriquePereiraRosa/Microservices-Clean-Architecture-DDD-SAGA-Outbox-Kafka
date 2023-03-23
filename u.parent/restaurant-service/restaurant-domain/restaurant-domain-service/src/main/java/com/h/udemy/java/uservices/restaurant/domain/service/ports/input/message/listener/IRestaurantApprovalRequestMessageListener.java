@@ -2,7 +2,7 @@ package com.h.udemy.java.uservices.restaurant.domain.service.ports.input.message
 
 import com.h.udemy.java.uservices.restaurant.domain.service.dto.RestaurantApprovalRequest;
 
-public interface RestaurantApprovalRequestMessageListener {
+public interface IRestaurantApprovalRequestMessageListener {
 
     void approveOrder(RestaurantApprovalRequest restaurantApprovalRequest);
 

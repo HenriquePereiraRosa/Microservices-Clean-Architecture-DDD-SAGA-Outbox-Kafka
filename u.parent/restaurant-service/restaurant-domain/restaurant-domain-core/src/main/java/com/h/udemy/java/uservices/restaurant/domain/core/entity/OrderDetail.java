@@ -21,18 +21,8 @@ public class OrderDetail extends BaseEntity<OrderId> {
     }
 
 
-
-
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
-
-    public Money getTotalAmount() {
-        return totalAmount;
-    }
-
-    public List<RestaurantProduct> getProducts() {
-        return products;
+    public static Builder builder() {
+        return new Builder();
     }
 
     public static final class Builder {
@@ -44,11 +34,8 @@ public class OrderDetail extends BaseEntity<OrderId> {
         private Builder() {
         }
 
-        public static Builder builder() {
-            return new Builder();
-        }
 
-        public Builder id(OrderId val) {
+        public Builder orderId(OrderId val) {
             orderId = val;
             return this;
         }
@@ -72,4 +59,18 @@ public class OrderDetail extends BaseEntity<OrderId> {
             return new OrderDetail(this);
         }
     }
+
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public Money getTotalAmount() {
+        return totalAmount;
+    }
+
+    public List<RestaurantProduct> getProducts() {
+        return products;
+    }
+
 }

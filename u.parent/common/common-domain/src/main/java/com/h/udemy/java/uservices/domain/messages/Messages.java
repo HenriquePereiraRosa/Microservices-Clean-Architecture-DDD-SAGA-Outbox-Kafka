@@ -5,6 +5,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.ResourceBundle;
 
+import static java.text.MessageFormat.format;
+
 
 @Getter
 public enum Messages {
@@ -38,7 +40,10 @@ public enum Messages {
     ERR_PAYMENT_COULD_NOT_FIND_CREDIT_HISTORY_FOR_CUSTOMER_ID("err.payment.could-not-find-credit-history-for-customer-id"),
     ERR_PAYMENT_NOT_ENOUGH_CREDIT("err.payment.not-enough-credit"),
     ERR_PAYMENT_CREDIT_HISTORY_NOT_EQUALS("err.payment.credit-history-not-equals"),
-    ERR_PAYMENT_COULD_NOT_BE_FOUND_WITH_ORDER_ID("err.payment.order-could-not-be-found-with-id");
+    ERR_PAYMENT_COULD_NOT_BE_FOUND_WITH_ORDER_ID("err.payment.order-could-not-be-found-with-id"),
+
+
+    RESTAURANT_COULD_NOT_BE_FOUND_WITH_ORDER_ID("err.payment.order-could-not-be-found-with-id");
 
     final String key;
     Messages(final String key) {
@@ -49,5 +54,9 @@ public enum Messages {
         final ResourceBundle bundle = ResourceBundle
                 .getBundle("messages_common_domain.messages", LocaleContextHolder.getLocale());
         return bundle.getString(key);
+    }
+
+    public String build(Object... objects) {
+        return format(key, objects);
     }
 }

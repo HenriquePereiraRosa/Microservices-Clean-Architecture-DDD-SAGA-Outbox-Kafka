@@ -19,6 +19,9 @@ public class RestaurantProduct extends BaseEntity<ProductId> {
         available = builder.available;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
 
     public static final class Builder {
         private ProductId productId;
@@ -30,11 +33,8 @@ public class RestaurantProduct extends BaseEntity<ProductId> {
         private Builder() {
         }
 
-        public static Builder builder() {
-            return new Builder();
-        }
 
-        public Builder id(ProductId val) {
+        public Builder productId(ProductId val) {
             productId = val;
             return this;
         }
