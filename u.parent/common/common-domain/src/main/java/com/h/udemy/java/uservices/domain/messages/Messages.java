@@ -28,6 +28,7 @@ public enum Messages {
     ERR_ORDER_COULD_NOT_BE_SAVED("err.order.could-not-be-saved"),
     ERR_RESTAURANT_ID_NOT_ACTIVE("err.restaurant.id.not-active"),
     ERR_RESTAURANT_NOT_FOUND("err.restaurant.not-found"),
+    ERR_RESTAURANT_NONE_FOUND("err.restaurant.no-one-found"),
     ERR_CUSTOMER_NOT_FOUND("err.customer.not-found"),
 
 
@@ -50,6 +51,7 @@ public enum Messages {
         this.key = key;
     }
 
+    @Deprecated
     public String get() {
         final ResourceBundle bundle = ResourceBundle
                 .getBundle("messages_common_domain.messages", LocaleContextHolder.getLocale());

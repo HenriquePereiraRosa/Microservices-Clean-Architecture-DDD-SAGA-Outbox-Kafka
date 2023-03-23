@@ -11,4 +11,19 @@
 
     <artifactId>restaurant-dataaccess</artifactId>
 
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>common-dataaccess</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>restaurant-domain-service</artifactId>
+        </dependency>
+
+    </dependencies>
+
 </project>
