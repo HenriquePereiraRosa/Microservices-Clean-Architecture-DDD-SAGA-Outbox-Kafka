@@ -3,7 +3,7 @@ package com.h.udemy.java.uservices.restaurant.domain.service.ports.output.messag
 import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
 import com.h.udemy.java.uservices.restaurant.domain.core.event.OrderRejectedEvent;
 
-public interface OrderRejectedMessagePublisher extends IDomainEventPublisher<OrderRejectedEvent> {
+public interface IOrderRejectedMessagePublisher extends IDomainEventPublisher<OrderRejectedEvent> {
 
 
 }

@@ -17,16 +17,19 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.RESTAUR
 public class Restaurant extends AggregateRoot<RestaurantId> {
 
     private OrderApproval orderApproval;
-    private final boolean active;
+    private boolean active;
     private final OrderDetail orderDetail;
 
-    private Restaurant(Builder builder) {
+    protected Restaurant(Builder builder) {
         setId(builder.restaurantId);
         orderApproval = builder.orderApproval;
         active = builder.active;
         orderDetail = builder.orderDetail;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
 
     public static final class Builder {
         private RestaurantId restaurantId;
@@ -37,9 +40,6 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
         private Builder() {
         }
 
-        public static Builder builder() {
-            return new Builder();
-        }
 
         public Builder restaurantId(RestaurantId val) {
             restaurantId = val;
@@ -101,6 +101,9 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
         }
     }
 
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public void constructOrderApproval(OrderApprovalStatus approvalStatus) {
         this.orderApproval = OrderApproval.builder()
