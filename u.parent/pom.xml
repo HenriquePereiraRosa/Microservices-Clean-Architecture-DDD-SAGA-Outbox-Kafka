@@ -189,19 +189,19 @@
 			<dependency>
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>restaurant-domain-service</artifactId>
-				<version>${restaurant.domain.core.version}</version>
+				<version>${restaurant.domain.service.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>restaurant-dataaccess</artifactId>
-				<version>${restaurant.domain.core.version}</version>
+				<version>${restaurant.dataaccess.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>restaurant-messaging</artifactId>
-				<version>${restaurant.domain.core.version}</version>
+				<version>${restaurant.messaging.version}</version>
 			</dependency>
 
 		</dependencies>

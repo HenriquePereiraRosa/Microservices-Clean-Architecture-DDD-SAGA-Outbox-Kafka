@@ -7,6 +7,15 @@ import static java.text.MessageFormat.format;
 @Getter
 public enum LogMessages {
 
+    // COMMON
+    KAFKA_X_REQUESTS_RECEIVED("{0} number of {1} request received with keys: {2}, partitions: {3}, and offsets: {4}"),
+    KAFKA_PROCESSING_FOR_ID("Processing {0} for order id: {1}"),
+
+    EVENT_RECEIVED("Received {0} for {1} id: {2}"),
+    EVENT_SENT_TO_KAFKA("{0} sent to KAFKA for {1} id: {2}"),
+    EVENT_SENT_TO_KAFKA_AT("{0} sent to KAFKA at:  {1}"),
+    EVENT_ERR_SENT_TO_KAFKA("Error while sending {0} message to KAFKA with {1} id: {2}, error: {3}"),
+
 
     // ORDER
     ORDER_RECEIVED_ID("Received OrderCreatedEvent. orderId: {0}"),
@@ -29,7 +38,6 @@ public enum LogMessages {
     PAYMENT_REQUEST_CANCELLING_FOR_ID("Cancelling payment for order id: {0}"),
     PAYMENT_REQUEST_SUCCESS_FOR_ID("Payment request success for order id: {0}!"),
     PAYMENT_REQUEST_CANCELED_FOR_ID("Payment request canceled for order id: {0}!"),
-    PAYMENT_X_REQUESTS_RECEIVED("{0} number of payment request received with keys: {1}, partitions: {2}, and offsets: {4}"),
     PAYMENT_ERR_NOT_ENOUGH_CREDIT("CustomerId: {0}, does not have enough credit for payment!"),
     PAYMENT_ERR_CREDIT_HISTORY_NOT_EQUALS("Credit history total and Current credit is not equal for CustomerId: {0}!"),
     PAYMENT_ERR_FAILED_FOR_ORDER_ID("Payment request failed for order id: {0}!"),
@@ -42,11 +50,8 @@ public enum LogMessages {
     RESTAURANT_REJECTED_ORDER_ID("Order id {0} REJECTED."),
     RESTAURANT_PAYMENT_NOT_COMPLETED("Payment is not completed for order: {0}"),
     RESTAURANT_PRODUCT_NOT_AVAILABLE("Product with id: {0} is not available"),
-    RESTAURANT_PRODUCT_PRICE_INCORRECT("Price total is not correct for order: {0}"),
+    RESTAURANT_PRODUCT_PRICE_INCORRECT("Price total is not correct for order: {0}");
 
-    EVENT_RECEIVED("Received {0} for {1} id: {2}"),
-    EVENT_SENT_TO_KAFKA("{0} sent to KAFKA for {1} id: {2}"),
-    EVENT_ERR_SENT_TO_KAFKA("Error while sending {0} message to KAFKA with {1} id: {2}, error: {3}");
 
     final String key;
 

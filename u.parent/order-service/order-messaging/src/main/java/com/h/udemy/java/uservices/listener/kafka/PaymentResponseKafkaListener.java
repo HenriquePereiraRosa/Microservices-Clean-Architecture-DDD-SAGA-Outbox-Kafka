@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.listener.kafka;
 
-import com.h.udemy.java.uservices.kafka.consumer.KafkaConsumer;
+import com.h.udemy.java.uservices.kafka.consumer.IKafkaConsumer;
 import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentResponseAvroModel;
 import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentStatus;
 import com.h.udemy.java.uservices.mapper.OrderMessagingDataMapper;
@@ -19,7 +19,7 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_K
 
 @Slf4j
 @Component
-public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentResponseAvroModel> {
+public class PaymentResponseKafkaListener implements IKafkaConsumer<PaymentResponseAvroModel> {
 
     private final String MODEL_NAME = "PAYMENT";
     private final String KAFKA_CONSUMER_GROUP_ID = "${kafka-consumer-config.payment-consumer-group-id}";

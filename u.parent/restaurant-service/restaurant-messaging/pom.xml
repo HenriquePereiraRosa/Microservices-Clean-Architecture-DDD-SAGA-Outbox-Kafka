@@ -11,4 +11,29 @@
 
     <artifactId>restaurant-messaging</artifactId>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>restaurant-domain-service</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>kafka-model</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>kafka-consumer</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>kafka-producer</artifactId>
+        </dependency>
+
+    </dependencies>
+
+
 </project>

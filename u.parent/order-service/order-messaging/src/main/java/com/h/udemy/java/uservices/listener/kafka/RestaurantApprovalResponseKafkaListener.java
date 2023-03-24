@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.listener.kafka;
 
-import com.h.udemy.java.uservices.kafka.consumer.KafkaConsumer;
+import com.h.udemy.java.uservices.kafka.consumer.IKafkaConsumer;
 import com.h.udemy.java.uservices.kafka.order.avro.model.OrderApprovalStatus;
 import com.h.udemy.java.uservices.kafka.order.avro.model.RestaurantApprovalResponseAvroModel;
 import com.h.udemy.java.uservices.mapper.OrderMessagingDataMapper;
@@ -19,7 +19,7 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_K
 
 @Slf4j
 @Component
-public class RestaurantApprovalResponseKafkaListener implements KafkaConsumer<RestaurantApprovalResponseAvroModel> {
+public class RestaurantApprovalResponseKafkaListener implements IKafkaConsumer<RestaurantApprovalResponseAvroModel> {
 
     private final String MODEL_NAME = "RESTAURANT APPROVAL";
     private final String KAFKA_CONSUMER_GROUP_ID = "${kafka-consumer-config.restaurant-approval-consumer-group-id}";
