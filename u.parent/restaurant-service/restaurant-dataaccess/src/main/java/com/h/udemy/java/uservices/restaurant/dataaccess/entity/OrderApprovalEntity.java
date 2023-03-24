@@ -19,7 +19,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tb_order_approval", schema = "restaurant")
+@Table(name = "order_approval", schema = "restaurant")
 @Entity
 public class OrderApprovalEntity {
 
