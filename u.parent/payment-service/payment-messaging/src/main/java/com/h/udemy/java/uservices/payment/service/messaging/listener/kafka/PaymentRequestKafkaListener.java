@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.PAYMENT_X_REQUESTS_RECEIVED;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.KAFKA_X_REQUESTS_RECEIVED;
 
 @Slf4j
 @Component
@@ -40,7 +40,7 @@ public class PaymentRequestKafkaListener implements IKafkaConsumer<PaymentReques
                         @Header(KafkaHeaders.RECEIVED_KEY) List<String> keys,
                         @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
                         @Header(KafkaHeaders.OFFSET) List<Long> offset) {
-        log.info(PAYMENT_X_REQUESTS_RECEIVED.build(
+        log.info(KAFKA_X_REQUESTS_RECEIVED.build(
                 messages.size(),
                 keys.toString(),
                 offset.toString()));
