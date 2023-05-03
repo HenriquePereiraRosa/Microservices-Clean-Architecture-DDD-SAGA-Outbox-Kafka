@@ -1,5 +1,7 @@
 package com.h.udemy.java.uservices.order.service.dataaccess.order.adapter;
 
+import com.h.udemy.java.uservices.domain.valueobject.OrderId;
+import com.h.udemy.java.uservices.order.service.dataaccess.order.entity.OrderEntity;
 import com.h.udemy.java.uservices.order.service.dataaccess.order.mapper.OrderDataAccessMapper;
 import com.h.udemy.java.uservices.order.service.dataaccess.order.repository.IOrderJpaRepository;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
@@ -35,10 +37,24 @@ public class OrderRepository implements IOrderRepository {
     }
 
     @Override
+    public Optional<Order> findById(OrderId orderId) {
+        return orderJpaRepository.findById(orderId.getValue())
+                .map(orderDataAccessMapper::orderEntityToOrder);
+    }
+
+    @Override
     public List<Order> fetchAll() {
         return orderJpaRepository.findAll()
                 .stream()
                 .map(orderDataAccessMapper::orderEntityToOrder)
                 .toList();
+    }
+
+    @Override
+    public Order save(Order order) {
+        final OrderEntity orderEntity =orderDataAccessMapper.orderToOrderEntity(order);
+
+        return orderDataAccessMapper
+                .orderEntityToOrder(orderJpaRepository.save(orderEntity));
     }
 }

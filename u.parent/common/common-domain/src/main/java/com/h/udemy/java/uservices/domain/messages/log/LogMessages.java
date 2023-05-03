@@ -21,13 +21,16 @@ public enum LogMessages {
     ORDER_RECEIVED_ID("Received OrderCreatedEvent. orderId: {0}"),
     ORDER_CANCEL_RECEIVED_ID("Received OrderCancelEvent. orderId: {0}"),
     ORDER_SUCCESSFUL_RESPONSE_KAFKA("PaymentRequestAvroModel sent to Kafka for order id: {0}"),
-    ORDER_SENT_REQUEST_KAFKA("Received successful response from Kafka for order id: {0}, Topic: {1}, Partition: {2}, " +
-            "Offset: {3}, Timestamp {4}"),
+    ORDER_SENT_REQUEST_KAFKA("Received successful response from Kafka for order id: {0}," +
+            " Topic: {1}, Partition: {2}, Offset: {3}, Timestamp {4}"),
     ORDER_ID_PROCESSED_SUCCESS("Order {0} processed successfully"),
     ORDER_ID_PROCESSED_FAILED("Order {0} failed!"),
-
-    ORDER_KAFKA_NUMBER_MODEL_RESPONSES_RECEIVED("{0} number of {1} responses received. Keys: {2}, Partitions: {3}, " +
-            "Offsets: {4}"),
+    ORDER_KAFKA_NUMBER_MODEL_RESPONSES_RECEIVED("{0} number of {1} responses received." +
+            " Keys: {2}, Partitions: {3}, Offsets: {4}"),
+    ORDER_COMPLETING_PAYMENT_FOR_ID("Completing payment for order with id: {0}"),
+    ORDER_PAID_FOR_ID("Order id: {0} PAID."),
+    ORDER_ID_CANCELLING("Cancelling payment for order with id: {0}"),
+    ORDER_ID_CANCELED_ID("Order id: {0} CANCELED."),
 
     ORDER_ERROR_WHILE_SENDING_REQUEST_AVRO("Error while sending {0} message {1} to topic {2}"),
     ORDER_ERROR_MSG_SENDING_REQ_AVRO_KAFKA("Error while sending {0} message to Kafka. orderId {1}, error: {2}"),

@@ -26,6 +26,9 @@ public enum Messages {
     ERR_ORDER_NOT_CORRECT_STATE_F_INIT_CANCEL("err.order.not-correct-state-for-init-cancel"),
     ERR_ORDER_NOT_CORRECT_STATE_F_CANCEL("err.order.not-correct-state-for-cancel"),
     ERR_ORDER_COULD_NOT_BE_SAVED("err.order.could-not-be-saved"),
+    ERR_ORDER_NOT_FOUND("Order NOT FOUND! id: {0}"),
+
+
     ERR_RESTAURANT_ID_NOT_ACTIVE("err.restaurant.id.not-active"),
     ERR_RESTAURANT_NOT_FOUND("err.restaurant.not-found"),
     ERR_RESTAURANT_NONE_FOUND("err.restaurant.no-one-found"),

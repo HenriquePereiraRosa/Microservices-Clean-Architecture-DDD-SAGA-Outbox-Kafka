@@ -27,6 +27,8 @@
 		<kafka-model.version>1.0.0</kafka-model.version>
 		<kafka-config-data.version>1.0.0</kafka-config-data.version>
 
+		<saga.version>1.0.0</saga.version>
+
 		<common-domain.version>1.0.0</common-domain.version>
 		<common-dataaccess.version>1.0.0</common-dataaccess.version>
 		<common-application.version>1.0.0</common-application.version>
@@ -63,7 +65,6 @@
 		<module>order-service</module>
 		<module>common</module>
         <module>infrastructure</module>
-		<module>infrastructure/kafka</module>
         <module>customer-service</module>
         <module>payment-service</module>
 		<module>restaurant-service</module>
@@ -94,6 +95,12 @@
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>kafka-config-data</artifactId>
 				<version>${kafka-config-data.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>saga</artifactId>
+				<version>${saga.version}</version>
 			</dependency>
 
 
