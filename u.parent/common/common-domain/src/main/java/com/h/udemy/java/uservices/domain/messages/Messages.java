@@ -10,13 +10,17 @@ import static java.text.MessageFormat.format;
 
 @Getter
 public enum Messages {
+    PUBLISHING_EVENT_FOR_ID("event.publishing.with-id"),
+
+
     ORDER_CREATED_SUCCESSFULLY("order.created.successfully"),
     ORDER_ID_INITIATED("order.id.initiated"),
     ORDER_ID_PAYMENT_CANCELLING("order.id.payment-cancelling"),
     ORDER_ID_PAYMENT_CANCELLED("order.id.payment-cancelled"),
     ORDER_ID_CREATED("order.id.created"),
-    ORDER_TRACKING_ID_NOT_FOUND("err.order.tracking-id.not-found"),
+    ORDER_ROLLBACK_DONE_MSGS("order.id.rollback.done"),
 
+    ERR_ORDER_TRACKING_ID_NOT_FOUND("err.order.tracking-id.not-found"),
     ERR_ORDER_NOT_CORRECT_INIT_STATE("err.order.not-correct-state-initialization"),
     ERR_ORDER_PRICE_MUST_GREATER_ZERO("err.order.price-must-greater-zero"),
     ERR_ORDER_TOTAL_AND_ORDER_PRICES_DIFF("err.order.total-and-order-prices-are-diff"),

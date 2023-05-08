@@ -7,7 +7,5 @@ public final class EmptyEvent implements IDomainEvent<Void> {
     private EmptyEvent() {}
 
     @Override
-    public void fire() {
-
-    }
+    public void fire() {}
 }

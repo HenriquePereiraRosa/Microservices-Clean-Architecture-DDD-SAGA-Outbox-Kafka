@@ -31,6 +31,10 @@ public enum LogMessages {
     ORDER_PAID_FOR_ID("Order id: {0} PAID."),
     ORDER_ID_CANCELLING("Cancelling payment for order with id: {0}"),
     ORDER_ID_CANCELED_ID("Order id: {0} CANCELED."),
+    ORDER_ID_APPROVING("Approving order id: [{0}]."),
+    ORDER_ID_APPROVED("Order id: {0} APPROVED."),
+    ORDER_ID_PUBLISHING_ORDER_CANCELLED_EVENT("Publishing OrderCancelledEvent for Oder id: {0} with failure " +
+            "messages: {1}."),
 
     ORDER_ERROR_WHILE_SENDING_REQUEST_AVRO("Error while sending {0} message {1} to topic {2}"),
     ORDER_ERROR_MSG_SENDING_REQ_AVRO_KAFKA("Error while sending {0} message to Kafka. orderId {1}, error: {2}"),

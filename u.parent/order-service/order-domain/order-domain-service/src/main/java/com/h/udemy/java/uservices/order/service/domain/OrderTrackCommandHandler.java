@@ -32,7 +32,7 @@ public class OrderTrackCommandHandler {
         final TrackingId trackingId = new TrackingId(trackOrderQuery.getOrderTrackingId());
         Optional<Order> orderOp = IOrderRepository.findByTrackingId(trackingId);
         if(orderOp.isEmpty()) {
-            final String msg = Messages.ORDER_TRACKING_ID_NOT_FOUND.get() + trackingId;
+            final String msg = Messages.ERR_ORDER_TRACKING_ID_NOT_FOUND.get() + trackingId;
             log.warn(msg);
             throw new OrderNotFoundException(msg);
         }
