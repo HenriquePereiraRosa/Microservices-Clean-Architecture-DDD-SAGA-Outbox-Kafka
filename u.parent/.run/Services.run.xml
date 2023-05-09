@@ -2,6 +2,8 @@
   <configuration default="false" name="Services" type="CompoundRunConfigurationType">
     <toRun name="CustomerServiceApi" type="Application" />
     <toRun name="OrderServiceApi" type="Application" />
+    <toRun name="PaymentServiceApi" type="Application" />
+    <toRun name="RestaurantServiceApi" type="Application" />
     <method v="2" />
   </configuration>
 </component>

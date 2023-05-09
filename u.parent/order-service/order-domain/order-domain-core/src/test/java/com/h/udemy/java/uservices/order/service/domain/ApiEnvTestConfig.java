@@ -12,7 +12,8 @@ import javax.annotation.PostConstruct;
 import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.APP_NAME_DESCRIPTION;
 
 @Slf4j
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = BeanTestConfig.class,
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class ApiEnvTestConfig {
     public ObjectMapper mapper = new ObjectMapper();
 
