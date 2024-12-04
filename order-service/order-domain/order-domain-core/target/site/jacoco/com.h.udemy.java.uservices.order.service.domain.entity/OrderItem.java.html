@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderItem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-domain-core</a> &gt; <a href="index.source.html" class="el_package">com.h.udemy.java.uservices.order.service.domain.entity</a> &gt; <span class="el_source">OrderItem.java</span></div><h1>OrderItem.java</h1><pre class="source lang-java linenums">package com.h.udemy.java.uservices.order.service.domain.entity;
+
+import com.h.udemy.java.uservices.domain.entity.BaseEntity;
+import com.h.udemy.java.uservices.domain.valueobject.Money;
+import com.h.udemy.java.uservices.domain.valueobject.OrderId;
+import com.h.udemy.java.uservices.order.service.domain.valueobject.OrderItemId;
+
+import java.math.BigDecimal;
+import java.util.UUID;
+
+public class OrderItem extends BaseEntity&lt;OrderItemId&gt; {
+    private  OrderId orderId;
+    private final Product product;
+    private final int quantity;
+    private final Money price;
+
+<span class="fc" id="L17">    private OrderItem(Builder builder) {</span>
+<span class="fc" id="L18">        super.setId(builder.orderItemId);</span>
+<span class="fc" id="L19">        product = builder.product;</span>
+<span class="fc" id="L20">        quantity = builder.quantity;</span>
+<span class="fc" id="L21">        price = builder.price;</span>
+<span class="fc" id="L22">    }</span>
+    public static Builder builder() {
+<span class="fc" id="L24">        return new Builder();</span>
+    }
+
+    public OrderId getOrderId() {
+<span class="nc" id="L28">        return orderId;</span>
+    }
+
+    public void setOrderId(OrderId orderId) {
+<span class="nc" id="L32">        this.orderId = orderId;</span>
+<span class="nc" id="L33">    }</span>
+
+    public Product getProduct() {
+<span class="nc" id="L36">        return product;</span>
+    }
+
+    public int getQuantity() {
+<span class="nc" id="L40">        return quantity;</span>
+    }
+
+    public Money getPrice() {
+<span class="nc" id="L44">        return price;</span>
+    }
+
+    public Money getSubtotal() {
+<span class="fc" id="L48">        return price.multiply(quantity);</span>
+    }
+
+    boolean isPriceValid() {
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        return price.isGreaterThanZero()</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">                &amp;&amp; price.equals(product.getPrice())</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">                &amp;&amp; price.multiply(quantity).equals(getSubtotal());</span>
+    }
+
+    void initializeOrderItem(OrderId orderId, OrderItemId orderItemId) {
+<span class="fc" id="L58">        this.orderId = orderId;</span>
+<span class="fc" id="L59">        super.setId(orderItemId);</span>
+<span class="fc" id="L60">    }</span>
+
+    public static final class Builder {
+        private OrderItemId orderItemId;
+        private Product product;
+        private int quantity;
+        private Money price;
+
+        private Builder() {
+        }
+
+        public static Builder builder() {
+<span class="nc" id="L72">            return new Builder();</span>
+        }
+
+        public Builder orderItemId(OrderItemId val) {
+<span class="fc" id="L76">            orderItemId = val;</span>
+<span class="fc" id="L77">            return this;</span>
+        }
+
+        public Builder product(Product val) {
+<span class="fc" id="L81">            product = val;</span>
+<span class="fc" id="L82">            return this;</span>
+        }
+
+        public Builder product(UUID val) {
+<span class="nc" id="L86">            product = new Product(val);</span>
+<span class="nc" id="L87">            return this;</span>
+        }
+
+        public Builder quantity(int val) {
+<span class="fc" id="L91">            quantity = val;</span>
+<span class="fc" id="L92">            return this;</span>
+        }
+
+        public Builder price(Money val) {
+<span class="fc" id="L96">            price = val;</span>
+<span class="fc" id="L97">            return this;</span>
+        }
+
+        public Builder price(BigDecimal val) {
+<span class="nc" id="L101">            price = new Money(val);</span>
+<span class="nc" id="L102">            return this;</span>
+        }
+
+        public OrderItem build() {
+<span class="fc" id="L106">            return new OrderItem(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaymentCompletedKafkaMessagePublisher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">payment-messaging</a> &gt; <a href="index.source.html" class="el_package">com.h.udemy.java.uservices.payment.service.messaging.publisher.kafka</a> &gt; <span class="el_source">PaymentCompletedKafkaMessagePublisher.java</span></div><h1>PaymentCompletedKafkaMessagePublisher.java</h1><pre class="source lang-java linenums">package com.h.udemy.java.uservices.payment.service.messaging.publisher.kafka;
+
+import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentResponseAvroModel;
+import com.h.udemy.java.uservices.kafka.producer.KafkaMessageHelper;
+import com.h.udemy.java.uservices.kafka.producer.service.impl.KafkaProducer;
+import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCompletedEvent;
+import com.h.udemy.java.uservices.payment.domain.service.config.PaymentServiceConfigData;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.IPaymentCompletedMessagePublisher;
+import com.h.udemy.java.uservices.payment.service.messaging.mapper.PaymentMessagingDataMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.EVENT_ERR_SENT_TO_KAFKA;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.EVENT_RECEIVED;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.EVENT_SENT_TO_KAFKA;
+
+<span class="nc" id="L17">@Slf4j</span>
+@Component
+public class PaymentCompletedKafkaMessagePublisher implements IPaymentCompletedMessagePublisher {
+
+    public static final String AVRO_MODEL_NAME = &quot;PaymentResponseAvroModel&quot;;
+    public static final String TARGET_NAME = &quot;OrderId&quot;;
+    public static final String EVENT_NAME = &quot;PaymentCompletedEvent&quot;;
+
+    private final PaymentMessagingDataMapper mapper;
+    private final KafkaProducer&lt;String, PaymentResponseAvroModel&gt; kafkaProducer;
+    private final PaymentServiceConfigData paymentServiceConfigData;
+    private final KafkaMessageHelper kafkaMessageHelper;
+
+
+    public PaymentCompletedKafkaMessagePublisher(PaymentMessagingDataMapper mapper,
+                                                 KafkaProducer&lt;String, PaymentResponseAvroModel&gt; kafkaProducer,
+                                                 PaymentServiceConfigData paymentServiceConfigData,
+<span class="nc" id="L34">                                                 KafkaMessageHelper kafkaMessageHelper) {</span>
+<span class="nc" id="L35">        this.mapper = mapper;</span>
+<span class="nc" id="L36">        this.kafkaProducer = kafkaProducer;</span>
+<span class="nc" id="L37">        this.paymentServiceConfigData = paymentServiceConfigData;</span>
+<span class="nc" id="L38">        this.kafkaMessageHelper = kafkaMessageHelper;</span>
+<span class="nc" id="L39">    }</span>
+
+    @Override
+    public void publish(PaymentCompletedEvent domainEvent) {
+<span class="nc" id="L43">        String orderId = domainEvent.getPayment().getOrderId().getValue().toString();</span>
+
+<span class="nc" id="L45">        log.info(EVENT_RECEIVED.build(EVENT_NAME, TARGET_NAME, orderId));</span>
+
+        try {
+<span class="nc" id="L48">            PaymentResponseAvroModel avroModel = mapper.paymentCompletedEventToPaymentResponseAvroModel(domainEvent);</span>
+
+<span class="nc" id="L50">            kafkaProducer.send(paymentServiceConfigData.getPaymentRequestTopicName(),</span>
+                    orderId,
+                    avroModel,
+<span class="nc" id="L53">                    kafkaMessageHelper.getKafkaCallback(paymentServiceConfigData.getPaymentRequestTopicName(),</span>
+                            avroModel,
+                            orderId,
+                            AVRO_MODEL_NAME));
+
+<span class="nc" id="L58">            log.info(EVENT_SENT_TO_KAFKA.build(AVRO_MODEL_NAME, TARGET_NAME, orderId));</span>
+<span class="nc" id="L59">        } catch (Exception e) {</span>
+<span class="nc" id="L60">            log.info(EVENT_ERR_SENT_TO_KAFKA.build(AVRO_MODEL_NAME, TARGET_NAME, orderId, e.getMessage()));</span>
+<span class="nc" id="L61">        }</span>
+<span class="nc" id="L62">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

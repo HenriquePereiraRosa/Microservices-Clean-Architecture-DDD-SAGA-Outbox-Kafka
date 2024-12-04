@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RestaurantDataAccessMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-dataaccess</a> &gt; <a href="index.source.html" class="el_package">com.h.udemy.java.uservices.order.service.dataaccess.restaurant.mapper</a> &gt; <span class="el_source">RestaurantDataAccessMapper.java</span></div><h1>RestaurantDataAccessMapper.java</h1><pre class="source lang-java linenums">package com.h.udemy.java.uservices.order.service.dataaccess.restaurant.mapper;
+
+import com.h.udemy.java.uservices.dataaccess.restaurant.entity.RestaurantEntity;
+import com.h.udemy.java.uservices.dataaccess.restaurant.exception.RestaurantDataAccessException;
+import com.h.udemy.java.uservices.domain.messages.Messages;
+import com.h.udemy.java.uservices.domain.valueobject.Money;
+import com.h.udemy.java.uservices.domain.valueobject.ProductId;
+import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
+import com.h.udemy.java.uservices.order.service.domain.entity.Product;
+import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+
+@Component
+<span class="fc" id="L19">public class RestaurantDataAccessMapper {</span>
+
+
+    public List&lt;UUID&gt; restaurantToRestaurantProducts(Restaurant restaurant) {
+<span class="nc" id="L23">        return restaurant.getProducts().stream()</span>
+<span class="nc" id="L24">                .map(product -&gt; product.getId().getValue())</span>
+<span class="nc" id="L25">                .collect(Collectors.toList());</span>
+    }
+
+    public Restaurant restaurantEntityToRestaurant(List&lt;RestaurantEntity&gt; restaurantEntities) {
+<span class="nc" id="L29">        RestaurantEntity restaurantEntity =</span>
+                restaurantEntities
+<span class="nc" id="L31">                        .stream()</span>
+<span class="nc" id="L32">                        .findFirst()</span>
+<span class="nc" id="L33">                        .orElseThrow(() -&gt;</span>
+<span class="nc" id="L34">                        new RestaurantDataAccessException(Messages.ERR_RESTAURANT_NOT_FOUND.get()));</span>
+
+<span class="nc" id="L36">        List&lt;Product&gt; restaurantProducts = restaurantEntities.stream().map(entity -&gt;</span>
+<span class="nc" id="L37">                new Product(new ProductId(entity.getProductId()), entity.getProductName(),</span>
+<span class="nc" id="L38">                        new Money(entity.getProductPrice()))).toList();</span>
+
+<span class="nc" id="L40">        return Restaurant.builder()</span>
+<span class="nc" id="L41">                .restaurantId(new RestaurantId(restaurantEntity.getRestaurantId()))</span>
+<span class="nc" id="L42">                .products(restaurantProducts)</span>
+<span class="nc" id="L43">                .active(restaurantEntity.getRestaurantActive())</span>
+<span class="nc" id="L44">                .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

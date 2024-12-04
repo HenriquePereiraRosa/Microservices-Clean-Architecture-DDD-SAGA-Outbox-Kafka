@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Payment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">payment-domain-core</a> &gt; <a href="index.source.html" class="el_package">com.h.udemy.java.uservices.payment.domain.core.entity</a> &gt; <span class="el_source">Payment.java</span></div><h1>Payment.java</h1><pre class="source lang-java linenums">package com.h.udemy.java.uservices.payment.domain.core.entity;
+
+import com.h.udemy.java.uservices.domain.entity.AggregateRoot;
+import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
+import com.h.udemy.java.uservices.domain.valueobject.Money;
+import com.h.udemy.java.uservices.domain.valueobject.OrderId;
+import com.h.udemy.java.uservices.domain.valueobject.PaymentStatus;
+import com.h.udemy.java.uservices.payment.domain.core.valueobject.PaymentId;
+import lombok.Getter;
+
+import java.time.ZonedDateTime;
+import java.util.UUID;
+
+import static com.h.udemy.java.uservices.domain.Constants.ZONED_UTC;
+import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_PAYMENT_TOTAL_PRICE_MUST_BE_GRATER_THAN_ZERO;
+
+@Getter
+public class Payment extends AggregateRoot&lt;PaymentId&gt; {
+
+<span class="fc" id="L20">    private final OrderId orderId;</span>
+<span class="fc" id="L21">    private final CustomerId customerId;</span>
+<span class="fc" id="L22">    private final Money price;</span>
+<span class="fc" id="L23">    private PaymentStatus paymentStatus;</span>
+<span class="fc" id="L24">    private ZonedDateTime createdAt;</span>
+
+<span class="fc" id="L26">    private Payment(Builder builder) {</span>
+<span class="fc" id="L27">        setId(builder.paymentId);</span>
+<span class="fc" id="L28">        orderId = builder.orderId;</span>
+<span class="fc" id="L29">        customerId = builder.customerId;</span>
+<span class="fc" id="L30">        price = builder.price;</span>
+<span class="fc" id="L31">        paymentStatus = builder.paymentStatus;</span>
+<span class="fc" id="L32">        createdAt = builder.createdAt;</span>
+<span class="fc" id="L33">    }</span>
+
+    public static Builder builder() {
+<span class="fc" id="L36">        return new Builder();</span>
+    }
+
+    // InnerBuilder
+    public static final class Builder {
+        private PaymentId paymentId;
+        private OrderId orderId;
+        private CustomerId customerId;
+        private Money price;
+        private PaymentStatus paymentStatus;
+        private ZonedDateTime createdAt;
+
+        private Builder() {
+        }
+
+        public static Builder builder() {
+<span class="nc" id="L52">            return new Builder();</span>
+        }
+
+        public Builder paymentId(PaymentId val) {
+<span class="nc" id="L56">            paymentId = val;</span>
+<span class="nc" id="L57">            return this;</span>
+        }
+
+        public Builder orderId(OrderId val) {
+<span class="fc" id="L61">            orderId = val;</span>
+<span class="fc" id="L62">            return this;</span>
+        }
+
+        public Builder customerId(CustomerId val) {
+<span class="fc" id="L66">            customerId = val;</span>
+<span class="fc" id="L67">            return this;</span>
+        }
+
+        public Builder price(Money val) {
+<span class="fc" id="L71">            price = val;</span>
+<span class="fc" id="L72">            return this;</span>
+        }
+
+        public Builder paymentStatus(PaymentStatus val) {
+<span class="nc" id="L76">            paymentStatus = val;</span>
+<span class="nc" id="L77">            return this;</span>
+        }
+
+        public Builder createdAt(ZonedDateTime val) {
+<span class="nc" id="L81">            createdAt = val;</span>
+<span class="nc" id="L82">            return this;</span>
+        }
+
+        public Payment build() {
+<span class="fc" id="L86">            return new Payment(this);</span>
+        }
+    }
+
+
+    public void initializePayment() {
+<span class="fc" id="L92">        setId(new PaymentId(UUID.randomUUID()));</span>
+<span class="fc" id="L93">        createdAt = ZonedDateTime.now(ZONED_UTC);</span>
+<span class="fc" id="L94">    }</span>
+
+    public String validatePaymentReturningFailuresMsgs() {
+<span class="pc bpc" id="L97" title="1 of 4 branches missed.">        if(price == null || !price.isGreaterThanZero()) {</span>
+<span class="fc" id="L98">            return ERR_PAYMENT_TOTAL_PRICE_MUST_BE_GRATER_THAN_ZERO.get();</span>
+        }
+
+<span class="fc" id="L101">        return null;</span>
+    }
+
+    public void updateStatus(PaymentStatus paymentStatus) {
+<span class="fc" id="L105">        this.paymentStatus = paymentStatus;</span>
+<span class="fc" id="L106">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

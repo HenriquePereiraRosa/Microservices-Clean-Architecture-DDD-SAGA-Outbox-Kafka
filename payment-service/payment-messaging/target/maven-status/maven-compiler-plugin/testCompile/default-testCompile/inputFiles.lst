@@ -1,0 +1,8 @@
+C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\payment-service\payment-messaging\src\test\java\com\h\udemy\java\uservices\payment\service\messaging\test\config\BeanTestConfig.java
+C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\payment-service\payment-messaging\src\test\java\com\h\udemy\java\uservices\payment\service\messaging\test\util\factory\PaymentFactory.java
+C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\payment-service\payment-messaging\src\test\java\com\h\udemy\java\uservices\payment\service\messaging\test\util\factory\PaymentRequestFactory.java
+C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\payment-service\payment-messaging\src\test\java\com\h\udemy\java\uservices\payment\service\messaging\test\config\ApiEnvTest.java
+C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\payment-service\payment-messaging\src\test\java\com\h\udemy\java\uservices\payment\service\messaging\test\util\factory\CreditEntryFactory.java
+C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\payment-service\payment-messaging\src\test\java\com\h\udemy\java\uservices\payment\service\messaging\mapper\PaymentMessagingDataMapperTest.java
+C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\payment-service\payment-messaging\src\test\java\com\h\udemy\java\uservices\payment\service\messaging\test\util\factory\CreditHistoryFactory.java
+C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\payment-service\payment-messaging\src\test\java\com\h\udemy\java\uservices\payment\service\messaging\test\util\factory\PaymentEventFactory.java

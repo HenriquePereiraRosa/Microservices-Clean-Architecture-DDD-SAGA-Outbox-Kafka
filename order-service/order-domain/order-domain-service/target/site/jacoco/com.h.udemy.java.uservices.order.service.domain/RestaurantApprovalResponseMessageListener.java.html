@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RestaurantApprovalResponseMessageListener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-domain-service</a> &gt; <a href="index.source.html" class="el_package">com.h.udemy.java.uservices.order.service.domain</a> &gt; <span class="el_source">RestaurantApprovalResponseMessageListener.java</span></div><h1>RestaurantApprovalResponseMessageListener.java</h1><pre class="source lang-java linenums">package com.h.udemy.java.uservices.order.service.domain;
+
+import com.h.udemy.java.uservices.order.service.domain.dto.message.RestaurantApprovalResponse;
+import com.h.udemy.java.uservices.order.service.domain.event.OrderCancelledEvent;
+import com.h.udemy.java.uservices.order.service.domain.ports.input.message.listener.restaurantApproval.IRestaurantApprovalMessageListener;
+import com.h.udemy.java.uservices.order.service.domain.saga.OrderApprovalSaga;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_ID_APPROVED;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_ID_PUBLISHING_ORDER_CANCELLED_EVENT;
+import static com.h.udemy.java.uservices.order.service.domain.entity.Order.FAILURE_MESSAGE_DELIMITER;
+
+
+<span class="fc" id="L16">@Slf4j</span>
+@Validated
+@Service
+public class RestaurantApprovalResponseMessageListener implements IRestaurantApprovalMessageListener {
+
+    private final OrderApprovalSaga orderApprovalSaga;
+
+<span class="fc" id="L23">    public RestaurantApprovalResponseMessageListener(OrderApprovalSaga orderApprovalSaga) {</span>
+<span class="fc" id="L24">        this.orderApprovalSaga = orderApprovalSaga;</span>
+<span class="fc" id="L25">    }</span>
+
+    @Override
+    public void orderApproval(RestaurantApprovalResponse restaurantApprovalResponse) {
+<span class="nc" id="L29">        orderApprovalSaga.process(restaurantApprovalResponse);</span>
+<span class="nc" id="L30">        log.info(ORDER_ID_APPROVED.build(restaurantApprovalResponse.getOrderId()));</span>
+<span class="nc" id="L31">    }</span>
+
+    @Override
+    public void orderRejected(RestaurantApprovalResponse restaurantApprovalResponse) {
+<span class="nc" id="L35">        OrderCancelledEvent domainEvent = orderApprovalSaga.rollback(restaurantApprovalResponse);</span>
+
+<span class="nc" id="L37">        log.info(ORDER_ID_PUBLISHING_ORDER_CANCELLED_EVENT.build(restaurantApprovalResponse.getOrderId(),</span>
+<span class="nc" id="L38">                        String.join(FAILURE_MESSAGE_DELIMITER, restaurantApprovalResponse.getFailureMessages())));</span>
+<span class="nc" id="L39">        domainEvent.fire();</span>
+<span class="nc" id="L40">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

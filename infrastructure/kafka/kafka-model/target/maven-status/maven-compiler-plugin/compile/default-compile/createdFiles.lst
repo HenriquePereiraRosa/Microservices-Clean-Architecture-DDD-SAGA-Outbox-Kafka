@@ -1,0 +1,14 @@
+com\h\udemy\java\uservices\kafka\order\avro\model\RestaurantApprovalRequestAvroModel.class
+com\h\udemy\java\uservices\kafka\order\avro\model\RestaurantApprovalResponseAvroModel$Builder.class
+com\h\udemy\java\uservices\kafka\order\avro\model\RestaurantOrderStatus.class
+com\h\udemy\java\uservices\kafka\order\avro\model\RestaurantApprovalResponseAvroModel.class
+com\h\udemy\java\uservices\kafka\order\avro\model\Product.class
+com\h\udemy\java\uservices\kafka\order\avro\model\PaymentRequestAvroModel$Builder.class
+com\h\udemy\java\uservices\kafka\order\avro\model\PaymentResponseAvroModel$Builder.class
+com\h\udemy\java\uservices\kafka\order\avro\model\PaymentOrderStatus.class
+com\h\udemy\java\uservices\kafka\order\avro\model\OrderApprovalStatus.class
+com\h\udemy\java\uservices\kafka\order\avro\model\PaymentStatus.class
+com\h\udemy\java\uservices\kafka\order\avro\model\PaymentResponseAvroModel.class
+com\h\udemy\java\uservices\kafka\order\avro\model\Product$Builder.class
+com\h\udemy\java\uservices\kafka\order\avro\model\RestaurantApprovalRequestAvroModel$Builder.class
+com\h\udemy\java\uservices\kafka\order\avro\model\PaymentRequestAvroModel.class

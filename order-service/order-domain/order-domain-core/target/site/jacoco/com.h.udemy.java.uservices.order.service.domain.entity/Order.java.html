@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Order.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-domain-core</a> &gt; <a href="index.source.html" class="el_package">com.h.udemy.java.uservices.order.service.domain.entity</a> &gt; <span class="el_source">Order.java</span></div><h1>Order.java</h1><pre class="source lang-java linenums">package com.h.udemy.java.uservices.order.service.domain.entity;
+
+import com.h.udemy.java.uservices.domain.entity.AggregateRoot;
+import com.h.udemy.java.uservices.domain.messages.Messages;
+import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
+import com.h.udemy.java.uservices.domain.valueobject.Money;
+import com.h.udemy.java.uservices.domain.valueobject.OrderId;
+import com.h.udemy.java.uservices.domain.valueobject.OrderStatus;
+import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
+import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
+import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainInitialStateException;
+import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainTotalPriceException;
+import com.h.udemy.java.uservices.order.service.domain.valueobject.OrderItemId;
+import com.h.udemy.java.uservices.order.service.domain.valueobject.StreetAddress;
+import com.h.udemy.java.uservices.order.service.domain.valueobject.TrackingId;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.util.CollectionUtils;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+public class Order extends AggregateRoot&lt;OrderId&gt; {
+
+    public static final String FAILURE_MESSAGE_DELIMITER = &quot;,&quot;;
+
+    private final CustomerId customerId;
+    private final RestaurantId restaurantId;
+    private final StreetAddress deliveryAddress;
+    private final Money price;
+    private final List&lt;OrderItem&gt; items;
+
+    private TrackingId trackingId;
+    private OrderStatus orderStatus;
+    private List&lt;String&gt; failureMessages;
+
+    @Autowired
+    MessageSource messageSource;
+
+<span class="fc" id="L42">    private Order(Builder builder) {</span>
+<span class="fc" id="L43">        super.setId(builder.orderId);</span>
+<span class="fc" id="L44">        customerId = builder.customerId;</span>
+<span class="fc" id="L45">        restaurantId = builder.restaurantId;</span>
+<span class="fc" id="L46">        deliveryAddress = builder.deliveryAddress;</span>
+<span class="fc" id="L47">        price = builder.price;</span>
+<span class="fc" id="L48">        trackingId = builder.trackingId;</span>
+<span class="fc" id="L49">        orderStatus = builder.orderStatus;</span>
+
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if (builder.items == null) {</span>
+<span class="nc" id="L52">            items = new ArrayList&lt;&gt;();</span>
+        } else {
+<span class="fc" id="L54">            items = builder.items;</span>
+        }
+
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if (builder.failureMessages == null) {</span>
+<span class="fc" id="L58">            failureMessages = new ArrayList&lt;&gt;();</span>
+        } else {
+<span class="nc" id="L60">            failureMessages = builder.failureMessages;</span>
+        }
+<span class="fc" id="L62">    }</span>
+
+    public static Builder builder() {
+<span class="fc" id="L65">        return new Builder();</span>
+    }
+
+    public CustomerId getCustomerId() {
+<span class="fc" id="L69">        return customerId;</span>
+    }
+
+    public RestaurantId getRestaurantId() {
+<span class="fc" id="L73">        return restaurantId;</span>
+    }
+
+    public StreetAddress getDeliveryAddress() {
+<span class="nc" id="L77">        return deliveryAddress;</span>
+    }
+
+    public Money getPrice() {
+<span class="nc" id="L81">        return price;</span>
+    }
+
+    public List&lt;OrderItem&gt; getItems() {
+<span class="nc" id="L85">        return items;</span>
+    }
+
+    public TrackingId getTrackingId() {
+<span class="fc" id="L89">        return trackingId;</span>
+    }
+
+    public OrderStatus getOrderStatus() {
+<span class="fc" id="L93">        return orderStatus;</span>
+    }
+
+    public List&lt;String&gt; getFailureMessages() {
+<span class="fc" id="L97">        return failureMessages;</span>
+    }
+    public String concatFailureMessages() {
+<span class="nc" id="L100">        return &quot;&quot;.join(FAILURE_MESSAGE_DELIMITER, getFailureMessages());</span>
+    }
+
+
+
+    public void initializeOrder() {
+<span class="fc" id="L106">        setId(new OrderId(UUID.randomUUID()));</span>
+<span class="fc" id="L107">        trackingId = new TrackingId(UUID.randomUUID());</span>
+<span class="fc" id="L108">        orderStatus = OrderStatus.PENDING;</span>
+<span class="fc" id="L109">        initializeOrderItems();</span>
+<span class="fc" id="L110">    }</span>
+
+    private void initializeOrderItems() {
+<span class="fc" id="L113">        long itemIdCounter = 1;</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        for (OrderItem orderItem : items) {</span>
+<span class="fc" id="L115">            orderItem.initializeOrderItem(super.getId(), new OrderItemId(itemIdCounter++));</span>
+<span class="fc" id="L116">        }</span>
+<span class="fc" id="L117">    }</span>
+
+    public void validateOrder() {
+<span class="fc" id="L120">        validateInitialOrder();</span>
+<span class="fc" id="L121">        validateTotalPrice();</span>
+<span class="fc" id="L122">        validateItemsPrice();</span>
+<span class="fc" id="L123">    }</span>
+
+    private void validateInitialOrder() {
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        if (orderStatus != null</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">                || getId() != null) {</span>
+<span class="fc" id="L128">            throw new OrderDomainInitialStateException();</span>
+        }
+<span class="fc" id="L130">    }</span>
+
+    private void validateTotalPrice() {
+<span class="pc bpc" id="L133" title="2 of 4 branches missed.">        if (price == null || !price.isGreaterThanZero()) {</span>
+<span class="nc" id="L134">            throw new OrderDomainTotalPriceException();</span>
+        }
+<span class="fc" id="L136">    }</span>
+
+    private void validateItemsPrice() {
+<span class="fc" id="L139">        final Money orderItemsTotal = items.stream().map(orderItem -&gt; {</span>
+<span class="fc" id="L140">            validateItemPrice(orderItem);</span>
+<span class="fc" id="L141">            return orderItem.getSubtotal();</span>
+<span class="fc" id="L142">        }).reduce(Money.ZERO, Money::add);</span>
+
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">        if (!orderItemsTotal.equals(price)) {</span>
+<span class="nc" id="L145">            throw new OrderDomainException(Messages.ERR_ORDER_TOTAL_AND_ORDER_PRICES_DIFF.get()</span>
+<span class="nc" id="L146">                    + &quot;: (price) &quot; + price.getAmount()</span>
+                    + &quot; != &quot;
+<span class="nc" id="L148">                    + &quot;(orderItemsTotal) &quot; + orderItemsTotal.getAmount());</span>
+        }
+<span class="fc" id="L150">    }</span>
+
+    private void validateItemPrice(OrderItem orderItem) {
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">        if (!orderItem.isPriceValid()) {</span>
+<span class="nc" id="L154">            throw new OrderDomainException(Messages.ERR_ORDER_ITEM_PRICE_INVALID.get()</span>
+<span class="nc" id="L155">                    + &quot;: &quot; + price.getAmount());</span>
+        }
+<span class="fc" id="L157">    }</span>
+
+    public void pay() {
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">        if (orderStatus != OrderStatus.PENDING) {</span>
+<span class="nc" id="L161">            throw new OrderDomainException(Messages.ERR_ORDER_NOT_CORRECT_STATE_F_PAY.get());</span>
+        }
+
+<span class="fc" id="L164">        orderStatus = OrderStatus.PAID;</span>
+<span class="fc" id="L165">    }</span>
+
+    public void approve() {
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">        if (orderStatus != OrderStatus.PAID) {</span>
+<span class="nc" id="L169">            throw new OrderDomainException(Messages.ERR_ORDER_NOT_CORRECT_STATE_F_APPROVE.get());</span>
+        }
+
+<span class="fc" id="L172">        orderStatus = OrderStatus.APPROVED;</span>
+<span class="fc" id="L173">    }</span>
+
+    public void initCancel(List&lt;String&gt; failureMessages) {
+<span class="nc bnc" id="L176" title="All 2 branches missed.">        if (orderStatus != OrderStatus.PAID) {</span>
+<span class="nc" id="L177">            throw new OrderDomainException(Messages.ERR_ORDER_NOT_CORRECT_STATE_F_INIT_CANCEL.get());</span>
+        }
+
+<span class="nc" id="L180">        orderStatus = OrderStatus.CANCELLING;</span>
+<span class="nc" id="L181">        updateFailureMessages(failureMessages);</span>
+<span class="nc" id="L182">    }</span>
+
+    public void cancel(List&lt;String&gt; failureMessages) {
+<span class="nc bnc" id="L185" title="All 4 branches missed.">        if (orderStatus != OrderStatus.CANCELLING || orderStatus != OrderStatus.PENDING) {</span>
+<span class="nc" id="L186">            throw new OrderDomainException(Messages.ERR_ORDER_NOT_CORRECT_STATE_F_CANCEL.get());</span>
+        }
+
+<span class="nc" id="L189">        orderStatus = OrderStatus.CANCELLED;</span>
+<span class="nc" id="L190">        updateFailureMessages(failureMessages);</span>
+<span class="nc" id="L191">    }</span>
+
+    private void updateFailureMessages(List&lt;String&gt; failureMessages) {
+<span class="nc bnc" id="L194" title="All 2 branches missed.">        if (!CollectionUtils.isEmpty(failureMessages)) {</span>
+<span class="nc" id="L195">            this.failureMessages.addAll(failureMessages.stream()</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">                    .filter(message -&gt; !message.isEmpty())</span>
+<span class="nc" id="L197">                    .toList());</span>
+        }
+<span class="nc" id="L199">    }</span>
+
+    // Inner builder
+    public static final class Builder {
+        private OrderId orderId;
+        private CustomerId customerId;
+        private RestaurantId restaurantId;
+        private StreetAddress deliveryAddress;
+        private Money price;
+        private List&lt;OrderItem&gt; items;
+        private TrackingId trackingId;
+        private OrderStatus orderStatus;
+        private List&lt;String&gt; failureMessages;
+
+        private Builder() {
+        }
+
+        public static Builder builder() {
+<span class="nc" id="L217">            return new Builder();</span>
+        }
+
+        public Builder orderId(OrderId val) {
+<span class="nc" id="L221">            orderId = val;</span>
+<span class="nc" id="L222">            return this;</span>
+        }
+
+        public Builder customerId(CustomerId val) {
+<span class="fc" id="L226">            customerId = val;</span>
+<span class="fc" id="L227">            return this;</span>
+        }
+
+        public Builder customerId(UUID val) {
+<span class="nc" id="L231">            customerId = new CustomerId(val);</span>
+<span class="nc" id="L232">            return this;</span>
+        }
+
+        public Builder restaurantId(RestaurantId val) {
+<span class="fc" id="L236">            restaurantId = val;</span>
+<span class="fc" id="L237">            return this;</span>
+        }
+
+        public Builder restaurantId(UUID val) {
+<span class="nc" id="L241">            restaurantId = new RestaurantId(val);</span>
+<span class="nc" id="L242">            return this;</span>
+        }
+
+        public Builder deliveryAddress(StreetAddress val) {
+<span class="fc" id="L246">            deliveryAddress = val;</span>
+<span class="fc" id="L247">            return this;</span>
+        }
+
+        public Builder price(Money val) {
+<span class="fc" id="L251">            price = val;</span>
+<span class="fc" id="L252">            return this;</span>
+        }
+
+        public Builder price(BigDecimal val) {
+<span class="nc" id="L256">            price = new Money(val);</span>
+<span class="nc" id="L257">            return this;</span>
+        }
+
+        public Builder items(List&lt;OrderItem&gt; val) {
+<span class="fc" id="L261">            items = val;</span>
+<span class="fc" id="L262">            return this;</span>
+        }
+
+        public Builder trackingId(TrackingId val) {
+<span class="fc" id="L266">            trackingId = val;</span>
+<span class="fc" id="L267">            return this;</span>
+        }
+
+        public Builder orderStatus(OrderStatus val) {
+<span class="nc" id="L271">            orderStatus = val;</span>
+<span class="nc" id="L272">            return this;</span>
+        }
+
+        public Builder failureMessages(List&lt;String&gt; val) {
+<span class="nc" id="L276">            failureMessages = val;</span>
+<span class="nc" id="L277">            return this;</span>
+        }
+
+        public Order build() {
+<span class="fc" id="L281">            return new Order(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

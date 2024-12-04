@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Money.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">common-domain</a> &gt; <a href="index.source.html" class="el_package">com.h.udemy.java.uservices.domain.valueobject</a> &gt; <span class="el_source">Money.java</span></div><h1>Money.java</h1><pre class="source lang-java linenums">package com.h.udemy.java.uservices.domain.valueobject;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Objects;
+
+public class Money {
+    private final BigDecimal amount;
+
+<span class="fc" id="L10">    public static final Money ZERO = new Money(BigDecimal.ZERO);</span>
+
+<span class="fc" id="L12">    public Money(BigDecimal pAmount) {</span>
+<span class="fc" id="L13">        this.amount = setScale(pAmount);</span>
+<span class="fc" id="L14">    }</span>
+<span class="nc" id="L15">    public Money(double pAmount) {</span>
+<span class="nc" id="L16">        this.amount = setScale(BigDecimal.valueOf(pAmount));</span>
+<span class="nc" id="L17">    }</span>
+
+    public BigDecimal getAmount() {
+<span class="fc" id="L20">        return this.amount;</span>
+    }
+
+    public boolean isGreaterThanZero() {
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">        return this.amount != null</span>
+<span class="pc bpc" id="L25" title="1 of 2 branches missed.">                &amp;&amp; this.amount.compareTo(BigDecimal.ZERO) &gt; 0;</span>
+    }
+
+    public boolean isGreaterThan(Money pMoney) {
+<span class="pc bpc" id="L29" title="1 of 2 branches missed.">        return this.amount != null</span>
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">                &amp;&amp; this.amount.compareTo(pMoney.getAmount()) &gt; 0;</span>
+    }
+
+    public boolean isEqual(BigDecimal price) {
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (price == null) return false;</span>
+<span class="fc" id="L35">        price = this.setScale(price);</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        return this.amount.compareTo(price) == 0;</span>
+    }
+
+    public Money add(Money pMoney) {
+<span class="fc" id="L40">        return new Money(setScale(</span>
+<span class="fc" id="L41">                this.amount.add(pMoney.getAmount())</span>
+        ));
+    }
+
+    public Money substract(Money pMoney) {
+<span class="fc" id="L46">        return new Money(setScale(</span>
+<span class="fc" id="L47">                this.amount.subtract(pMoney.getAmount())</span>
+        ));
+    }
+
+    public Money multiply(int pMultiplier) {
+<span class="fc" id="L52">        return new Money(setScale(</span>
+<span class="fc" id="L53">                this.amount.multiply(new BigDecimal(pMultiplier))</span>
+        ));
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L61" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="fc" id="L62">        Money money = (Money) o;</span>
+<span class="fc" id="L63">        return this.isEqual(money.getAmount());</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L68">        return Objects.hash(amount);</span>
+    }
+
+    private BigDecimal setScale(BigDecimal pInput) {
+<span class="fc" id="L72">        return pInput.setScale(2, RoundingMode.HALF_EVEN);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

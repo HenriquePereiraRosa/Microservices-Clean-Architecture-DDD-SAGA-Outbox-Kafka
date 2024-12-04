@@ -1,0 +1,4 @@
+com\h\udemy\java\uservices\order\service\domain\ApiEnvTestConfig.class
+com\h\udemy\java\uservices\order\service\domain\BeanTestConfig.class
+com\h\udemy\java\uservices\order\service\domain\entity\OrderTest.class
+com\h\udemy\java\uservices\order\service\domain\exception\messages\I18nTest.class

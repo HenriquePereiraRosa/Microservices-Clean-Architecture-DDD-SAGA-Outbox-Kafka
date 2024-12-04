@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaymentProcessor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">payment-messaging</a> &gt; <a href="index.source.html" class="el_package">com.h.udemy.java.uservices.payment.service.messaging.listener.kafka.strategy</a> &gt; <span class="el_source">PaymentProcessor.java</span></div><h1>PaymentProcessor.java</h1><pre class="source lang-java linenums">package com.h.udemy.java.uservices.payment.service.messaging.listener.kafka.strategy;
+
+import com.h.udemy.java.uservices.domain.valueobject.PaymentOrderStatus;
+import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentRequestAvroModel;
+import com.h.udemy.java.uservices.payment.domain.service.PaymentRequestMessageListener;
+import com.h.udemy.java.uservices.payment.domain.service.dto.PaymentRequest;
+import com.h.udemy.java.uservices.payment.service.messaging.mapper.PaymentMessagingDataMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.PAYMENT_ERR_STATUS_UNSUPPORTED;
+
+<span class="nc" id="L16">@Slf4j</span>
+@Component
+public class PaymentProcessor {
+<span class="nc" id="L19">    private final Map&lt;PaymentOrderStatus, IPaymentOrderStatusStrategy&gt; strategies = new HashMap&lt;&gt;();</span>
+    private final PaymentRequestMessageListener paymentRequestListener;
+    private final PaymentMessagingDataMapper mapper;
+
+    public PaymentProcessor(PaymentRequestMessageListener paymentRequestListener,
+<span class="nc" id="L24">                            PaymentMessagingDataMapper mapper) {</span>
+<span class="nc" id="L25">        this.paymentRequestListener = paymentRequestListener;</span>
+<span class="nc" id="L26">        this.mapper = mapper;</span>
+
+<span class="nc" id="L28">        strategies.put(PaymentOrderStatus.PENDING, new PaymentCompletedOrderStatusStrategy());</span>
+<span class="nc" id="L29">        strategies.put(PaymentOrderStatus.CANCELLED, new PaymentCancelledOrderStatusStrategy());</span>
+<span class="nc" id="L30">    }</span>
+
+    public void processPayment(PaymentRequestAvroModel paymentRequestAvroModel) {
+<span class="nc" id="L33">        PaymentRequest paymentRequest = mapper.paymentRequestAvroModelToPaymentRequest(paymentRequestAvroModel);</span>
+<span class="nc" id="L34">        PaymentOrderStatus paymentOrderStatus = paymentRequest.getPaymentOrderStatus();</span>
+<span class="nc" id="L35">        IPaymentOrderStatusStrategy paymentOrderStatusStrategy = strategies.get(paymentOrderStatus);</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        if (paymentOrderStatusStrategy != null) {</span>
+<span class="nc" id="L37">            paymentOrderStatusStrategy.processPayment(paymentRequestListener, paymentRequest);</span>
+        } else {
+<span class="nc" id="L39">            log.error(PAYMENT_ERR_STATUS_UNSUPPORTED.build(paymentOrderStatus));</span>
+        }
+<span class="nc" id="L41">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

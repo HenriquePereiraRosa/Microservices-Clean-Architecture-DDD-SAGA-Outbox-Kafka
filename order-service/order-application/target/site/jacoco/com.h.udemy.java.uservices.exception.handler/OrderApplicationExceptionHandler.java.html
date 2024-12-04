@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderApplicationExceptionHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">order-application</a> &gt; <a href="index.source.html" class="el_package">com.h.udemy.java.uservices.exception.handler</a> &gt; <span class="el_source">OrderApplicationExceptionHandler.java</span></div><h1>OrderApplicationExceptionHandler.java</h1><pre class="source lang-java linenums">package com.h.udemy.java.uservices.exception.handler;
+
+import com.h.udemy.java.uservices.application.exception.handler.GlobalExceptionHandler;
+import com.h.udemy.java.uservices.application.exception.handler.model.ErrorDTO;
+import com.h.udemy.java.uservices.order.service.domain.exception.CustomerNotFoundException;
+import com.h.udemy.java.uservices.order.service.domain.exception.OrderCouldNotBeSavedException;
+import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
+import com.h.udemy.java.uservices.order.service.domain.exception.OrderNotFoundException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+<span class="fc" id="L16">@Slf4j</span>
+@ControllerAdvice
+<span class="fc" id="L18">public class OrderApplicationExceptionHandler extends GlobalExceptionHandler {</span>
+
+    @ExceptionHandler(value = {OrderDomainException.class})
+    public ResponseEntity handleOrderDomainException(OrderDomainException orderDomainException) {
+
+<span class="fc" id="L23">        log.error(orderDomainException.getMessage(), orderDomainException);</span>
+
+<span class="fc" id="L25">        ErrorDTO errorbody = ErrorDTO.builder()</span>
+<span class="fc" id="L26">                .code(HttpStatus.BAD_REQUEST.getReasonPhrase())</span>
+<span class="fc" id="L27">                .message(orderDomainException.getMessage())</span>
+<span class="fc" id="L28">                .build();</span>
+
+<span class="fc" id="L30">        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorbody);</span>
+    }
+
+    @ExceptionHandler(value = {OrderNotFoundException.class})
+    public ResponseEntity handleOrderNotFoundException(OrderNotFoundException orderNotFoundException) {
+
+<span class="fc" id="L36">        log.error(orderNotFoundException.getMessage(), orderNotFoundException);</span>
+
+<span class="fc" id="L38">        ErrorDTO errorbody = ErrorDTO.builder()</span>
+<span class="fc" id="L39">                .code(HttpStatus.NOT_FOUND.getReasonPhrase())</span>
+<span class="fc" id="L40">                .message(orderNotFoundException.getMessage())</span>
+<span class="fc" id="L41">                .build();</span>
+<span class="fc" id="L42">        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorbody);</span>
+    }
+
+    @ExceptionHandler(value = {OrderCouldNotBeSavedException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity handleOrderCouldNotBeSavedException(OrderCouldNotBeSavedException exception) {
+
+<span class="fc" id="L49">        log.error(exception.getMessage(), exception);</span>
+
+<span class="fc" id="L51">        ErrorDTO errorbody = ErrorDTO.builder()</span>
+<span class="fc" id="L52">                .code(HttpStatus.BAD_REQUEST.getReasonPhrase())</span>
+<span class="fc" id="L53">                .message(exception.getMessage())</span>
+<span class="fc" id="L54">                .build();</span>
+
+<span class="fc" id="L56">        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorbody);</span>
+    }
+
+    @ExceptionHandler(value = {CustomerNotFoundException.class})
+    public ResponseEntity handleCustomerNotFoundException(CustomerNotFoundException exception) {
+
+<span class="fc" id="L62">        log.error(exception.getMessage(), exception);</span>
+
+<span class="fc" id="L64">        ErrorDTO errorbody = ErrorDTO.builder()</span>
+<span class="fc" id="L65">                .code(HttpStatus.BAD_REQUEST.getReasonPhrase())</span>
+<span class="fc" id="L66">                .message(exception.getMessage())</span>
+<span class="fc" id="L67">                .build();</span>
+
+<span class="fc" id="L69">        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorbody);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

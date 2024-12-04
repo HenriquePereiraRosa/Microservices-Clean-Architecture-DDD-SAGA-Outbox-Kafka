@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.h.udemy.java.uservices.exception.handler.OrderApplicationExceptionHandlerTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.078 s - in com.h.udemy.java.uservices.exception.handler.OrderApplicationExceptionHandlerTest

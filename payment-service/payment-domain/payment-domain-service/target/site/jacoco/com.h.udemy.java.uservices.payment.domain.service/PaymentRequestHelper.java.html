@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaymentRequestHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">payment-domain-service</a> &gt; <a href="index.source.html" class="el_package">com.h.udemy.java.uservices.payment.domain.service</a> &gt; <span class="el_source">PaymentRequestHelper.java</span></div><h1>PaymentRequestHelper.java</h1><pre class="source lang-java linenums">package com.h.udemy.java.uservices.payment.domain.service;
+
+import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
+import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
+import com.h.udemy.java.uservices.payment.domain.core.PaymentDomainService;
+import com.h.udemy.java.uservices.payment.domain.core.entity.CreditEntry;
+import com.h.udemy.java.uservices.payment.domain.core.entity.CreditHistory;
+import com.h.udemy.java.uservices.payment.domain.core.entity.Payment;
+import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCancelledEvent;
+import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCompletedEvent;
+import com.h.udemy.java.uservices.payment.domain.core.event.PaymentEvent;
+import com.h.udemy.java.uservices.payment.domain.core.event.PaymentFailedEvent;
+import com.h.udemy.java.uservices.payment.domain.service.dto.PaymentRequest;
+import com.h.udemy.java.uservices.payment.domain.service.exception.PaymentDomainServiceException;
+import com.h.udemy.java.uservices.payment.domain.service.mapper.PaymentDataMapper;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.ICreditEntryRepository;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.ICreditHistoryRepository;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.IPaymentRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import static com.h.udemy.java.uservices.domain.messages.Messages.*;
+import static java.text.MessageFormat.format;
+
+<span class="fc" id="L32">@Slf4j</span>
+@Component
+public class PaymentRequestHelper {
+
+    private static final boolean COMPLETED_EVENT = true;
+    private static final boolean CANCELLED_EVENT = false;
+
+    private final PaymentDomainService paymentDomainService;
+    private final PaymentDataMapper paymentDataMapper;
+    private final IPaymentRepository iPaymentRepository;
+    private final ICreditEntryRepository iCreditEntryRepository;
+    private final ICreditHistoryRepository iCreditHistoryRepository;
+    private final IDomainEventPublisher&lt;PaymentCompletedEvent&gt; completedEventPublisher;
+    private final IDomainEventPublisher&lt;PaymentCancelledEvent&gt; cancelledEventPublisher;
+    private final IDomainEventPublisher&lt;PaymentFailedEvent&gt; failedEventPublisher;
+
+    public PaymentRequestHelper(PaymentDomainService paymentDomainService,
+                                PaymentDataMapper paymentDataMapper,
+                                IPaymentRepository iPaymentRepository,
+                                ICreditEntryRepository iCreditEntryRepository,
+                                ICreditHistoryRepository iCreditHistoryRepository,
+                                IDomainEventPublisher&lt;PaymentCompletedEvent&gt; completedEventPublisher,
+                                IDomainEventPublisher&lt;PaymentCancelledEvent&gt; cancelledEventPublisher,
+<span class="fc" id="L55">                                IDomainEventPublisher&lt;PaymentFailedEvent&gt; failedEventPublisher) {</span>
+<span class="fc" id="L56">        this.paymentDomainService = paymentDomainService;</span>
+<span class="fc" id="L57">        this.paymentDataMapper = paymentDataMapper;</span>
+<span class="fc" id="L58">        this.iPaymentRepository = iPaymentRepository;</span>
+<span class="fc" id="L59">        this.iCreditEntryRepository = iCreditEntryRepository;</span>
+<span class="fc" id="L60">        this.iCreditHistoryRepository = iCreditHistoryRepository;</span>
+<span class="fc" id="L61">        this.completedEventPublisher = completedEventPublisher;</span>
+<span class="fc" id="L62">        this.cancelledEventPublisher = cancelledEventPublisher;</span>
+<span class="fc" id="L63">        this.failedEventPublisher = failedEventPublisher;</span>
+<span class="fc" id="L64">    }</span>
+
+    @Transactional
+    public PaymentEvent persistPayment(PaymentRequest paymentRequest) {
+<span class="fc" id="L68">        final String msg = format(PAYMENT_SUCCESSFULLY_RECEIVED_COMPLETE_EVENT_FOR_ID.get(),</span>
+<span class="fc" id="L69">                paymentRequest.getOrderId());</span>
+<span class="fc" id="L70">        log.info(msg);</span>
+
+<span class="fc" id="L72">        Payment payment = paymentDataMapper.paymentRequestModelToPayment(paymentRequest);</span>
+
+<span class="fc" id="L74">        return persistDbObjects(payment, COMPLETED_EVENT);</span>
+    }
+
+    @Transactional
+    public PaymentEvent persistCancelPayment(PaymentRequest paymentRequest) {
+<span class="fc" id="L79">        final String msg = format(PAYMENT_SUCCESSFULLY_RECEIVED_CANCEL_EVENT_FOR_ID.get(),</span>
+<span class="fc" id="L80">                paymentRequest.getOrderId());</span>
+<span class="fc" id="L81">        log.info(msg);</span>
+
+<span class="fc" id="L83">        Optional&lt;Payment&gt; paymentResponse = iPaymentRepository</span>
+<span class="fc" id="L84">                .findByOrderId(UUID.fromString(paymentRequest.getOrderId()));</span>
+
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if(paymentResponse.isEmpty()) {</span>
+<span class="fc" id="L87">            final String errMsg = format(ERR_PAYMENT_COULD_NOT_BE_FOUND_WITH_ORDER_ID.get(),</span>
+<span class="fc" id="L88">                    paymentRequest.getOrderId());</span>
+<span class="fc" id="L89">            log.info(errMsg);</span>
+<span class="fc" id="L90">            throw new PaymentDomainServiceException(errMsg);</span>
+        }
+
+<span class="fc" id="L93">        Payment payment = paymentResponse.get();</span>
+
+<span class="fc" id="L95">        return persistDbObjects(payment, CANCELLED_EVENT);</span>
+    }
+
+    private PaymentEvent persistDbObjects(Payment payment, boolean isCompletedEvent) {
+<span class="fc" id="L99">        CreditEntry creditEntry = getCreditEntry(payment.getCustomerId());</span>
+<span class="fc" id="L100">        List&lt;CreditHistory&gt; creditHistories = getCreditHistory(payment.getCustomerId());</span>
+<span class="fc" id="L101">        List&lt;String&gt; failureMsgs = new ArrayList&lt;&gt;();</span>
+        PaymentEvent paymentEvent;
+
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if(isCompletedEvent) {</span>
+<span class="fc" id="L105">            paymentEvent = paymentDomainService</span>
+<span class="fc" id="L106">                    .validateAndInitiatePayment(payment,</span>
+                            creditEntry,
+                            creditHistories,
+                            failureMsgs,
+                            completedEventPublisher,
+                            failedEventPublisher);
+        } else {
+<span class="fc" id="L113">            paymentEvent = paymentDomainService</span>
+<span class="fc" id="L114">                    .validateAndCancelPayment(payment,</span>
+                            creditEntry,
+                            creditHistories,
+                            failureMsgs,
+                            cancelledEventPublisher,
+                            failedEventPublisher);
+        }
+
+<span class="fc" id="L122">        iPaymentRepository.save(payment);</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        if(CollectionUtils.isEmpty(failureMsgs)) {</span>
+<span class="fc" id="L124">            iCreditEntryRepository.save(creditEntry);</span>
+<span class="fc" id="L125">            iCreditHistoryRepository.save(creditHistories.get(creditHistories.size() - 1));</span>
+        }
+
+<span class="fc" id="L128">        return paymentEvent;</span>
+    }
+
+    private CreditEntry getCreditEntry(CustomerId customerId) {
+<span class="fc" id="L132">        Optional&lt;CreditEntry&gt; creditEntry = iCreditEntryRepository.findByCustomerId(customerId);</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if(creditEntry.isEmpty()) {</span>
+<span class="fc" id="L134">            final String msg = format(ERR_PAYMENT_COULD_NOT_FIND_CREDIT_ENTRY_FOR_CUSTOMER_ID.get(),</span>
+<span class="fc" id="L135">                    customerId.getValue());</span>
+<span class="fc" id="L136">            log.info(msg);</span>
+<span class="fc" id="L137">            throw new PaymentDomainServiceException(msg);</span>
+        }
+<span class="fc" id="L139">        return creditEntry.get();</span>
+    }
+
+    private List&lt;CreditHistory&gt; getCreditHistory(CustomerId customerId) {
+<span class="fc" id="L143">        Optional&lt;List&lt;CreditHistory&gt;&gt; creditHistories = iCreditHistoryRepository.findByCustomerId(customerId);</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        if(creditHistories.isEmpty()) {</span>
+<span class="fc" id="L145">            final String msg = format(ERR_PAYMENT_COULD_NOT_FIND_CREDIT_HISTORY_FOR_CUSTOMER_ID.get(),</span>
+<span class="fc" id="L146">                    customerId.getValue());</span>
+<span class="fc" id="L147">            log.info(msg);</span>
+<span class="fc" id="L148">            throw new PaymentDomainServiceException(msg);</span>
+        }
+<span class="fc" id="L150">        return creditHistories.get();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
