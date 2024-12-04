@@ -17,10 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static com.h.udemy.java.uservices.domain.Constants.ZONED_UTC;
 import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_PAYMENT_NOT_ENOUGH_CREDIT;
@@ -45,7 +42,7 @@ public class PaymentDomainService implements IPaymentDomainService {
         validateCreditHistory(creditEntry, creditHistories, failureMessages);
 
         if (CollectionUtils.isEmpty(failureMessages)) {
-            log.info(PAYMENT_REQUEST_SUCCESS_FOR_ID.build(), payment.getOrderId().getValue());
+            log.info(PAYMENT_REQUEST_SUCCESS_FOR_ID.build(payment.getOrderId().getValue()));
             payment.updateStatus(PaymentStatus.COMPLETED);
 
             return new PaymentCompletedEvent(payment,
@@ -53,7 +50,7 @@ public class PaymentDomainService implements IPaymentDomainService {
                     completedEventPublisher);
         }
 
-        log.info(PAYMENT_ERR_FAILED_FOR_ORDER_ID.build(), payment.getOrderId().getValue());
+        log.info(PAYMENT_ERR_FAILED_FOR_ORDER_ID.build(payment.getOrderId().getValue()));
         payment.updateStatus(PaymentStatus.FAILED);
 
         return new PaymentFailedEvent(payment,
@@ -75,7 +72,7 @@ public class PaymentDomainService implements IPaymentDomainService {
         updateCreditHistory(payment, creditHistories, TransactionType.CREDIT);
 
         if (CollectionUtils.isEmpty(failureMessages)) {
-            log.info(PAYMENT_REQUEST_CANCELED_FOR_ID.build(), payment.getOrderId().getValue());
+            log.info(PAYMENT_REQUEST_CANCELED_FOR_ID.build(payment.getOrderId().getValue()));
             payment.updateStatus(PaymentStatus.CANCELLED);
 
             return new PaymentCancelledEvent(payment,
@@ -83,7 +80,7 @@ public class PaymentDomainService implements IPaymentDomainService {
                     cancelledEventPublisher);
         }
 
-        log.info(PAYMENT_ERR_FAILED_FOR_ORDER_ID.build(), payment.getOrderId().getValue());
+        log.info(PAYMENT_ERR_FAILED_FOR_ORDER_ID.build(payment.getOrderId().getValue()));
         payment.updateStatus(PaymentStatus.FAILED);
 
         return new PaymentFailedEvent(payment,
@@ -98,15 +95,15 @@ public class PaymentDomainService implements IPaymentDomainService {
             return new ArrayList<>();
         }
 
-        return Arrays.asList(payment.validatePaymentReturningFailuresMsgs());
+        return Collections.singletonList(payment.validatePaymentReturningFailuresMsgs());
     }
 
 
     private void validateCreditEntry(Payment payment, CreditEntry creditEntry, List<String> failureMessages) {
         if (payment.getPrice().isGreaterThan(creditEntry.getTotalCreditAmount())) {
-            log.error(PAYMENT_ERR_NOT_ENOUGH_CREDIT.build(), payment.getCustomerId().getValue());
+            log.error(PAYMENT_ERR_NOT_ENOUGH_CREDIT.build(payment.getCustomerId().getValue()));
 
-            failureMessages.add(ERR_PAYMENT_NOT_ENOUGH_CREDIT.get() + payment.getCustomerId());
+            failureMessages.add(ERR_PAYMENT_NOT_ENOUGH_CREDIT.build(payment.getCustomerId()));
         }
     }
 
@@ -129,14 +126,14 @@ public class PaymentDomainService implements IPaymentDomainService {
         if (totalDebitHistory.isGreaterThan(totalCreditHistory)) {
             log.error(PAYMENT_ERR_NOT_ENOUGH_CREDIT.build(), creditEntry.getCustomerId().getValue());
 
-            failureMessages.add(ERR_PAYMENT_NOT_ENOUGH_CREDIT.get() + creditEntry.getCustomerId());
+            failureMessages.add(ERR_PAYMENT_NOT_ENOUGH_CREDIT.build(creditEntry.getCustomerId()));
         }
 
-        Money danglingDebit = totalCreditHistory.substract(totalDebitHistory);
+        Money danglingDebit = totalCreditHistory.subtract(totalDebitHistory);
         if (isCreditNotEntryEnough(creditEntry, danglingDebit)) {
             log.error(PAYMENT_ERR_CREDIT_HISTORY_NOT_EQUALS.build(), creditEntry.getCustomerId().getValue());
 
-            failureMessages.add(ERR_PAYMENT_NOT_ENOUGH_CREDIT.get() + creditEntry.getCustomerId());
+            failureMessages.add(ERR_PAYMENT_NOT_ENOUGH_CREDIT.build(creditEntry.getCustomerId()));
         }
     }
 

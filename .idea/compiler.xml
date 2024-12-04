@@ -17,35 +17,48 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$USER_HOME$/.m2/org/projectlombok/lombok/1.18.24/lombok-1.18.24.jar" />
-          <entry name="$USER_HOME$/.m2/org/mapstruct/mapstruct-processor/1.5.3.Final/mapstruct-processor-1.5.3.Final.jar" />
-          <entry name="$USER_HOME$/.m2/org/mapstruct/mapstruct/1.5.3.Final/mapstruct-1.5.3.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.24/lombok-1.18.24.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.3.Final/mapstruct-processor-1.5.3.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.3.Final/mapstruct-1.5.3.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.24/lombok-1.18.24.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.3.Final/mapstruct-processor-1.5.3.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.3.Final/mapstruct-1.5.3.Final.jar" />
         </processorPath>
         <module name="common-application" />
         <module name="payment-domain-service" />
         <module name="kafka-model" />
         <module name="kafka-consumer" />
+        <module name="kafka-producer" />
         <module name="payment-messaging" />
+        <module name="kafka-config-data" />
+        <module name="restaurant-domain-service" />
+        <module name="payment-dataaccess" />
+        <module name="order-container" />
         <module name="order-dataaccess" />
         <module name="restaurant-container" />
         <module name="order-messaging" />
+        <module name="restaurant-dataaccess" />
+        <module name="payment-container" />
         <module name="common-domain" />
         <module name="order-application" />
+        <module name="order-domain-service" />
         <module name="restaurant-domain-core" />
         <module name="saga" />
         <module name="order-domain-core" />
         <module name="payment-domain-core" />
         <module name="common-dataaccess" />
-        <module name="customer-service" />
-        <module name="kafka-producer" />
-        <module name="kafka-config-data" />
-        <module name="restaurant-domain-service" />
-        <module name="payment-dataaccess" />
-        <module name="order-container" />
-        <module name="restaurant-dataaccess" />
-        <module name="payment-container" />
-        <module name="order-domain-service" />
         <module name="restaurant-messaging" />
+      </profile>
+      <profile name="Annotation profile for customer-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.24/lombok-1.18.24.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.3.Final/mapstruct-processor-1.5.3.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.3.Final/mapstruct-1.5.3.Final.jar" />
+        </processorPath>
+        <module name="customer-service" />
       </profile>
     </annotationProcessing>
   </component>

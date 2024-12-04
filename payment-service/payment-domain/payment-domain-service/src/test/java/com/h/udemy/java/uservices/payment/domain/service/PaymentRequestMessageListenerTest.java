@@ -25,8 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.h.udemy.java.uservices.domain.test.constants.ConstantsTest.ERROR_PRICE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -73,7 +72,7 @@ class PaymentRequestMessageListenerTest extends ApiEnvTest {
                 completedEventPublisher,
                 failedEventPublisher);
 
-        assertTrue(!CollectionUtils.isEmpty(paymentEvent.getFailureMessages()));
+        assertFalse(CollectionUtils.isEmpty(paymentEvent.getFailureMessages()));
         assertEquals(PaymentStatus.FAILED, paymentEvent.getPayment().getPaymentStatus());
     }
 
@@ -109,7 +108,7 @@ class PaymentRequestMessageListenerTest extends ApiEnvTest {
                 cancelledEventPublisher,
                 failedEventPublisher);
 
-        assertTrue(!CollectionUtils.isEmpty(paymentEvent.getFailureMessages()));
+        assertFalse(CollectionUtils.isEmpty(paymentEvent.getFailureMessages()));
         assertEquals(PaymentStatus.FAILED, paymentEvent.getPayment().getPaymentStatus());
     }
 }

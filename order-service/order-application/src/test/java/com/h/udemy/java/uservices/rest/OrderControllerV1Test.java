@@ -20,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -44,11 +45,11 @@ class OrderControllerV1Test extends ApiEnvTestConfig {
 
     private final String baseUrl = "/v1/orders";
 
-    private Customer customer = createCustomer();
-    private Order orderSaved = createOrderSaved();
-    private Restaurant restaurant = createRestaurant();
-    private CreateOrderCommand createOrderCommand = createCreateOrderCommand();
-    private OrderCreatedEvent orderCreatedEvent = createOrderCreatedEvent(orderSaved);
+    private final Customer customer = createCustomer();
+    private final Order orderSaved = createOrderSaved();
+    private final Restaurant restaurant = createRestaurant();
+    private final CreateOrderCommand createOrderCommand = createCreateOrderCommand();
+    private final OrderCreatedEvent orderCreatedEvent = createOrderCreatedEvent(orderSaved);
 
     @Autowired
     IOrderRepository orderRepository;
@@ -64,7 +65,7 @@ class OrderControllerV1Test extends ApiEnvTestConfig {
                 .thenReturn(Optional.of(customer));
 
         when(this.restaurantRepository.findRestaurantInformation(restaurant))
-                .thenReturn(Optional.ofNullable(restaurant));
+                .thenReturn(Optional.of(restaurant));
     }
 
 
@@ -89,7 +90,7 @@ class OrderControllerV1Test extends ApiEnvTestConfig {
     @Test
     void when_fetchOrderByTrackingId_should_return_200() throws Exception {
         when(this.orderRepository.findByTrackingId(orderSaved.getTrackingId()))
-                .thenReturn(Optional.ofNullable(orderSaved));
+                .thenReturn(Optional.of(orderSaved));
 
         MvcResult res = mockMvc.perform(get(baseUrl + "/by-tracking-id?trackingId=" +
                         orderSaved.getTrackingId().getValue())
@@ -129,7 +130,7 @@ class OrderControllerV1Test extends ApiEnvTestConfig {
     @Test
     void when_fetchAllOrder_should_return_200() throws Exception {
         when(this.orderRepository.fetchAll())
-                .thenReturn(Arrays.asList(orderSaved));
+                .thenReturn(List.of(orderSaved));
 
         MvcResult res = mockMvc.perform(get(baseUrl)
                         .headers(new HttpHeaders())

@@ -68,10 +68,10 @@ class MoneyTest extends ApiEnvTestConfig {
     }
 
     @Test
-    void substract() {
+    void subtract() {
         Money money1 = new Money(new BigDecimal(2.02));
         final Money money2 = new Money(new BigDecimal(0.02));
-        money1 = money1.substract(money2);
+        money1 = money1.subtract(money2);
 
         assertEquals(money1, new Money(new BigDecimal(2.00)));
     }

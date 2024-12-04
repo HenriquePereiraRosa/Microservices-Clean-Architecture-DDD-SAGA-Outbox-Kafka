@@ -77,9 +77,8 @@ class PaymentDomainServiceTest extends ApiEnvTest {
     void should_return_NOK_validateAndInitiatePayment_when_debit_history_is_greater() {
         Payment payment = PaymentFactory.createPayment(PRICE);
         CreditEntry creditEntry = CreditEntryFactory.createOne();
-        List<CreditHistory> historyList = new ArrayList<>();
 
-        historyList.addAll(CreditHistoryFactory.createNOKList());
+        List<CreditHistory> historyList = new ArrayList<>(CreditHistoryFactory.createNOKList());
 
         PaymentEvent paymentEvent = paymentDomainService
                 .validateAndInitiatePayment(payment,

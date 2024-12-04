@@ -42,7 +42,7 @@ public class Money {
         ));
     }
 
-    public Money substract(Money pMoney) {
+    public Money subtract(Money pMoney) {
         return new Money(setScale(
                 this.amount.subtract(pMoney.getAmount())
         ));

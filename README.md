@@ -1,6 +1,4 @@
-# Sos.User
-
-
+# Microservices: Clean Architecture, DDD, SAGA, Outbox & Kafka
 
 ## Getting started
 
