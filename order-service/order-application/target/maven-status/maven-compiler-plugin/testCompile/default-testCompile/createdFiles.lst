@@ -1,9 +1,0 @@
-com\h\udemy\java\uservices\test\util\config\BeanTestConfig2.class
-com\h\udemy\java\uservices\test\util\ConstTestUtils.class
-com\h\udemy\java\uservices\test\util\factory\OrderFactory.class
-com\h\udemy\java\uservices\rest\OrderControllerV1Test.class
-com\h\udemy\java\uservices\test\util\config\ApiEnvTestConfig.class
-com\h\udemy\java\uservices\test\util\factory\CustomerFactory.class
-com\h\udemy\java\uservices\exception\handler\OrderApplicationExceptionHandlerTest.class
-com\h\udemy\java\uservices\test\util\config\BeanTestConfig.class
-com\h\udemy\java\uservices\test\util\factory\RestaurantFactory.class

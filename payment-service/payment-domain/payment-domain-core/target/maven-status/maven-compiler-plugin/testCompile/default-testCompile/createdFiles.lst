@@ -1,7 +1,0 @@
-com\h\udemy\java\uservices\payment\domain\core\test\util\factory\CreditHistoryFactory.class
-com\h\udemy\java\uservices\payment\domain\core\PaymentDomainServiceTest.class
-com\h\udemy\java\uservices\payment\domain\core\test\config\ApiEnvTest.class
-com\h\udemy\java\uservices\payment\domain\core\test\util\factory\CreditEntryFactory.class
-com\h\udemy\java\uservices\payment\domain\core\test\config\BeanTestConfig.class
-com\h\udemy\java\uservices\payment\domain\core\test\util\factory\PaymentFactory.class
-com\h\udemy\java\uservices\payment\domain\core\entity\PaymentTest.class

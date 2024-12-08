@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.h.udemy.java.uservices.payment.domain.service.PaymentRequestMessageListenerTest
--------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.042 s - in com.h.udemy.java.uservices.payment.domain.service.PaymentRequestMessageListenerTest

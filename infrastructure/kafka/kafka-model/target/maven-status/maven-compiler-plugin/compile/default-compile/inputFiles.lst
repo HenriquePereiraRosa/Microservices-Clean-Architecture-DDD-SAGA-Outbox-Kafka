@@ -1,9 +1,0 @@
-C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\infrastructure\kafka\kafka-model\src\main\java\com\h\udemy\java\uservices\kafka\order\avro\model\Product.java
-C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\infrastructure\kafka\kafka-model\src\main\java\com\h\udemy\java\uservices\kafka\order\avro\model\RestaurantApprovalRequestAvroModel.java
-C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\infrastructure\kafka\kafka-model\src\main\java\com\h\udemy\java\uservices\kafka\order\avro\model\PaymentOrderStatus.java
-C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\infrastructure\kafka\kafka-model\src\main\java\com\h\udemy\java\uservices\kafka\order\avro\model\PaymentStatus.java
-C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\infrastructure\kafka\kafka-model\src\main\java\com\h\udemy\java\uservices\kafka\order\avro\model\OrderApprovalStatus.java
-C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\infrastructure\kafka\kafka-model\src\main\java\com\h\udemy\java\uservices\kafka\order\avro\model\PaymentRequestAvroModel.java
-C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\infrastructure\kafka\kafka-model\src\main\java\com\h\udemy\java\uservices\kafka\order\avro\model\RestaurantApprovalResponseAvroModel.java
-C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\infrastructure\kafka\kafka-model\src\main\java\com\h\udemy\java\uservices\kafka\order\avro\model\RestaurantOrderStatus.java
-C:\dev\training\udemy\Microservices-Clean-Architecture-DDD-SAGA-Outbox-Kafka\infrastructure\kafka\kafka-model\src\main\java\com\h\udemy\java\uservices\kafka\order\avro\model\PaymentResponseAvroModel.java

@@ -1,6 +1,0 @@
-com\h\udemy\java\uservices\dataaccess\restaurant\entity\RestaurantEntityId$RestaurantEntityIdBuilder.class
-com\h\udemy\java\uservices\dataaccess\restaurant\entity\RestaurantEntityId.class
-com\h\udemy\java\uservices\dataaccess\restaurant\repository\IRestaurantJpaRepository.class
-com\h\udemy\java\uservices\dataaccess\restaurant\entity\RestaurantEntity$RestaurantEntityBuilder.class
-com\h\udemy\java\uservices\dataaccess\restaurant\entity\RestaurantEntity.class
-com\h\udemy\java\uservices\dataaccess\restaurant\exception\RestaurantDataAccessException.class

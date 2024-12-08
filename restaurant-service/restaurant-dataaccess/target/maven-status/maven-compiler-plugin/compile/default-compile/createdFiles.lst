@@ -1,6 +1,0 @@
-com\h\udemy\java\uservices\restaurant\dataaccess\adapter\RestaurantRepository.class
-com\h\udemy\java\uservices\restaurant\dataaccess\entity\OrderApprovalEntity$OrderApprovalEntityBuilder.class
-com\h\udemy\java\uservices\restaurant\dataaccess\repository\IOrderApprovalJpaRepository.class
-com\h\udemy\java\uservices\restaurant\dataaccess\adapter\OrderApprovalRepository.class
-com\h\udemy\java\uservices\restaurant\dataaccess\mapper\RestaurantDataAccessMapper.class
-com\h\udemy\java\uservices\restaurant\dataaccess\entity\OrderApprovalEntity.class

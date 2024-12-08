@@ -1,9 +1,0 @@
-GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-payment-messaging,com.h.udemy.java.uservices.payment.service.messaging.mapper,PaymentMessagingDataMapper,173,0,0,0,43,0,5,0,5,0
-payment-messaging,com.h.udemy.java.uservices.payment.service.messaging.publisher.kafka,PaymentCancelledKafkaMessagePublisher,110,0,0,0,17,0,3,0,3,0
-payment-messaging,com.h.udemy.java.uservices.payment.service.messaging.publisher.kafka,PaymentFailedKafkaMessagePublisher,110,0,0,0,17,0,3,0,3,0
-payment-messaging,com.h.udemy.java.uservices.payment.service.messaging.publisher.kafka,PaymentCompletedKafkaMessagePublisher,110,0,0,0,17,0,3,0,3,0
-payment-messaging,com.h.udemy.java.uservices.payment.service.messaging.listener.kafka,PaymentRequestKafkaListener,58,0,0,0,14,0,3,0,3,0
-payment-messaging,com.h.udemy.java.uservices.payment.service.messaging.listener.kafka.strategy,PaymentProcessor,67,0,2,0,15,0,4,0,3,0
-payment-messaging,com.h.udemy.java.uservices.payment.service.messaging.listener.kafka.strategy,PaymentCompletedOrderStatusStrategy,27,0,2,0,6,0,4,0,3,0
-payment-messaging,com.h.udemy.java.uservices.payment.service.messaging.listener.kafka.strategy,PaymentCancelledOrderStatusStrategy,22,0,0,0,5,0,3,0,3,0
