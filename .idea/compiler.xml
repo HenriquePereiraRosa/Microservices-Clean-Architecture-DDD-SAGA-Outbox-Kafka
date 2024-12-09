@@ -32,7 +32,6 @@
         <module name="payment-messaging" />
         <module name="kafka-config-data" />
         <module name="restaurant-domain-service" />
-        <module name="payment-dataaccess" />
         <module name="order-container" />
         <module name="order-dataaccess" />
         <module name="restaurant-container" />
@@ -59,6 +58,17 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.3.Final/mapstruct-1.5.3.Final.jar" />
         </processorPath>
         <module name="customer-service" />
+      </profile>
+      <profile name="Annotation profile for payment-dataaccess" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.24/lombok-1.18.24.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.3.Final/mapstruct-processor-1.5.3.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.3.Final/mapstruct-1.5.3.Final.jar" />
+        </processorPath>
+        <module name="payment-dataaccess" />
       </profile>
     </annotationProcessing>
   </component>

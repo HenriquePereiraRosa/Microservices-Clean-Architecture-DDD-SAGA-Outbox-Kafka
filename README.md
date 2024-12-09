@@ -1,5 +1,11 @@
 # Microservices: Clean Architecture, DDD, SAGA, Outbox & Kafka
 
+## Visualize dependencies:
+https://github.com/ferstl/depgraph-maven-plugin
+```
+mvn com.github.ferstl:depgraph-maven-plugin:aggregate -DcreateImage=true -DreduceEdges=false -Dscope=compile "-Dincludes=com.h.udemy*:*"
+```
+
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.

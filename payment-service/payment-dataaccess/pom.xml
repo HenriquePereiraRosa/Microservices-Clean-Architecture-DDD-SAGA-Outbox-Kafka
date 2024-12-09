@@ -33,6 +33,12 @@
             <artifactId>postgresql</artifactId>
         </dependency>
 
+
+        <!-- FlayWay db Migrations -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
