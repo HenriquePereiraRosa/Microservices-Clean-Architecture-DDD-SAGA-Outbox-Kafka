@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.dataaccess.restaurant.entity;
+package com.h.udemy.java.uservices.restaurant.dataaccess.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

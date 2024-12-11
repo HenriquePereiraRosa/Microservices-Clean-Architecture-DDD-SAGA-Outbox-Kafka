@@ -1,7 +1,7 @@
 package com.h.udemy.java.uservices.order.service.dataaccess.restaurant.adapter;
 
-import com.h.udemy.java.uservices.dataaccess.restaurant.entity.RestaurantEntity;
-import com.h.udemy.java.uservices.dataaccess.restaurant.repository.IRestaurantJpaRepository;
+import com.h.udemy.java.uservices.restaurant.dataaccess.entity.RestaurantEntity;
+import com.h.udemy.java.uservices.restaurant.dataaccess.repository.IRestaurantJpaRepository;
 import com.h.udemy.java.uservices.order.service.dataaccess.restaurant.mapper.RestaurantDataAccessMapper;
 import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IRestaurantRepository;

@@ -1,7 +1,7 @@
 package com.h.udemy.java.uservices.order.service.dataaccess.restaurant.mapper;
 
-import com.h.udemy.java.uservices.dataaccess.restaurant.entity.RestaurantEntity;
-import com.h.udemy.java.uservices.dataaccess.restaurant.exception.RestaurantDataAccessException;
+import com.h.udemy.java.uservices.restaurant.dataaccess.entity.RestaurantEntity;
+import com.h.udemy.java.uservices.restaurant.dataaccess.exception.RestaurantDataAccessException;
 import com.h.udemy.java.uservices.domain.messages.Messages;
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.domain.valueobject.ProductId;

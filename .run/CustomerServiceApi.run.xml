@@ -2,6 +2,7 @@
   <configuration default="false" name="CustomerServiceApi" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="com.h.udemy.java.uservices.customer.service.CustomerServiceApi" />
     <module name="customer-service" />
+    <option name="VM_PARAMETERS" value="-Dspring.profiles.active=local" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.h.udemy.java.uservices.customer.service.*" />

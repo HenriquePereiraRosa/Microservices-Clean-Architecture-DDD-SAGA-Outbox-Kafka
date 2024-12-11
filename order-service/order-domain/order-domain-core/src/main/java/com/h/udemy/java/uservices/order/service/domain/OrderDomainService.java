@@ -36,7 +36,7 @@ public class OrderDomainService implements IOrderDomainService {
         order.validateOrder();
         order.initializeOrder();
 
-        log.info(Messages.ORDER_ID_INITIATED.get(), order.getId().getValue());
+        log.info(Messages.ORDER_ID_INITIATED.build(order.getId().getValue()));
 
         return new OrderCreatedEvent(order,
                 ZonedDateTime.now(ZONED_UTC),
@@ -62,20 +62,20 @@ public class OrderDomainService implements IOrderDomainService {
                                                   List<String> failureMessages,
                                                   IDomainEventPublisher<OrderCancelledEvent> cancelledEventPublisher) {
         order.initCancel(failureMessages);
-        log.info(Messages.ORDER_ID_PAYMENT_CANCELLING.get());
+        log.info(Messages.ORDER_ID_PAYMENT_CANCELLING.build());
         return new OrderCancelledEvent(order, ZonedDateTime.now(ZONED_UTC), cancelledEventPublisher);
     }
 
     @Override
     public void cancelOrder(Order order, List<String> failureMessages) {
         order.cancel(failureMessages);
-        log.info(Messages.ORDER_ID_PAYMENT_CANCELLED.get());
+        log.info(Messages.ORDER_ID_PAYMENT_CANCELLED.build());
     }
 
     private void validateRestaurant(Restaurant restaurant) {
         if (!restaurant.isActive()) {
-            throw new OrderDomainException(Messages.ERR_RESTAURANT_ID_NOT_ACTIVE.get()
-                    + restaurant.getId().getValue());
+            throw new OrderDomainException(Messages.ERR_RESTAURANT_ID_NOT_ACTIVE
+                    .build(restaurant.getId().getValue()));
         }
     }
 
@@ -83,7 +83,7 @@ public class OrderDomainService implements IOrderDomainService {
 
         long timeStamp = System.nanoTime();
 
-        //todo: remove this code after performonce diagnosys
+        //todo: remove this code after performance diagnoses
         // n*n = O(n^2) -> exp
         order.getItems().forEach(orderItem -> restaurant.getProducts().forEach(product -> {
             Product currentProduct = orderItem.getProduct();

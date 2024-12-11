@@ -23,8 +23,8 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-u.parent/infrastructure/docker-compose/volumes/kafka/
-u.parent/infrastructure/docker-compose/volumes/zookeeper/
+/infrastructure/docker-files/volumes/kafka/*
+/infrastructure/docker-files/volumes/zookeeper/*
 
 **LOG_FILE_IS_UNDEFINED**
 docker-compose/volumes/

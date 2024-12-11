@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.dataaccess.restaurant.entity;
+package com.h.udemy.java.uservices.restaurant.dataaccess.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +20,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @IdClass(RestaurantEntityId.class)
-@Table(name = "vw_order_restaurant", schema = "restaurant")
+@Table(name = "order_restaurant_m_view", schema = "restaurant")
 @Entity
 public class RestaurantEntity {
 

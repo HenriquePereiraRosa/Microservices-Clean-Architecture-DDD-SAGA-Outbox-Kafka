@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.order.service.dataaccess;
 
-import com.h.udemy.java.uservices.dataaccess.restaurant.repository.IRestaurantJpaRepository;
+import com.h.udemy.java.uservices.restaurant.dataaccess.repository.IRestaurantJpaRepository;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCancelledPaymentRequestRequestMessagePublisher;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCreatedPaymentRequestMessagePublisher;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderPaidRestaurantRequestRequestMessagePublisher;

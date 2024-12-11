@@ -54,8 +54,8 @@ public class OrderCreateHelper {
                 .validateAndInitiateOrder(order, restaurant, createdEventPublisher);
         insertOrder(order);
 
-        final String msg = Messages.ORDER_ID_CREATED.get() +
-                orderCreatedEvent.getOrder().getId().getValue();
+        final String msg = Messages.ORDER_ID_CREATED
+                .build(orderCreatedEvent.getOrder().getId().getValue());
         log.warn(msg);
 
         return orderCreatedEvent;
@@ -87,8 +87,7 @@ public class OrderCreateHelper {
     private Order insertOrder(Order order) {
         Order orderCreated = orderRepository.insertOrder(order);
         if (orderCreated == null) {
-            final String msg = Messages.ERR_ORDER_COULD_NOT_BE_SAVED.get() +
-                    order.getId().getValue();
+            final String msg = Messages.ERR_ORDER_COULD_NOT_BE_SAVED.build(order.getId().getValue());
             log.warn(msg);
             throw new OrderCouldNotBeSavedException(order.getId().getValue());
         }

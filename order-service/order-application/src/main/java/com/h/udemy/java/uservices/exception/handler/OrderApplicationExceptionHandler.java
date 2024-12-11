@@ -2,10 +2,7 @@ package com.h.udemy.java.uservices.exception.handler;
 
 import com.h.udemy.java.uservices.application.exception.handler.GlobalExceptionHandler;
 import com.h.udemy.java.uservices.application.exception.handler.model.ErrorDTO;
-import com.h.udemy.java.uservices.order.service.domain.exception.CustomerNotFoundException;
-import com.h.udemy.java.uservices.order.service.domain.exception.OrderCouldNotBeSavedException;
-import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
-import com.h.udemy.java.uservices.order.service.domain.exception.OrderNotFoundException;
+import com.h.udemy.java.uservices.order.service.domain.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,5 +64,18 @@ public class OrderApplicationExceptionHandler extends GlobalExceptionHandler {
                 .build();
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorbody);
+    }
+
+    @ExceptionHandler(value = {UnableToPublishOrderCreationMessageException.class})
+    public ResponseEntity handleCustomerNotFoundException(UnableToPublishOrderCreationMessageException exception) {
+
+        log.error(exception.getMessage(), exception);
+
+        ErrorDTO errorBody = ErrorDTO.builder()
+                .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .message(exception.getMessage())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorBody);
     }
 }

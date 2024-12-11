@@ -1,7 +1,7 @@
-package com.h.udemy.java.uservices.dataaccess.restaurant.repository;
+package com.h.udemy.java.uservices.restaurant.dataaccess.repository;
 
-import com.h.udemy.java.uservices.dataaccess.restaurant.entity.RestaurantEntity;
-import com.h.udemy.java.uservices.dataaccess.restaurant.entity.RestaurantEntityId;
+import com.h.udemy.java.uservices.restaurant.dataaccess.entity.RestaurantEntity;
+import com.h.udemy.java.uservices.restaurant.dataaccess.entity.RestaurantEntityId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

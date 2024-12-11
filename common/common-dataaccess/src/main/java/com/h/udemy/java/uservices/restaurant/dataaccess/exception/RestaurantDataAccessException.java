@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.dataaccess.restaurant.exception;
+package com.h.udemy.java.uservices.restaurant.dataaccess.exception;
 
 public class RestaurantDataAccessException extends RuntimeException{
 

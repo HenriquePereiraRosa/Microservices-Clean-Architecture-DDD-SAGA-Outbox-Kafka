@@ -6,6 +6,7 @@ import com.h.udemy.java.uservices.kafka.producer.service.impl.KafkaProducer;
 import com.h.udemy.java.uservices.mapper.OrderMessagingDataMapper;
 import com.h.udemy.java.uservices.order.service.domain.config.OrderServiceConfigData;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
+import com.h.udemy.java.uservices.order.service.domain.exception.UnableToPublishOrderCreationMessageException;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCreatedPaymentRequestMessagePublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -64,6 +65,8 @@ public class CreateOrderKafkaMessagePublisher implements IOrderCreatedPaymentReq
                     AVRO_MODEL_NAME,
                     orderId,
                     e.getMessage()));
+
+            throw new UnableToPublishOrderCreationMessageException(orderId);
         }
     }
 
