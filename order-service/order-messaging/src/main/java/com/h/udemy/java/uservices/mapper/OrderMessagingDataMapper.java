@@ -31,6 +31,7 @@ public class OrderMessagingDataMapper {
                 .setSagaId("not implemented yet.") // todo: impl
                 .setCustomerId(order.getCustomerId().getValue().toString())
                 .setOrderId(order.getId().getValue().toString())
+                .setPrice(order.getPrice().getAmount())
                 .setCreatedAt(orderCreatedEvent.getCreatedAt().toInstant())
                 .setPaymentOrderStatus(PaymentOrderStatus.PENDING)
                 .build();
@@ -44,6 +45,7 @@ public class OrderMessagingDataMapper {
                 .setSagaId("not implemented yet.") // todo: impl
                 .setCustomerId(order.getCustomerId().getValue().toString())
                 .setOrderId(order.getId().getValue().toString())
+                .setPrice(order.getPrice().getAmount())
                 .setCreatedAt(orderCreatedEvent.getCreatedAt().toInstant())
                 .setPaymentOrderStatus(PaymentOrderStatus.CANCELLED)
                 .build();
@@ -58,6 +60,7 @@ public class OrderMessagingDataMapper {
                 .setOrderId(order.getId().getValue().toString())
                 .setRestaurantId(order.getRestaurantId().getValue().toString())
                 .setOrderId(order.getId().getValue().toString())
+                .setPrice(order.getPrice().getAmount())
                 .setRestaurantOrderStatus(RestaurantOrderStatus
                         .valueOf(order.getOrderStatus().name()))
                 .setProducts(order.getItems().stream().map(orderItem ->
