@@ -7,6 +7,6 @@ import java.util.UUID;
 
 public class OrderCouldNotBeSavedException extends DomainException {
     public OrderCouldNotBeSavedException(UUID orderId) {
-        super(Messages.ERR_ORDER_COULD_NOT_BE_SAVED.build(orderId));
+        super(Messages.ERR_ORDER_COULD_NOT_BE_SAVED.get() + orderId);
     }
 }

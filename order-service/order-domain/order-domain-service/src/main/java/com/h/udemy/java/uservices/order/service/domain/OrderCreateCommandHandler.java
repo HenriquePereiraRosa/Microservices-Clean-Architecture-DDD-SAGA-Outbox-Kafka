@@ -34,7 +34,7 @@ public class OrderCreateCommandHandler {
         IOrderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
 
         return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder(),
-                Messages.ORDER_CREATED_SUCCESSFULLY.build());
+                Messages.ORDER_CREATED_SUCCESSFULLY.get());
 
     }
 }

@@ -59,7 +59,6 @@ public enum Messages {
         this.key = key;
     }
 
-    @Deprecated
     public String get() {
         final ResourceBundle bundle = ResourceBundle
                 .getBundle("messages_common_domain.messages", LocaleContextHolder.getLocale());
