@@ -68,6 +68,7 @@ public class RestaurantApprovalRequestHelper {
     }
 
     private Restaurant findRestaurant(RestaurantApprovalRequest approvalRequest) {
+
         Restaurant restaurant = restaurantMapper
                 .restaurantApprovalRequestToRestaurant(approvalRequest);
 
@@ -78,14 +79,16 @@ public class RestaurantApprovalRequestHelper {
             throw new RestaurantNotFoundException(message);
         }
 
-        Restaurant restaurantDb = restaurantDbOp.get();
+        Restaurant restaurantEntity = restaurantDbOp.get();
 
         restaurant.setActive(true);
-        restaurant.getOrderDetail().getProducts().forEach(restaurantProduct ->
-                restaurantDb.getOrderDetail().getProducts().forEach(restaurantProductDb -> {
-                    if (restaurantProductDb.getId().equals(restaurantProduct.getId())) {
-                        restaurantProduct.updateWithConfirmedNamePriceAndAvailability(restaurantProduct.getName(),
-                                restaurantProduct.getPrice(), restaurantProduct.isAvailable());
+        restaurant.getOrderDetail().getProducts().forEach(product ->
+                restaurantEntity.getOrderDetail().getProducts().forEach(p -> {
+                    if (p.getId().equals(product.getId())) {
+                        product.updateWithConfirmedNamePriceAndAvailability(
+                                p.getName(),
+                                p.getPrice(),
+                                p.isAvailable());
                     }
                 }));
         restaurant.getOrderDetail().setId(new OrderId(UUID.fromString(approvalRequest.getOrderId())));
