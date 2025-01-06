@@ -1,9 +1,9 @@
 package com.h.udemy.java.uservices.order.service.dataaccess;
 
+import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.restaurantapproval.IOrderPaidRestaurantRequestMessagePublisher;
 import com.h.udemy.java.uservices.restaurant.dataaccess.repository.IRestaurantJpaRepository;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCancelledPaymentRequestRequestMessagePublisher;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCreatedPaymentRequestMessagePublisher;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderPaidRestaurantRequestRequestMessagePublisher;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
 import org.mockito.Mockito;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,8 +24,8 @@ public class BeanTestConfig {
     }
 
     @Bean
-    public IOrderPaidRestaurantRequestRequestMessagePublisher orderPaidRestaurantRequestRequestMessagePublisher() {
-        return Mockito.mock(IOrderPaidRestaurantRequestRequestMessagePublisher.class);
+    public IOrderPaidRestaurantRequestMessagePublisher orderPaidRestaurantRequestRequestMessagePublisher() {
+        return Mockito.mock(IOrderPaidRestaurantRequestMessagePublisher.class);
     }
 
     @Bean

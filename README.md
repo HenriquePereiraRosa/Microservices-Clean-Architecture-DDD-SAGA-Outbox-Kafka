@@ -30,6 +30,8 @@ select * from order.tb_order_address;
 select * from payment.tb_payments;
 select * from payment.tb_credit_entry;
 select * from payment.tb_credit_history;
+
+select * from customer.tb_customers;
 ````
 
 

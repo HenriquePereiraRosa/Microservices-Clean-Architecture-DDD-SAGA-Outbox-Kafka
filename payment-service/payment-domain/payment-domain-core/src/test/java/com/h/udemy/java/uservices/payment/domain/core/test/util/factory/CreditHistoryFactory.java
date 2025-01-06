@@ -19,9 +19,11 @@ public class CreditHistoryFactory {
     public static final int DEBIT_LIST_SIZE = 3;
     public static final int ODD_DETECTOR = 2;
 
-    static public List<CreditHistory> createOKList() {
+    static public List<CreditHistory> createOKList(Integer listSize) {
         List<CreditHistory> historyList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        int pListSize = listSize != null ? listSize : LIST_SIZE;
+
+        for (int i = 0; i < pListSize; i++) {
             historyList.add(CreditHistory.builder()
                     .creditHistoryId(new CreditHistoryId(CREDIT_HISTORY_UUID))
                     .customerId(new CustomerId(CUSTOMER_UUID))
@@ -59,9 +61,9 @@ public class CreditHistoryFactory {
 
     private static TransactionType sortType(int i) {
         if (i % ODD_DETECTOR == 0) {
-            return TransactionType.DEBIT;
+            return TransactionType.CREDIT;
         }
 
-        return TransactionType.CREDIT;
+        return TransactionType.DEBIT;
     }
 }

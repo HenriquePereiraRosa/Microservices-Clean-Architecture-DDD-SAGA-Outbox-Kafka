@@ -16,7 +16,7 @@ public class PaymentCompletedOrderStatusStrategy implements IPaymentOrderStatusS
     @Override
     public void processPayment(PaymentRequestMessageListener paymentRequestListener,
                                PaymentRequest paymentRequest) {
-        if (PaymentOrderStatus.PENDING.equals(paymentRequest.getPaymentOrderStatus())) {
+        if (PaymentOrderStatus.PENDING == PaymentOrderStatus.valueOf(paymentRequest.getPaymentOrderStatus().name())) {
             log.info(KAFKA_PROCESSING_FOR_ID.build(paymentRequest.getOrderId()));
 
             paymentRequestListener.completePayment(paymentRequest);

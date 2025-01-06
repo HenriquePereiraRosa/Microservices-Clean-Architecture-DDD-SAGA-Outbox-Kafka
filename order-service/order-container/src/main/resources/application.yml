@@ -3,7 +3,7 @@ server:
 
 logging:
   level:
-    root: DEBUG
+    root: INFO
     com.h.udemy.java.uservices: DEBUG
 
 order-service:
@@ -32,7 +32,7 @@ spring:
 kafka-config:
   bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
   schema-registry-url-key: schema.registry.url
-  schema-registry-url: http://localhost:8981
+  schema-registry-url: http://localhost:8081
   num-of-partitions: 3
   replication-factor: 3
 
@@ -64,4 +64,4 @@ kafka-consumer-config:
   max-poll-records: 500
   max-partition-fetch-bytes-default: 1048576
   max-partition-fetch-bytes-boost-factor: 1
-  poll-timeout-ms: 150
+  poll-timeout-ms: 2000 # 150

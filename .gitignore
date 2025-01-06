@@ -28,3 +28,4 @@ hs_err_pid*
 
 **LOG_FILE_IS_UNDEFINED**
 docker-compose/volumes/
+.idea/

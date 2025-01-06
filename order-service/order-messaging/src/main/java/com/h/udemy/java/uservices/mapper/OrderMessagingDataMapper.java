@@ -23,12 +23,14 @@ import java.util.stream.Collectors;
 @Component
 public class OrderMessagingDataMapper {
 
+    private final String SAGA_ID = ""; // todo: will be implemented in future classes
+
     public PaymentRequestAvroModel orderCreatedEventToPaymentRequestAvroModel(OrderCreatedEvent orderCreatedEvent) {
         Order order = orderCreatedEvent.getOrder();
 
         return PaymentRequestAvroModel.newBuilder()
                 .setId(UUID.randomUUID().toString())
-                .setSagaId("not implemented yet.") // todo: impl
+                .setSagaId(SAGA_ID)
                 .setCustomerId(order.getCustomerId().getValue().toString())
                 .setOrderId(order.getId().getValue().toString())
                 .setPrice(order.getPrice().getAmount())
@@ -42,7 +44,7 @@ public class OrderMessagingDataMapper {
 
         return PaymentRequestAvroModel.newBuilder()
                 .setId(UUID.randomUUID().toString())
-                .setSagaId("not implemented yet.") // todo: impl
+                .setSagaId(SAGA_ID)
                 .setCustomerId(order.getCustomerId().getValue().toString())
                 .setOrderId(order.getId().getValue().toString())
                 .setPrice(order.getPrice().getAmount())
@@ -56,7 +58,7 @@ public class OrderMessagingDataMapper {
         Order order = orderPaidEvent.getOrder();
         return RestaurantApprovalRequestAvroModel.newBuilder()
                 .setId(UUID.randomUUID().toString())
-                .setSagaId("")
+                .setSagaId(SAGA_ID)
                 .setOrderId(order.getId().getValue().toString())
                 .setRestaurantId(order.getRestaurantId().getValue().toString())
                 .setOrderId(order.getId().getValue().toString())

@@ -2,26 +2,22 @@ package com.h.udemy.java.uservices.order.service.domain.entity;
 
 import com.h.udemy.java.uservices.domain.entity.AggregateRoot;
 import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
 public class Restaurant extends AggregateRoot<RestaurantId> {
 
     private final List<Product> products;
+    @Setter
     private boolean active;
 
     private Restaurant(Builder builder) {
         super.setId(builder.restaurantId);
         products = builder.products;
         active = builder.active;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public boolean isActive() {
-        return active;
     }
 
     public static Builder builder() {

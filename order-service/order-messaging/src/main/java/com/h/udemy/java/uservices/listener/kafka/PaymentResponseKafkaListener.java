@@ -7,6 +7,7 @@ import com.h.udemy.java.uservices.mapper.OrderMessagingDataMapper;
 import com.h.udemy.java.uservices.order.service.domain.ports.input.message.listener.payment.IPaymentResponseMessageListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
@@ -36,9 +37,10 @@ public class PaymentResponseKafkaListener implements IKafkaConsumer<PaymentRespo
     @Override
     @KafkaListener(id = KAFKA_CONSUMER_GROUP_ID, topics = KAFKA_TOPIC_NAME)
     public void receive(@Payload List<PaymentResponseAvroModel> messages,
-                        @Header List<String> keys,
-                        @Header List<Integer> partitions,
-                        @Header List<Long> offsets) {
+                        @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) List<String> keys,
+                        @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
+                        @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
+
         log.info(ORDER_KAFKA_NUMBER_MODEL_RESPONSES_RECEIVED.build(
                 messages.size(),
                 MODEL_NAME,

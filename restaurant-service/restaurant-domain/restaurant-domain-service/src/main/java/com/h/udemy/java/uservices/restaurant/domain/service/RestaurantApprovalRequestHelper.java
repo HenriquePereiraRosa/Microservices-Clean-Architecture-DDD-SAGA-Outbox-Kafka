@@ -57,10 +57,11 @@ public class RestaurantApprovalRequestHelper {
         List<String> failureMessages = new ArrayList<>();
         Restaurant restaurant = findRestaurant(approvalRequest);
 
-        OrderApprovalEvent orderApprovalEvent = restaurantDomainService.validateOrder(restaurant,
-                failureMessages,
-                approvedMessagePublisher,
-                rejectedMessagePublisher);
+        OrderApprovalEvent orderApprovalEvent = restaurantDomainService.validateOrder(
+                        restaurant,
+                        failureMessages,
+                        approvedMessagePublisher,
+                        rejectedMessagePublisher);
 
         orderApprovalRepository.save(restaurant.getOrderApproval());
         return orderApprovalEvent;

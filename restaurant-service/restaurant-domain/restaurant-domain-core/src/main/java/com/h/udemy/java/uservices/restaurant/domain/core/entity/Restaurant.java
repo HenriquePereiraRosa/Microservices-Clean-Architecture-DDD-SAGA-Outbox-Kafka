@@ -6,6 +6,8 @@ import com.h.udemy.java.uservices.domain.valueobject.OrderApprovalStatus;
 import com.h.udemy.java.uservices.domain.valueobject.OrderStatus;
 import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
 import com.h.udemy.java.uservices.restaurant.domain.core.valueobject.OrderApprovalId;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,13 +16,15 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.RESTAUR
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.RESTAURANT_PRODUCT_NOT_AVAILABLE;
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.RESTAURANT_PRODUCT_PRICE_INCORRECT;
 
+@Getter
 public class Restaurant extends AggregateRoot<RestaurantId> {
 
     private OrderApproval orderApproval;
+    @Setter
     private boolean active;
     private final OrderDetail orderDetail;
 
-    protected Restaurant(Builder builder) {
+    private Restaurant(Builder builder) {
         setId(builder.restaurantId);
         orderApproval = builder.orderApproval;
         active = builder.active;
@@ -39,7 +43,6 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
 
         private Builder() {
         }
-
 
         public Builder restaurantId(RestaurantId val) {
             restaurantId = val;
@@ -67,19 +70,6 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
     }
 
 
-    public OrderApproval getOrderApproval() {
-        return orderApproval;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public OrderDetail getOrderDetail() {
-        return orderDetail;
-    }
-
-
     public void validateOrder(List<String> failureMessages) {
         if(orderDetail.getOrderStatus() != OrderStatus.PAID) {
             failureMessages.add(RESTAURANT_PAYMENT_NOT_COMPLETED
@@ -92,17 +82,13 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
                         .build(product.getId().getValue()));
             }
             return product.getPrice().multiply(product.getQuantity());
-        })
-                .reduce(Money.ZERO, Money::add);
+
+        }).reduce(Money.ZERO, Money::add);
 
         if(!totalAmount.equals(orderDetail.getTotalAmount())) {
             failureMessages.add(RESTAURANT_PRODUCT_PRICE_INCORRECT
                     .build(orderDetail.getId()));
         }
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 
     public void constructOrderApproval(OrderApprovalStatus approvalStatus) {

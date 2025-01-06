@@ -38,7 +38,8 @@ public class PaymentDomainService implements IPaymentDomainService {
         failureMessages = validateAndAddMessages(payment);
         payment.initializePayment();
         validateCreditEntry(payment, creditEntry, failureMessages);
-        creditEntry.subtractCreditAmount(payment.getPrice());
+        subtractCreditEntry(payment, creditEntry);
+        updateCreditHistory(payment, creditHistories, TransactionType.DEBIT);
         validateCreditHistory(creditEntry, creditHistories, failureMessages);
 
         if (CollectionUtils.isEmpty(failureMessages)) {
@@ -103,8 +104,13 @@ public class PaymentDomainService implements IPaymentDomainService {
         if (payment.getPrice().isGreaterThan(creditEntry.getTotalCreditAmount())) {
             log.error(PAYMENT_ERR_NOT_ENOUGH_CREDIT.build(payment.getCustomerId().getValue()));
 
-            failureMessages.add(ERR_PAYMENT_NOT_ENOUGH_CREDIT.build(payment.getCustomerId()));
+            failureMessages.add(ERR_PAYMENT_NOT_ENOUGH_CREDIT.get() + payment.getCustomerId());
         }
+    }
+
+
+    private void subtractCreditEntry(Payment payment, CreditEntry creditEntry) {
+        creditEntry.subtractCreditAmount(payment.getPrice());
     }
 
     private void updateCreditHistory(Payment payment,
@@ -129,16 +135,16 @@ public class PaymentDomainService implements IPaymentDomainService {
             failureMessages.add(ERR_PAYMENT_NOT_ENOUGH_CREDIT.build(creditEntry.getCustomerId()));
         }
 
-        Money danglingDebit = totalCreditHistory.subtract(totalDebitHistory);
-        if (isCreditNotEntryEnough(creditEntry, danglingDebit)) {
+        Money remanescentCredit = totalCreditHistory.subtract(totalDebitHistory);
+        if (isCreditHistoryAndTotalCreditAmountNotEqual(creditEntry, remanescentCredit)) {
             log.error(PAYMENT_ERR_CREDIT_HISTORY_NOT_EQUALS.build(), creditEntry.getCustomerId().getValue());
 
-            failureMessages.add(ERR_PAYMENT_NOT_ENOUGH_CREDIT.build(creditEntry.getCustomerId()));
+            failureMessages.add(ERR_PAYMENT_NOT_ENOUGH_CREDIT.get() + creditEntry.getCustomerId());
         }
     }
 
-    private static boolean isCreditNotEntryEnough(CreditEntry creditEntry, Money danglingDebit) {
-        return !creditEntry.getTotalCreditAmount().isGreaterThan(danglingDebit);
+    private static boolean isCreditHistoryAndTotalCreditAmountNotEqual(CreditEntry creditEntry, Money remanescentCredit) {
+        return !remanescentCredit.isEqual(creditEntry.getTotalCreditAmount().getAmount());
     }
 
     private Money getTotalHistoryAmount(List<CreditHistory> creditHistories, TransactionType transactionType) {

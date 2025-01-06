@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.h.udemy.java.uservices.domain.messages.Messages.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -180,7 +181,7 @@ class OrderDomainServiceTest extends ApiEnvTestConfig {
                     iOrderAplicationService.createOrder(createOrderCommandWrongPrice);
                 });
 
-        final String exceptionMsg = Messages.ERR_ORDER_TOTAL_AND_ORDER_PRICES_DIFF.get()
+        final String exceptionMsg = ERR_ORDER_TOTAL_AND_ORDER_PRICES_DIFF.get()
                 + ": (price) 250.00 != (orderItemsTotal) 200.00";
 
         assertEquals(exceptionMsg, orderDomainException.getMessage());
@@ -194,7 +195,7 @@ class OrderDomainServiceTest extends ApiEnvTestConfig {
                     iOrderAplicationService.createOrder(createOrderCommandWrongProductPrice);
                 });
 
-        final String exceptionMsg = Messages.ERR_ORDER_ITEM_PRICE_INVALID.get() + ": 210.00";
+        final String exceptionMsg = ERR_ORDER_ITEM_PRICE_INVALID.get() + ": 210.00";
 
         assertEquals(exceptionMsg, orderDomainException.getMessage());
     }
@@ -225,7 +226,7 @@ class OrderDomainServiceTest extends ApiEnvTestConfig {
                     iOrderAplicationService.createOrder(createOrderCommand);
                 });
 
-        final String exceptionMsg = Messages.ERR_RESTAURANT_ID_NOT_ACTIVE.get() + RESTAURANT_ID;
+        final String exceptionMsg = ERR_RESTAURANT_ID_NOT_ACTIVE.get() + RESTAURANT_ID;
 
         assertEquals(exceptionMsg, orderDomainException.getMessage());
     }

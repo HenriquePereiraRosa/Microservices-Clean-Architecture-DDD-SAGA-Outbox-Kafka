@@ -43,11 +43,12 @@ class PaymentDomainServiceTest extends ApiEnvTest {
     void should_validateAndInitiatePayment() {
         Payment payment = PaymentFactory.createPayment(CUSTOMER_UUID);
         CreditEntry creditEntry = CreditEntryFactory.createOne(CUSTOMER_UUID);
+        List<CreditHistory> historyList = new ArrayList<>(CreditHistoryFactory.createOKList(1));
 
         PaymentEvent paymentEvent = paymentDomainService
                 .validateAndInitiatePayment(payment,
                         creditEntry,
-                        new ArrayList<>(),
+                        historyList,
                         new ArrayList<>(),
                         completedEventPublisher,
                         failedEventPublisher);

@@ -6,7 +6,7 @@ import com.h.udemy.java.uservices.kafka.producer.service.impl.KafkaProducer;
 import com.h.udemy.java.uservices.mapper.OrderMessagingDataMapper;
 import com.h.udemy.java.uservices.order.service.domain.config.OrderServiceConfigData;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderPaidEvent;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderPaidRestaurantRequestRequestMessagePublisher;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.restaurantapproval.IOrderPaidRestaurantRequestMessagePublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_S
 
 @Slf4j
 @Component
-public class PayOrderKafkaMessagePublisher implements IOrderPaidRestaurantRequestRequestMessagePublisher {
+public class PayOrderKafkaMessagePublisher implements IOrderPaidRestaurantRequestMessagePublisher {
 
     private static final String AVRO_MODEL_NAME= "RestaurantApprovalRequestAvroModel";
 
@@ -47,18 +47,18 @@ public class PayOrderKafkaMessagePublisher implements IOrderPaidRestaurantReques
             RestaurantApprovalRequestAvroModel avroModel = orderMessagingDataMapper
                     .orderPaidEventToRestaurantApprovalRequestAvroModel(domainEvent);
 
-            kafkaProducer.send(orderServiceConfigData.getPaymentRequestTopicName(),
+            kafkaProducer.send(orderServiceConfigData.getRestaurantApprovalRequestTopicName(),
                     orderId,
                     avroModel,
                     kafkaMessageHelper.getKafkaCallback(orderServiceConfigData
-                                    .getPaymentResponseTopicName(),
+                                    .getRestaurantApprovalRequestTopicName(),
                             avroModel,
                             AVRO_MODEL_NAME,
                             orderId)
             );
 
             log.info(ORDER_SENT_REQUEST_KAFKA.build(avroModel.getOrderId(),
-                    orderServiceConfigData.getPaymentResponseTopicName(),
+                    orderServiceConfigData.getRestaurantApprovalRequestTopicName(),
                     avroModel.getCreatedAt()));
 
         } catch (Exception e) {

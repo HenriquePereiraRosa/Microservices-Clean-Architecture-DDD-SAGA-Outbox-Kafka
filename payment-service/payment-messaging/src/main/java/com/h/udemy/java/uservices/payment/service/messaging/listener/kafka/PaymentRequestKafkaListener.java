@@ -24,21 +24,19 @@ public class PaymentRequestKafkaListener implements IKafkaConsumer<PaymentReques
     private final String KAFKA_TOPIC_NAME = "${payment-service.payment-request-topic-name}";
 
     private final PaymentRequestMessageListener listener;
-    private final PaymentMessagingDataMapper mapper;
     private final PaymentProcessor paymentProcessor;
 
     public PaymentRequestKafkaListener(PaymentRequestMessageListener paymentRequestMessageListener,
                                        PaymentMessagingDataMapper mapper) {
         this.listener = paymentRequestMessageListener;
-        this.mapper = mapper;
         this.paymentProcessor = new PaymentProcessor(listener, mapper);
     }
 
     @Override
     @KafkaListener(id = KAFKA_CONSUMER_GROUP_ID, topics = KAFKA_TOPIC_NAME)
     public void receive(@Payload List<PaymentRequestAvroModel> messages,
-                        @Header(KafkaHeaders.RECEIVED_KEY) List<String> keys,
-                        @Header(KafkaHeaders.RECEIVED_PARTITION) List<Integer> partitions,
+                        @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) List<String> keys,
+                        @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
                         @Header(KafkaHeaders.OFFSET) List<Long> offset) {
         log.info(KAFKA_X_REQUESTS_RECEIVED.build(
                 messages.size(),

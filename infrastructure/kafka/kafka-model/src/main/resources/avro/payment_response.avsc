@@ -57,18 +57,18 @@
         {
             "name": "paymentStatus",
             "type": {
-                  "type": "enum",
-                  "name": "PaymentStatus",
-                  "symbols": ["COMPLETED", "CANCELLED", "FAILED"]
-               }
+                "type": "enum",
+                "name": "PaymentStatus",
+                "symbols": ["COMPLETED", "CANCELLED", "FAILED"]
+            }
         },
         {
             "name": "failureMessages",
             "type": {
                 "type": "array",
                 "items":{
-                  "type":"string"
-               }
+                    "type":"string"
+                }
             }
         }
     ]

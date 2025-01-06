@@ -47,10 +47,10 @@ public class PaymentCompletedKafkaMessagePublisher implements IPaymentCompletedM
         try {
             PaymentResponseAvroModel avroModel = mapper.paymentCompletedEventToPaymentResponseAvroModel(domainEvent);
 
-            kafkaProducer.send(paymentServiceConfigData.getPaymentRequestTopicName(),
+            kafkaProducer.send(paymentServiceConfigData.getPaymentResponseTopicName(),
                     orderId,
                     avroModel,
-                    kafkaMessageHelper.getKafkaCallback(paymentServiceConfigData.getPaymentRequestTopicName(),
+                    kafkaMessageHelper.getKafkaCallback(paymentServiceConfigData.getPaymentResponseTopicName(),
                             avroModel,
                             orderId,
                             AVRO_MODEL_NAME));

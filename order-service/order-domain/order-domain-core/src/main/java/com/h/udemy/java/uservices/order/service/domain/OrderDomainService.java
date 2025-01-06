@@ -9,7 +9,6 @@ import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCancelledEvent;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderPaidEvent;
-import com.h.udemy.java.uservices.order.service.domain.event.publisher.DomainEventPublisher;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.h.udemy.java.uservices.domain.Constants.ZONED_UTC;
+import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_RESTAURANT_ID_NOT_ACTIVE;
 
 @Slf4j
 @Service
@@ -45,7 +45,7 @@ public class OrderDomainService implements IOrderDomainService {
 
     @Override
     public OrderPaidEvent payOrder(Order order,
-                                   DomainEventPublisher<OrderPaidEvent> orderPaidEventDomainEventPublisher) {
+                                   IDomainEventPublisher<OrderPaidEvent> orderPaidEventDomainEventPublisher) {
         order.pay();
         log.info("Order with id: {} is paid", order.getId().getValue()); // todo: change this messages
         return new OrderPaidEvent(order, ZonedDateTime.now(ZONED_UTC), orderPaidEventDomainEventPublisher);
@@ -74,8 +74,8 @@ public class OrderDomainService implements IOrderDomainService {
 
     private void validateRestaurant(Restaurant restaurant) {
         if (!restaurant.isActive()) {
-            throw new OrderDomainException(Messages.ERR_RESTAURANT_ID_NOT_ACTIVE
-                    .build(restaurant.getId().getValue()));
+            throw new OrderDomainException(ERR_RESTAURANT_ID_NOT_ACTIVE
+                    .get() + restaurant.getId().getValue());
         }
     }
 

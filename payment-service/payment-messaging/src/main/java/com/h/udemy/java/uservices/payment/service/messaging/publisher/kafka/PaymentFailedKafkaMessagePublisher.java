@@ -47,10 +47,10 @@ public class PaymentFailedKafkaMessagePublisher implements IPaymentFailedMessage
         try {
             PaymentResponseAvroModel avroModel = mapper.paymentFailedEventToPaymentResponseAvroModel(domainEvent);
 
-            kafkaProducer.send(paymentServiceConfigData.getPaymentRequestTopicName(),
+            kafkaProducer.send(paymentServiceConfigData.getPaymentResponseTopicName(),
                     orderId,
                     avroModel,
-                    kafkaMessageHelper.getKafkaCallback(paymentServiceConfigData.getPaymentRequestTopicName(),
+                    kafkaMessageHelper.getKafkaCallback(paymentServiceConfigData.getPaymentResponseTopicName(),
                             avroModel,
                             orderId,
                             AVRO_MODEL_NAME));
