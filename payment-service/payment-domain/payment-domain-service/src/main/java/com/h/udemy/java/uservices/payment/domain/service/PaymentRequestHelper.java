@@ -1,21 +1,17 @@
 package com.h.udemy.java.uservices.payment.domain.service;
 
-import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
 import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
-import com.h.udemy.java.uservices.payment.domain.core.PaymentDomainService;
+import com.h.udemy.java.uservices.payment.domain.core.PaymentDomainServiceImpl;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditEntry;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditHistory;
 import com.h.udemy.java.uservices.payment.domain.core.entity.Payment;
-import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCancelledEvent;
-import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCompletedEvent;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentEvent;
-import com.h.udemy.java.uservices.payment.domain.core.event.PaymentFailedEvent;
 import com.h.udemy.java.uservices.payment.domain.service.dto.PaymentRequest;
 import com.h.udemy.java.uservices.payment.domain.service.exception.PaymentDomainServiceException;
 import com.h.udemy.java.uservices.payment.domain.service.mapper.PaymentDataMapper;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.IPaymentCancelledMessagePublisher;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.IPaymentCompletedMessagePublisher;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.IPaymentFailedMessagePublisher;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentCancelledMessagePublisher;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentCompletedMessagePublisher;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentFailedMessagePublisher;
 import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.ICreditEntryRepository;
 import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.ICreditHistoryRepository;
 import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.IPaymentRepository;
@@ -35,24 +31,24 @@ import static java.text.MessageFormat.format;
 @Component
 public class PaymentRequestHelper {
 
-    private final PaymentDomainService paymentDomainService;
+    private final PaymentDomainServiceImpl paymentDomainServiceImpl;
     private final PaymentDataMapper paymentDataMapper;
     private final IPaymentRepository paymentRepository;
     private final ICreditEntryRepository creditEntryRepository;
     private final ICreditHistoryRepository creditHistoryRepository;
-    private final IPaymentCompletedMessagePublisher paymentCompletedEventPublisher;
-    private final IPaymentCancelledMessagePublisher paymentCancelledEventPublisher;
-    private final IPaymentFailedMessagePublisher paymentFailedEventPublisher;
+    private final PaymentCompletedMessagePublisher paymentCompletedEventPublisher;
+    private final PaymentCancelledMessagePublisher paymentCancelledEventPublisher;
+    private final PaymentFailedMessagePublisher paymentFailedEventPublisher;
 
-    public PaymentRequestHelper(PaymentDomainService paymentDomainService,
+    public PaymentRequestHelper(PaymentDomainServiceImpl paymentDomainServiceImpl,
                                 PaymentDataMapper paymentDataMapper,
                                 IPaymentRepository paymentRepository,
                                 ICreditEntryRepository creditEntryRepository,
                                 ICreditHistoryRepository creditHistoryRepository,
-                                IPaymentCompletedMessagePublisher paymentCompletedEventPublisher,
-                                IPaymentCancelledMessagePublisher paymentCancelledEventPublisher,
-                                IPaymentFailedMessagePublisher paymentFailedEventPublisher) {
-        this.paymentDomainService = paymentDomainService;
+                                PaymentCompletedMessagePublisher paymentCompletedEventPublisher,
+                                PaymentCancelledMessagePublisher paymentCancelledEventPublisher,
+                                PaymentFailedMessagePublisher paymentFailedEventPublisher) {
+        this.paymentDomainServiceImpl = paymentDomainServiceImpl;
         this.paymentDataMapper = paymentDataMapper;
         this.paymentRepository = paymentRepository;
         this.creditEntryRepository = creditEntryRepository;
@@ -72,7 +68,7 @@ public class PaymentRequestHelper {
         List<CreditHistory> creditHistories = getCreditHistory(payment.getCustomerId());
         List<String> failureMessages = new ArrayList<>();
         PaymentEvent paymentEvent =
-                paymentDomainService.validateAndInitiatePayment(
+                paymentDomainServiceImpl.validateAndInitiatePayment(
                         payment,
                         creditEntry,
                         creditHistories,
@@ -104,7 +100,7 @@ public class PaymentRequestHelper {
         CreditEntry creditEntry = getCreditEntry(payment.getCustomerId());
         List<CreditHistory> creditHistories = getCreditHistory(payment.getCustomerId());
         List<String> failureMessages = new ArrayList<>();
-        PaymentEvent paymentEvent = paymentDomainService
+        PaymentEvent paymentEvent = paymentDomainServiceImpl
                 .validateAndCancelPayment(
                         payment,
                         creditEntry,

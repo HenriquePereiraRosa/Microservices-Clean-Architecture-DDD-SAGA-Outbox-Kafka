@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.payment.domain.core;
 
-import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
+import com.h.udemy.java.uservices.domain.event.DomainEventPublisher;
 import com.h.udemy.java.uservices.domain.valueobject.PaymentStatus;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditEntry;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditHistory;
@@ -25,19 +25,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class PaymentDomainServiceTest extends ApiEnvTest {
+class PaymentDomainServiceImplTest extends ApiEnvTest {
 
     public static final double ERROR_PRICE = -99.999;
     public static final double PRICE = 99_999.999;
 
     @Autowired
-    PaymentDomainService paymentDomainService;
+    PaymentDomainServiceImpl paymentDomainServiceImpl;
     @Autowired
-    IDomainEventPublisher<PaymentCompletedEvent> completedEventPublisher;
+    DomainEventPublisher<PaymentCompletedEvent> completedEventPublisher;
     @Autowired
-    IDomainEventPublisher<PaymentCancelledEvent> cancelledEventPublisher;
+    DomainEventPublisher<PaymentCancelledEvent> cancelledEventPublisher;
     @Autowired
-    IDomainEventPublisher<PaymentFailedEvent> failedEventPublisher;
+    DomainEventPublisher<PaymentFailedEvent> failedEventPublisher;
 
     @Test
     void should_validateAndInitiatePayment() {
@@ -45,7 +45,7 @@ class PaymentDomainServiceTest extends ApiEnvTest {
         CreditEntry creditEntry = CreditEntryFactory.createOne(CUSTOMER_UUID);
         List<CreditHistory> historyList = new ArrayList<>(CreditHistoryFactory.createOKList(1));
 
-        PaymentEvent paymentEvent = paymentDomainService
+        PaymentEvent paymentEvent = paymentDomainServiceImpl
                 .validateAndInitiatePayment(payment,
                         creditEntry,
                         historyList,
@@ -63,7 +63,7 @@ class PaymentDomainServiceTest extends ApiEnvTest {
         Payment payment = PaymentFactory.createPayment(99_999.999);
         CreditEntry creditEntry = CreditEntryFactory.createOne();
 
-        PaymentEvent paymentEvent = paymentDomainService
+        PaymentEvent paymentEvent = paymentDomainServiceImpl
                 .validateAndInitiatePayment(payment,
                         creditEntry,
                         new ArrayList<>(),
@@ -81,7 +81,7 @@ class PaymentDomainServiceTest extends ApiEnvTest {
 
         List<CreditHistory> historyList = new ArrayList<>(CreditHistoryFactory.createNOKList());
 
-        PaymentEvent paymentEvent = paymentDomainService
+        PaymentEvent paymentEvent = paymentDomainServiceImpl
                 .validateAndInitiatePayment(payment,
                         creditEntry,
                         historyList,
@@ -97,7 +97,7 @@ class PaymentDomainServiceTest extends ApiEnvTest {
         Payment payment = PaymentFactory.createPayment();
         CreditEntry creditEntry = CreditEntryFactory.createOne();
 
-        PaymentEvent paymentEvent = paymentDomainService
+        PaymentEvent paymentEvent = paymentDomainServiceImpl
                 .validateAndCancelPayment(payment,
                         creditEntry,
                         new ArrayList<>(),
@@ -113,7 +113,7 @@ class PaymentDomainServiceTest extends ApiEnvTest {
         Payment payment = PaymentFactory.createPayment(ERROR_PRICE);
         CreditEntry creditEntry = CreditEntryFactory.createOne();
 
-        PaymentEvent paymentEvent = paymentDomainService
+        PaymentEvent paymentEvent = paymentDomainServiceImpl
                 .validateAndCancelPayment(payment,
                         creditEntry,
                         new ArrayList<>(),

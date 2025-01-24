@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.test.util.factory;
 
-import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
+import com.h.udemy.java.uservices.domain.event.DomainEventPublisher;
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.OrderAddressDTO;
@@ -23,7 +23,7 @@ import static com.h.udemy.java.uservices.test.util.ConstTestUtils.*;
 public class OrderFactory {
 
     @Autowired
-    private static IDomainEventPublisher<OrderCreatedEvent> createdEventPublisher;
+    private static DomainEventPublisher<OrderCreatedEvent> createdEventPublisher;
 
     static public CreateOrderCommand createCreateOrderCommand() {
 

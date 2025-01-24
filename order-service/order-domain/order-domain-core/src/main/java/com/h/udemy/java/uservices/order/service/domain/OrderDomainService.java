@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
-import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
+import com.h.udemy.java.uservices.domain.event.DomainEventPublisher;
 import com.h.udemy.java.uservices.domain.messages.Messages;
 import com.h.udemy.java.uservices.domain.valueobject.ProductId;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
@@ -30,7 +30,7 @@ public class OrderDomainService implements IOrderDomainService {
     @Override
     public OrderCreatedEvent validateAndInitiateOrder(Order order,
                                                       Restaurant restaurant,
-                                                      IDomainEventPublisher<OrderCreatedEvent> createdEventPublisher) {
+                                                      DomainEventPublisher<OrderCreatedEvent> createdEventPublisher) {
         validateRestaurant(restaurant);
         setOrderProductInformation(order, restaurant);
         order.validateOrder();
@@ -45,7 +45,7 @@ public class OrderDomainService implements IOrderDomainService {
 
     @Override
     public OrderPaidEvent payOrder(Order order,
-                                   IDomainEventPublisher<OrderPaidEvent> orderPaidEventDomainEventPublisher) {
+                                   DomainEventPublisher<OrderPaidEvent> orderPaidEventDomainEventPublisher) {
         order.pay();
         log.info("Order with id: {} is paid", order.getId().getValue()); // todo: change this messages
         return new OrderPaidEvent(order, ZonedDateTime.now(ZONED_UTC), orderPaidEventDomainEventPublisher);
@@ -60,7 +60,7 @@ public class OrderDomainService implements IOrderDomainService {
     @Override
     public OrderCancelledEvent cancelOrderPayment(Order order,
                                                   List<String> failureMessages,
-                                                  IDomainEventPublisher<OrderCancelledEvent> cancelledEventPublisher) {
+                                                  DomainEventPublisher<OrderCancelledEvent> cancelledEventPublisher) {
         order.initCancel(failureMessages);
         log.info(Messages.ORDER_ID_PAYMENT_CANCELLING.build());
         return new OrderCancelledEvent(order, ZonedDateTime.now(ZONED_UTC), cancelledEventPublisher);

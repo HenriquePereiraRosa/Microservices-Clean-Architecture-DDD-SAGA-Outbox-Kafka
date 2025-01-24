@@ -5,7 +5,6 @@ import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCom
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderResponse;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
 import com.h.udemy.java.uservices.order.service.domain.mapper.OrderDataMapper;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCreatedPaymentRequestMessagePublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -16,11 +15,11 @@ public class OrderCreateCommandHandler {
     private final OrderCreateHelper orderCreateHelper;
     private final OrderDataMapper orderDataMapper;
 
-    private final IOrderCreatedPaymentRequestMessagePublisher IOrderCreatedPaymentRequestMessagePublisher;
+    private final OrderCreatedPaymentRequestMessagePublisher IOrderCreatedPaymentRequestMessagePublisher;
 
     public OrderCreateCommandHandler(OrderCreateHelper orderCreateHelper,
                                      OrderDataMapper orderDataMapper,
-                                     IOrderCreatedPaymentRequestMessagePublisher IOrderCreatedPaymentRequestMessagePublisher) {
+                                     OrderCreatedPaymentRequestMessagePublisher IOrderCreatedPaymentRequestMessagePublisher) {
         this.orderCreateHelper = orderCreateHelper;
         this.orderDataMapper = orderDataMapper;
         this.IOrderCreatedPaymentRequestMessagePublisher = IOrderCreatedPaymentRequestMessagePublisher;

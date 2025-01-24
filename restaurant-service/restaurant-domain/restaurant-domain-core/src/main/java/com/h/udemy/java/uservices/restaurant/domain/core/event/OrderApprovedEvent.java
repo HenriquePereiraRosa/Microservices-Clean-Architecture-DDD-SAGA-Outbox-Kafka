@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.restaurant.domain.core.event;
 
-import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
+import com.h.udemy.java.uservices.domain.event.DomainEventPublisher;
 import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
 import com.h.udemy.java.uservices.restaurant.domain.core.entity.OrderApproval;
 
@@ -9,12 +9,12 @@ import java.util.List;
 
 public class OrderApprovedEvent extends OrderApprovalEvent {
 
-    private final IDomainEventPublisher<OrderApprovedEvent> eventPublisher;
+    private final DomainEventPublisher<OrderApprovedEvent> eventPublisher;
     public OrderApprovedEvent(OrderApproval orderApproval,
                               RestaurantId restaurantId,
                               List<String> failureMessages,
                               ZonedDateTime createdAt,
-                              IDomainEventPublisher<OrderApprovedEvent> eventPublisher) {
+                              DomainEventPublisher<OrderApprovedEvent> eventPublisher) {
 
         super(orderApproval, restaurantId, failureMessages, createdAt);
         this.eventPublisher = eventPublisher;

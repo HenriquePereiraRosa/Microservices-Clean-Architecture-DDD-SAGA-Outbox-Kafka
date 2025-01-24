@@ -5,9 +5,8 @@ import com.h.udemy.java.uservices.order.service.domain.IOrderDomainService;
 import com.h.udemy.java.uservices.order.service.domain.dto.message.RestaurantApprovalResponse;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCancelledEvent;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCancelledPaymentRequestRequestMessagePublisher;
 import com.h.udemy.java.uservices.order.service.domain.saga.helper.OrderSagaHelper;
-import com.h.udemy.java.uservices.saga.ISagaStep;
+import com.h.udemy.java.uservices.saga.SagaStep;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,15 +18,15 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_I
 
 @Slf4j
 @Component
-public class OrderApprovalSaga implements ISagaStep<RestaurantApprovalResponse, EmptyEvent, OrderCancelledEvent> {
+public class OrderApprovalSaga implements SagaStep<RestaurantApprovalResponse, EmptyEvent, OrderCancelledEvent> {
 
     private final IOrderDomainService orderDomainService;
     private final OrderSagaHelper sagaHelper;
-    private final IOrderCancelledPaymentRequestRequestMessagePublisher messagePublisher;
+    private final OrderCancelledPaymentRequestRequestMessagePublisher messagePublisher;
 
     public OrderApprovalSaga(IOrderDomainService orderDomainService,
                              OrderSagaHelper sagaHelper,
-                             IOrderCancelledPaymentRequestRequestMessagePublisher messagePublisher) {
+                             OrderCancelledPaymentRequestRequestMessagePublisher messagePublisher) {
         this.orderDomainService = orderDomainService;
         this.sagaHelper = sagaHelper;
         this.messagePublisher = messagePublisher;

@@ -1,13 +1,13 @@
 package com.h.udemy.java.uservices.restaurant.domain.core.event;
 
-import com.h.udemy.java.uservices.domain.event.IDomainEvent;
+import com.h.udemy.java.uservices.domain.event.DomainEvent;
 import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
 import com.h.udemy.java.uservices.restaurant.domain.core.entity.OrderApproval;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 
-public abstract class OrderApprovalEvent implements IDomainEvent<OrderApproval> {
+public abstract class OrderApprovalEvent implements DomainEvent<OrderApproval> {
 
     private final OrderApproval orderApproval;
     private final RestaurantId restaurantId;

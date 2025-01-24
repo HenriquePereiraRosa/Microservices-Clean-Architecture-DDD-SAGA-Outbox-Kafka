@@ -1,16 +1,16 @@
 package com.h.udemy.java.uservices.order.service.domain.event;
 
-import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
+import com.h.udemy.java.uservices.domain.event.DomainEventPublisher;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 
 import java.time.ZonedDateTime;
 
 public class OrderCreatedEvent extends OrderEvent {
 
-    private final IDomainEventPublisher<OrderCreatedEvent> createdEventPublisher;
+    private final DomainEventPublisher<OrderCreatedEvent> createdEventPublisher;
     public OrderCreatedEvent(Order order,
                              ZonedDateTime createdAt,
-                             IDomainEventPublisher<OrderCreatedEvent> createdEventPublisher) {
+                             DomainEventPublisher<OrderCreatedEvent> createdEventPublisher) {
         super(order, createdAt);
         this.createdEventPublisher = createdEventPublisher;
     }

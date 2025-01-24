@@ -1,8 +1,8 @@
 package com.h.udemy.java.uservices.payment.domain.service;
 
-import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
+import com.h.udemy.java.uservices.domain.event.DomainEventPublisher;
 import com.h.udemy.java.uservices.domain.valueobject.PaymentStatus;
-import com.h.udemy.java.uservices.payment.domain.core.PaymentDomainService;
+import com.h.udemy.java.uservices.payment.domain.core.PaymentDomainServiceImpl;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditEntry;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditHistory;
 import com.h.udemy.java.uservices.payment.domain.core.entity.Payment;
@@ -10,7 +10,6 @@ import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCancelledEven
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCompletedEvent;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentEvent;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentFailedEvent;
-import com.h.udemy.java.uservices.payment.domain.service.exception.PaymentDomainServiceException;
 import com.h.udemy.java.uservices.payment.domain.service.test.config.ApiEnvTest;
 import com.h.udemy.java.uservices.payment.domain.service.test.util.factory.CreditEntryFactory;
 import com.h.udemy.java.uservices.payment.domain.service.test.util.factory.CreditHistoryFactory;
@@ -33,13 +32,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class PaymentRequestMessageListenerTest extends ApiEnvTest {
 
     @Autowired
-    PaymentDomainService paymentDomainService;
+    PaymentDomainServiceImpl paymentDomainServiceImpl;
     @Autowired
-    IDomainEventPublisher<PaymentCompletedEvent> completedEventPublisher;
+    DomainEventPublisher<PaymentCompletedEvent> completedEventPublisher;
     @Autowired
-    IDomainEventPublisher<PaymentCancelledEvent> cancelledEventPublisher;
+    DomainEventPublisher<PaymentCancelledEvent> cancelledEventPublisher;
     @Autowired
-    IDomainEventPublisher<PaymentFailedEvent> failedEventPublisher;
+    DomainEventPublisher<PaymentFailedEvent> failedEventPublisher;
 
     @Test
     void should_completePayment() {
@@ -48,7 +47,7 @@ class PaymentRequestMessageListenerTest extends ApiEnvTest {
         List<CreditHistory> creditHistories = CreditHistoryFactory.createOKList(1);
         List<String> failureMessages = new ArrayList<>();
 
-        PaymentEvent paymentEvent = paymentDomainService.validateAndInitiatePayment(payment,
+        PaymentEvent paymentEvent = paymentDomainServiceImpl.validateAndInitiatePayment(payment,
                 creditEntry,
                 creditHistories,
                 failureMessages,
@@ -68,7 +67,7 @@ class PaymentRequestMessageListenerTest extends ApiEnvTest {
 
         assertThrows(
                 UnsupportedOperationException.class,  // check this exception
-                () -> paymentDomainService.validateAndInitiatePayment(
+                () -> paymentDomainServiceImpl.validateAndInitiatePayment(
                         payment,
                         creditEntry,
                         creditHistories,
@@ -86,7 +85,7 @@ class PaymentRequestMessageListenerTest extends ApiEnvTest {
         List<CreditHistory> creditHistories = CreditHistoryFactory.createOKList(1);
         List<String> failureMessages = new ArrayList<>();
 
-        PaymentEvent paymentEvent = paymentDomainService.validateAndCancelPayment(payment,
+        PaymentEvent paymentEvent = paymentDomainServiceImpl.validateAndCancelPayment(payment,
                 creditEntry,
                 creditHistories,
                 failureMessages,
@@ -104,7 +103,7 @@ class PaymentRequestMessageListenerTest extends ApiEnvTest {
         List<CreditHistory> creditHistories = CreditHistoryFactory.createOKList(1);
         List<String> failureMessages = new ArrayList<>();
 
-        PaymentEvent paymentEvent = paymentDomainService.validateAndCancelPayment(payment,
+        PaymentEvent paymentEvent = paymentDomainServiceImpl.validateAndCancelPayment(payment,
                 creditEntry,
                 creditHistories,
                 failureMessages,

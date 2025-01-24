@@ -7,8 +7,8 @@ import com.h.udemy.java.uservices.restaurant.domain.core.event.OrderApprovalEven
 import com.h.udemy.java.uservices.restaurant.domain.core.exception.RestaurantNotFoundException;
 import com.h.udemy.java.uservices.restaurant.domain.service.dto.RestaurantApprovalRequest;
 import com.h.udemy.java.uservices.restaurant.domain.service.mapper.RestaurantDataMapper;
-import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.message.publisher.IOrderApprovedMessagePublisher;
-import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.message.publisher.IOrderRejectedMessagePublisher;
+import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.message.publisher.OrderApprovedMessagePublisher;
+import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.message.publisher.OrderRejectedMessagePublisher;
 import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.repository.IOrderApprovalRepository;
 import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.repository.IRestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -29,16 +29,16 @@ public class RestaurantApprovalRequestHelper {
     private final RestaurantDataMapper restaurantMapper;
     private final IRestaurantRepository restaurantRepository;
     private final IOrderApprovalRepository orderApprovalRepository;
-    private final IOrderApprovedMessagePublisher approvedMessagePublisher;
-    private final IOrderRejectedMessagePublisher rejectedMessagePublisher;
+    private final OrderApprovedMessagePublisher approvedMessagePublisher;
+    private final OrderRejectedMessagePublisher rejectedMessagePublisher;
 
 
     public RestaurantApprovalRequestHelper(RestaurantDomainService restaurantDomainService,
                                            RestaurantDataMapper restaurantMapper,
                                            IRestaurantRepository restaurantRepository,
                                            IOrderApprovalRepository orderApprovalRepository,
-                                           IOrderApprovedMessagePublisher approvedMessagePublisher,
-                                           IOrderRejectedMessagePublisher rejectedMessagePublisher) {
+                                           OrderApprovedMessagePublisher approvedMessagePublisher,
+                                           OrderRejectedMessagePublisher rejectedMessagePublisher) {
 
         this.restaurantDomainService = restaurantDomainService;
         this.restaurantMapper = restaurantMapper;

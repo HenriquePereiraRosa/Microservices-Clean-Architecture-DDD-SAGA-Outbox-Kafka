@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.domain.event;
 
-public final class EmptyEvent implements IDomainEvent<Void> {
+public final class EmptyEvent implements DomainEvent<Void> {
 
     public static final EmptyEvent INSTANCE = new EmptyEvent();
 

@@ -3,9 +3,9 @@ package com.h.udemy.java.uservices.payment.domain.service;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentEvent;
 import com.h.udemy.java.uservices.payment.domain.service.dto.PaymentRequest;
 import com.h.udemy.java.uservices.payment.domain.service.ports.input.message.listener.IPaymentRequestMessageListener;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.IPaymentCancelledMessagePublisher;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.IPaymentCompletedMessagePublisher;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.IPaymentFailedMessagePublisher;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentCancelledMessagePublisher;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentCompletedMessagePublisher;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentFailedMessagePublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +17,14 @@ import static java.text.MessageFormat.format;
 public class PaymentRequestMessageListener implements IPaymentRequestMessageListener {
 
     private final PaymentRequestHelper paymentRequestHelper;
-    private final IPaymentCompletedMessagePublisher iPaymentCompletedMessagePublisher;
-    private final IPaymentCancelledMessagePublisher iPaymentCancelledMessagePublisher;
-    private final IPaymentFailedMessagePublisher iPaymentFailedMessagePublisher;
+    private final PaymentCompletedMessagePublisher iPaymentCompletedMessagePublisher;
+    private final PaymentCancelledMessagePublisher iPaymentCancelledMessagePublisher;
+    private final PaymentFailedMessagePublisher iPaymentFailedMessagePublisher;
 
     public PaymentRequestMessageListener(PaymentRequestHelper paymentRequestHelper,
-                                         IPaymentCompletedMessagePublisher iPaymentCompletedMessagePublisher,
-                                         IPaymentCancelledMessagePublisher iPaymentCancelledMessagePublisher,
-                                         IPaymentFailedMessagePublisher iPaymentFailedMessagePublisher) {
+                                         PaymentCompletedMessagePublisher iPaymentCompletedMessagePublisher,
+                                         PaymentCancelledMessagePublisher iPaymentCancelledMessagePublisher,
+                                         PaymentFailedMessagePublisher iPaymentFailedMessagePublisher) {
         this.paymentRequestHelper = paymentRequestHelper;
         this.iPaymentCompletedMessagePublisher = iPaymentCompletedMessagePublisher;
         this.iPaymentCancelledMessagePublisher = iPaymentCancelledMessagePublisher;

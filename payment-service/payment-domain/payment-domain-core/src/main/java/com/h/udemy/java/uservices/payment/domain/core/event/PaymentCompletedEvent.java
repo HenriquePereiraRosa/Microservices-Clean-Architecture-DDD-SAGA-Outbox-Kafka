@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.payment.domain.core.event;
 
-import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
+import com.h.udemy.java.uservices.domain.event.DomainEventPublisher;
 import com.h.udemy.java.uservices.payment.domain.core.entity.Payment;
 
 import java.time.ZonedDateTime;
@@ -8,10 +8,10 @@ import java.util.Collections;
 
 public class PaymentCompletedEvent extends PaymentEvent {
 
-    private final IDomainEventPublisher<PaymentCompletedEvent> eventPublisher;
+    private final DomainEventPublisher<PaymentCompletedEvent> eventPublisher;
     public PaymentCompletedEvent(Payment payment,
                                  ZonedDateTime createdAt,
-                                 IDomainEventPublisher<PaymentCompletedEvent> eventPublisher) {
+                                 DomainEventPublisher<PaymentCompletedEvent> eventPublisher) {
         super(payment, createdAt, Collections.emptyList());
         this.eventPublisher = eventPublisher;
     }

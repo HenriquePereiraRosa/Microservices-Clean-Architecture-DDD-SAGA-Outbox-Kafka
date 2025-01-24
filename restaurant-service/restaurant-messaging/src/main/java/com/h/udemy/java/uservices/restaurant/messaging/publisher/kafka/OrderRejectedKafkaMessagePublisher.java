@@ -5,7 +5,7 @@ import com.h.udemy.java.uservices.kafka.producer.KafkaMessageHelper;
 import com.h.udemy.java.uservices.kafka.producer.service.impl.KafkaProducer;
 import com.h.udemy.java.uservices.restaurant.domain.core.event.OrderRejectedEvent;
 import com.h.udemy.java.uservices.restaurant.domain.service.config.RestaurantServiceConfigData;
-import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.message.publisher.IOrderRejectedMessagePublisher;
+import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.message.publisher.OrderRejectedMessagePublisher;
 import com.h.udemy.java.uservices.restaurant.messaging.mapper.RestaurantMessagingDataMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.EVENT_S
 
 @Slf4j
 @Component
-public class OrderRejectedKafkaMessagePublisher implements IOrderRejectedMessagePublisher {
+public class OrderRejectedKafkaMessagePublisher implements OrderRejectedMessagePublisher {
 
     public static final String AVRO_MODEL_NAME = "RestaurantApprovalResponseAvroModel";
     public static final String TARGET_NAME = "OrderId";

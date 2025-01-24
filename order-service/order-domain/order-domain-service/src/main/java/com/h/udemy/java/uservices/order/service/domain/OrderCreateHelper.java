@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
-import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
+import com.h.udemy.java.uservices.domain.event.DomainEventPublisher;
 import com.h.udemy.java.uservices.domain.messages.Messages;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.entity.Customer;
@@ -30,14 +30,14 @@ public class OrderCreateHelper {
     private final ICustomerRepository iCustomerRepository;
     private final IRestaurantRepository restaurantRepository;
     private final OrderDataMapper orderDataMapper;
-    private final IDomainEventPublisher<OrderCreatedEvent> createdEventPublisher;
+    private final DomainEventPublisher<OrderCreatedEvent> createdEventPublisher;
 
     public OrderCreateHelper(IOrderDomainService orderDomainService,
                              IOrderRepository orderRepository,
                              ICustomerRepository iCustomerRepository,
                              IRestaurantRepository restaurantRepository,
                              OrderDataMapper orderDataMapper,
-                             IDomainEventPublisher<OrderCreatedEvent> createdEventPublisher) {
+                             DomainEventPublisher<OrderCreatedEvent> createdEventPublisher) {
         this.iOrderDomainService = orderDomainService;
         this.orderRepository = orderRepository;
         this.iCustomerRepository = iCustomerRepository;

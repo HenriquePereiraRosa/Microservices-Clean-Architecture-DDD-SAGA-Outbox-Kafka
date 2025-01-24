@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.domain.event;
 
-public interface IDomainEventPublisher<T extends IDomainEvent> {
+public interface DomainEventPublisher<T extends DomainEvent> {
 
     void publish(T domainEvent);
 

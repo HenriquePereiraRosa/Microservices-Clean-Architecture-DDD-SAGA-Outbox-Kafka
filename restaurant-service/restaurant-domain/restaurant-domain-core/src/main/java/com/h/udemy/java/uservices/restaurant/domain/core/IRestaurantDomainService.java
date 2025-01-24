@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.restaurant.domain.core;
 
-import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
+import com.h.udemy.java.uservices.domain.event.DomainEventPublisher;
 import com.h.udemy.java.uservices.restaurant.domain.core.entity.Restaurant;
 import com.h.udemy.java.uservices.restaurant.domain.core.event.OrderApprovalEvent;
 import com.h.udemy.java.uservices.restaurant.domain.core.event.OrderApprovedEvent;
@@ -12,6 +12,6 @@ public interface IRestaurantDomainService {
 
     OrderApprovalEvent validateOrder(Restaurant restaurant,
                                      List<String> failureMessages,
-                                     IDomainEventPublisher<OrderApprovedEvent> orderApprovedPublisher,
-                                     IDomainEventPublisher<OrderRejectedEvent> orderRejectedPublisher);
+                                     DomainEventPublisher<OrderApprovedEvent> orderApprovedPublisher,
+                                     DomainEventPublisher<OrderRejectedEvent> orderRejectedPublisher);
 }

@@ -1,12 +1,12 @@
 package com.h.udemy.java.uservices.payment.domain.service.test.config;
 
-import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
+import com.h.udemy.java.uservices.domain.event.DomainEventPublisher;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCancelledEvent;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCompletedEvent;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentFailedEvent;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.IPaymentCancelledMessagePublisher;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.IPaymentCompletedMessagePublisher;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.IPaymentFailedMessagePublisher;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentCompletedMessagePublisher;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentCancelledMessagePublisher;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentFailedMessagePublisher;
 import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.ICreditEntryRepository;
 import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.ICreditHistoryRepository;
 import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.IPaymentRepository;
@@ -18,31 +18,31 @@ import org.springframework.context.annotation.Bean;
 public class BeanTestConfig {
 
     @Bean
-    public IDomainEventPublisher<PaymentCompletedEvent> completedEventPublisher() {
-        return Mockito.mock(IDomainEventPublisher.class);
+    public DomainEventPublisher<PaymentCompletedEvent> completedEventPublisher() {
+        return Mockito.mock(DomainEventPublisher.class);
     }
 
     @Bean
-    public IDomainEventPublisher<PaymentCancelledEvent> cancelledEventPublisher() {
-        return Mockito.mock(IDomainEventPublisher.class);
+    public DomainEventPublisher<PaymentCancelledEvent> cancelledEventPublisher() {
+        return Mockito.mock(DomainEventPublisher.class);
     }
 
     @Bean
-    public IDomainEventPublisher<PaymentFailedEvent> failedEventPublisher() {
-        return Mockito.mock(IDomainEventPublisher.class);
+    public DomainEventPublisher<PaymentFailedEvent> failedEventPublisher() {
+        return Mockito.mock(DomainEventPublisher.class);
     }
 
     @Bean
-    public IPaymentCompletedMessagePublisher iPaymentCompletedMessagePublisher() {
-        return Mockito.mock(IPaymentCompletedMessagePublisher.class);
+    public PaymentCompletedMessagePublisher iPaymentCompletedMessagePublisher() {
+        return Mockito.mock(PaymentCompletedMessagePublisher.class);
     }
     @Bean
-    public IPaymentCancelledMessagePublisher iPaymentCancelledMessagePublisher() {
-        return Mockito.mock(IPaymentCancelledMessagePublisher.class);
+    public PaymentCancelledMessagePublisher iPaymentCancelledMessagePublisher() {
+        return Mockito.mock(PaymentCancelledMessagePublisher.class);
     }
     @Bean
-    public IPaymentFailedMessagePublisher iPaymentFailedMessagePublisher() {
-        return Mockito.mock(IPaymentFailedMessagePublisher.class);
+    public PaymentFailedMessagePublisher iPaymentFailedMessagePublisher() {
+        return Mockito.mock(PaymentFailedMessagePublisher.class);
     }
 
     @Bean
