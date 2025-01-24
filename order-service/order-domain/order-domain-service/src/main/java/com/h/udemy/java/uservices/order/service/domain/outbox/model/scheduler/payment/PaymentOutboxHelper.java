@@ -72,4 +72,13 @@ public class PaymentOutboxHelper {
                 orderPaymentOutboxMessage.getId()));
 
     }
+
+    @Transactional
+    public void delete(OutboxStatus outboxStatus, SagaStatus... sagaStatuses) {
+
+        paymentOutboxRepository.deleteByTypeAndOutboxStatusAndSagaStatus(
+                        ORDER_SAGA_NAME,
+                        outboxStatus,
+                        sagaStatuses);
+    }
 }

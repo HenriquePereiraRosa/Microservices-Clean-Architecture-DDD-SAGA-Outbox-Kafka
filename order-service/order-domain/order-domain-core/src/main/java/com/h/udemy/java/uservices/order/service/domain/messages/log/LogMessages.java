@@ -23,7 +23,10 @@ public enum LogMessages {
 
     OUTBOX_MESSAGE_COULDNT_BE_SAVED("{0} with ID [{1}], could not be saved!"),
     OUTBOX_MESSAGE_SAVED("{0} saved with ID: [{1}]"),
-    ORDER_ID_STATUS_UPDATED("{0} with ID [{1}] updated with STATUS : {2}");
+    ORDER_ID_STATUS_UPDATED("{0} with ID [{1}] updated with STATUS : {2}"),
+
+    ORDER_MESSAGES_RECEIVED_FOR_CLEANUP("Received {0} {1} for clean-up. Payloads: {2}"),
+    ORDER_MESSAGES_DELETED("{0} {1} deleted.");
 
     final static String FILE_PATH = "messages_order_domain.log.log-messages";
     final String key;
