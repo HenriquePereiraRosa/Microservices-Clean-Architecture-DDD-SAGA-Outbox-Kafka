@@ -1,5 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain.mapper;
 
+import com.h.udemy.java.uservices.domain.valueobject.PaymentOrderStatus;
 import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderResponse;
@@ -10,6 +11,8 @@ import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import com.h.udemy.java.uservices.order.service.domain.entity.OrderItem;
 import com.h.udemy.java.uservices.order.service.domain.entity.Product;
 import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
+import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
+import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentEventPayload;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.StreetAddress;
 import org.springframework.stereotype.Component;
 
@@ -71,6 +74,16 @@ public class OrderDataMapper {
                 .orderTrackingId(order.getTrackingId().getValue())
                 .orderStatus(order.getOrderStatus())
                 .failureMessages(order.getFailureMessages())
+                .build();
+    }
+
+    public OrderPaymentEventPayload orderCreatedEventToOrderPaymentEventPayload(OrderCreatedEvent orderCreatedEvent) {
+        return OrderPaymentEventPayload.builder()
+                .customerId(orderCreatedEvent.getOrder().getCustomerId().getValue().toString())
+                .orderId(orderCreatedEvent.getOrder().getId().getValue().toString())
+                .price(orderCreatedEvent.getOrder().getPrice().getAmount())
+                .paymentOrderStatus(PaymentOrderStatus.PENDING.name())
+                .createdAt(orderCreatedEvent.getCreatedAt())
                 .build();
     }
 

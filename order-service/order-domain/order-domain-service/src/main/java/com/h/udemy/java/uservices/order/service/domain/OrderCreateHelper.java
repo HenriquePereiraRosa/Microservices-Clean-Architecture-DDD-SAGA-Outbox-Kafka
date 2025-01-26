@@ -30,7 +30,6 @@ public class OrderCreateHelper {
     private final ICustomerRepository iCustomerRepository;
     private final IRestaurantRepository restaurantRepository;
     private final OrderDataMapper orderDataMapper;
-    private final DomainEventPublisher<OrderCreatedEvent> createdEventPublisher;
 
     public OrderCreateHelper(IOrderDomainService orderDomainService,
                              IOrderRepository orderRepository,
@@ -43,15 +42,15 @@ public class OrderCreateHelper {
         this.iCustomerRepository = iCustomerRepository;
         this.restaurantRepository = restaurantRepository;
         this.orderDataMapper = orderDataMapper;
-        this.createdEventPublisher = createdEventPublisher;
     }
+
     @Transactional
     public OrderCreatedEvent persistOrder(CreateOrderCommand createOrderCommand) {
         checkCustomer(createOrderCommand.customerId());
         Restaurant restaurant = checkRestaurant(createOrderCommand);
         Order order = orderDataMapper.createOrderCommandToOrder(createOrderCommand);
         OrderCreatedEvent orderCreatedEvent = iOrderDomainService
-                .validateAndInitiateOrder(order, restaurant, createdEventPublisher);
+                .validateAndInitiateOrder(order, restaurant);
         insertOrder(order);
 
         final String msg = Messages.ORDER_ID_CREATED

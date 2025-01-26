@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.OUTBOX_MESSAGE_COULDNT_BE_SAVED;
+import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.ERR_OUTBOX_MESSAGE_COULD_NOT_BE_SAVED;
 import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.OUTBOX_MESSAGE_SAVED;
 import static com.h.udemy.java.uservices.saga.order.SagaConstants.ORDER_SAGA_NAME;
 import static java.util.Objects.isNull;
@@ -58,7 +58,7 @@ public class ApprovalOutboxHelper {
         OrderApprovalOutboxMessage response = approvalOutboxRepository.save(outboxMessage);
 
         if (isNull(response)) {
-            final String errorMsg = OUTBOX_MESSAGE_COULDNT_BE_SAVED.build(
+            final String errorMsg = ERR_OUTBOX_MESSAGE_COULD_NOT_BE_SAVED.build(
                     OrderApprovalOutboxMessage.class.getSimpleName(),
                     outboxMessage.getId());
 
