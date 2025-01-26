@@ -24,6 +24,6 @@ public class OrderPaymentOutboxMessage {
     private String payload;
     @Setter private SagaStatus sagaStatus;
     @Setter private OrderStatus orderStatus;
-    @Setter private OutboxStatus outBoxStatus;
+    @Setter private OutboxStatus outboxStatus;
     private int version;
 }

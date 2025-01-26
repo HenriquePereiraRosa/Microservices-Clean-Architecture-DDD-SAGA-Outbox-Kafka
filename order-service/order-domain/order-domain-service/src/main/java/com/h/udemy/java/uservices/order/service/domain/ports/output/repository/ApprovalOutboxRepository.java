@@ -1,7 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain.ports.output.repository;
 
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.approval.OrderApprovalOutboxMessage;
-import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
 import com.h.udemy.java.uservices.outbox.OutboxStatus;
 import com.h.udemy.java.uservices.saga.SagaStatus;
 

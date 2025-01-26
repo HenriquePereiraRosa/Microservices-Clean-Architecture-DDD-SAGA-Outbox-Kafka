@@ -1,7 +1,9 @@
-package com.h.udemy.java.uservices.order.service.domain.outbox.model.scheduler.payment;
+package com.h.udemy.java.uservices.order.service.domain.outbox.model.scheduler.approval;
 
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.OutboxProcessor;
+import com.h.udemy.java.uservices.order.service.domain.outbox.model.approval.OrderApprovalOutboxMessage;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
+import com.h.udemy.java.uservices.order.service.domain.outbox.model.scheduler.payment.PaymentOutboxHelper;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher;
 import com.h.udemy.java.uservices.outbox.OutboxScheduler;
 import com.h.udemy.java.uservices.outbox.OutboxStatus;
@@ -15,13 +17,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.*;
+import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.ORDER_MESSAGES_DELETED;
+import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.ORDER_MESSAGES_RECEIVED_FOR_CLEANUP;
 
 @Slf4j
 @Component
-public class PaymentOutboxCleanerScheduler implements OutboxScheduler {
+public class RestaurantApprovalOutboxCleanerScheduler implements OutboxScheduler {
 
-    private final PaymentOutboxHelper paymentOutboxHelper;
+    private final ApprovalOutboxHelper approvalOutboxHelper;
     private final PaymentRequestMessagePublisher paymentRequestMessagePublisher;
     private final OutboxProcessor outboxProcessor = new OutboxProcessor(
             OutboxStatus.COMPLETED,
@@ -29,8 +32,11 @@ public class PaymentOutboxCleanerScheduler implements OutboxScheduler {
             SagaStatus.COMPENSATED,
             SagaStatus.FAILED);
 
-    public PaymentOutboxCleanerScheduler(PaymentOutboxHelper paymentOutboxHelper, PaymentRequestMessagePublisher paymentRequestMessagePublisher) {
-        this.paymentOutboxHelper = paymentOutboxHelper;
+    public RestaurantApprovalOutboxCleanerScheduler(
+            ApprovalOutboxHelper ApprovalOutboxHelper,
+            PaymentRequestMessagePublisher paymentRequestMessagePublisher) {
+
+        this.approvalOutboxHelper = ApprovalOutboxHelper;
         this.paymentRequestMessagePublisher = paymentRequestMessagePublisher;
     }
 
@@ -39,14 +45,14 @@ public class PaymentOutboxCleanerScheduler implements OutboxScheduler {
     @Scheduled(cron = "@midnight")
     public void processOutboxMessage() {
 
-        Optional<List<OrderPaymentOutboxMessage>> outboxMessageResponse =
-                paymentOutboxHelper.getPaymentOutboxMessageByOutboxStatusAndSagaStatus(outboxProcessor);
+        Optional<List<OrderApprovalOutboxMessage>> outboxMessageResponse = approvalOutboxHelper
+                .getApprovalOutboxMessageByOutboxStatusAndSagaStatus(outboxProcessor);
 
         if (outboxMessageResponse.isPresent()) {
-            List<OrderPaymentOutboxMessage> outboxMessages = outboxMessageResponse.get();
+            List<OrderApprovalOutboxMessage> outboxMessages = outboxMessageResponse.get();
 
             String concatenatedMessages = outboxMessages.stream()
-                    .map(OrderPaymentOutboxMessage::getPayload)
+                    .map(OrderApprovalOutboxMessage::getPayload)
                     .collect(Collectors.joining("\n"));
 
             log.info(ORDER_MESSAGES_RECEIVED_FOR_CLEANUP.build(
@@ -54,7 +60,8 @@ public class PaymentOutboxCleanerScheduler implements OutboxScheduler {
                     OrderPaymentOutboxMessage.class.getSimpleName(),
                     concatenatedMessages));
 
-            paymentOutboxHelper.delete(outboxProcessor);
+            approvalOutboxHelper
+                    .deleteApprovalOutboxMessageByOutboxStatusAndSagaStatus(outboxProcessor);
 
             log.info(ORDER_MESSAGES_DELETED.build(
                     outboxMessages.size(),

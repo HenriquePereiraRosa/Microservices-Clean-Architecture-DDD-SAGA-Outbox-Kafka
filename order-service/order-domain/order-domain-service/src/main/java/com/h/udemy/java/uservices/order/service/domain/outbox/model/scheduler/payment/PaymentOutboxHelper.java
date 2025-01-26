@@ -1,6 +1,7 @@
 package com.h.udemy.java.uservices.order.service.domain.outbox.model.scheduler.payment;
 
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
+import com.h.udemy.java.uservices.order.service.domain.outbox.model.OutboxProcessor;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.PaymentOutboxRepository;
 import com.h.udemy.java.uservices.outbox.OutboxStatus;
@@ -29,14 +30,12 @@ public class PaymentOutboxHelper {
 
     @Transactional(readOnly = true)
     public Optional<List<OrderPaymentOutboxMessage>>
-    getPaymentOutboxMessageByOutboxStatusAndSagaStatus(
-            OutboxStatus outboxStatus,
-            SagaStatus... sagaStatuses) {
+    getPaymentOutboxMessageByOutboxStatusAndSagaStatus(OutboxProcessor outboxProcessor) {
 
         return paymentOutboxRepository.findByTypeAndOutboxStatusAndSagaStatus(
                 ORDER_SAGA_NAME,
-                outboxStatus,
-                sagaStatuses);
+                outboxProcessor.outboxStatus(),
+                outboxProcessor.sagaStatuses());
 
     }
 
@@ -74,11 +73,11 @@ public class PaymentOutboxHelper {
     }
 
     @Transactional
-    public void delete(OutboxStatus outboxStatus, SagaStatus... sagaStatuses) {
+    public void delete(OutboxProcessor outboxProcessor) {
 
         paymentOutboxRepository.deleteByTypeAndOutboxStatusAndSagaStatus(
                         ORDER_SAGA_NAME,
-                        outboxStatus,
-                        sagaStatuses);
+                outboxProcessor.outboxStatus(),
+                outboxProcessor.sagaStatuses());
     }
 }

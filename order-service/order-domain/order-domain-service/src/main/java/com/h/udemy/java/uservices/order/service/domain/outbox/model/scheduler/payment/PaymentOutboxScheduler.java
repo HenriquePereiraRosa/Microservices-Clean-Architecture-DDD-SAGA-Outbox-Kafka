@@ -1,12 +1,12 @@
 package com.h.udemy.java.uservices.order.service.domain.outbox.model.scheduler.payment;
 
+import com.h.udemy.java.uservices.order.service.domain.outbox.model.OutboxProcessor;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher;
 import com.h.udemy.java.uservices.outbox.OutboxScheduler;
 import com.h.udemy.java.uservices.outbox.OutboxStatus;
 import com.h.udemy.java.uservices.saga.SagaStatus;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.internal.bytebuddy.matcher.FilterableList;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +24,10 @@ public class PaymentOutboxScheduler implements OutboxScheduler {
 
     private final PaymentOutboxHelper paymentOutboxHelper;
     private final PaymentRequestMessagePublisher paymentRequestMessagePublisher;
+    private final OutboxProcessor outboxProcessor = new OutboxProcessor(
+            OutboxStatus.STARTED,
+            SagaStatus.STARTED,
+            SagaStatus.COMPENSATING);
 
     public PaymentOutboxScheduler(PaymentOutboxHelper paymentOutboxHelper, PaymentRequestMessagePublisher paymentRequestMessagePublisher) {
         this.paymentOutboxHelper = paymentOutboxHelper;
@@ -37,13 +41,11 @@ public class PaymentOutboxScheduler implements OutboxScheduler {
             initialDelayString = "${order-service.outbox-scheduler-initial-delay}")
     public void processOutboxMessage() {
 
-        List<OrderPaymentOutboxMessage> outboxMessages =
-                paymentOutboxHelper.getPaymentOutboxMessageByOutboxStatusAndSagaStatus(
-                        OutboxStatus.STARTED,
-                        SagaStatus.STARTED,
-                        SagaStatus.COMPENSATING).orElseGet(FilterableList.Empty::new);
+        Optional<List<OrderPaymentOutboxMessage>> outboxMessageResponse =
+                paymentOutboxHelper.getPaymentOutboxMessageByOutboxStatusAndSagaStatus(outboxProcessor);
 
-        if (!outboxMessages.isEmpty()) {
+        if (outboxMessageResponse.map(messages -> !messages.isEmpty()).orElse(false)) {
+            List<OrderPaymentOutboxMessage> outboxMessages = outboxMessageResponse.get();
 
             String concatenatedIds = outboxMessages.stream()
                     .map(outboxMessage -> outboxMessage.getId().toString())
@@ -59,7 +61,7 @@ public class PaymentOutboxScheduler implements OutboxScheduler {
     }
 
     private void updateOutboxStatus(OrderPaymentOutboxMessage orderPaymentOutboxMessage, OutboxStatus outboxStatus) {
-        orderPaymentOutboxMessage.setOutBoxStatus(outboxStatus);
+        orderPaymentOutboxMessage.setOutboxStatus(outboxStatus);
         paymentOutboxHelper.save(orderPaymentOutboxMessage);
 
         log.info(ORDER_ID_STATUS_UPDATED.build(
@@ -67,5 +69,4 @@ public class PaymentOutboxScheduler implements OutboxScheduler {
                 orderPaymentOutboxMessage.getId(),
                 outboxStatus.name()));
     }
-
 }
