@@ -4,7 +4,7 @@ import com.h.udemy.java.uservices.kafka.consumer.IKafkaConsumer;
 import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentResponseAvroModel;
 import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentStatus;
 import com.h.udemy.java.uservices.mapper.OrderMessagingDataMapper;
-import com.h.udemy.java.uservices.order.service.domain.ports.input.message.listener.payment.IPaymentResponseMessageListener;
+import com.h.udemy.java.uservices.order.service.domain.ports.input.message.listener.payment.PaymentResponseMessageListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -26,10 +26,10 @@ public class PaymentResponseKafkaListener implements IKafkaConsumer<PaymentRespo
     private final String KAFKA_CONSUMER_GROUP_ID = "${kafka-consumer-config.payment-consumer-group-id}";
     private final String KAFKA_TOPIC_NAME = "${order-service.payment-response-topic-name}";
     private final OrderMessagingDataMapper orderMessagingDataMapper;
-    private final IPaymentResponseMessageListener paymentResponseMessageListener;
+    private final PaymentResponseMessageListener paymentResponseMessageListener;
 
     public PaymentResponseKafkaListener(OrderMessagingDataMapper orderMessagingDataMapper,
-                                        IPaymentResponseMessageListener paymentResponseMessageListener) {
+                                        PaymentResponseMessageListener paymentResponseMessageListener) {
         this.orderMessagingDataMapper = orderMessagingDataMapper;
         this.paymentResponseMessageListener = paymentResponseMessageListener;
     }

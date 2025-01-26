@@ -1,6 +1,5 @@
 package com.h.udemy.java.uservices.order.service.domain.outbox.model.scheduler.payment;
 
-import com.h.udemy.java.uservices.order.service.domain.outbox.model.OutboxProcessor;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher;
 import com.h.udemy.java.uservices.outbox.OutboxScheduler;
@@ -23,13 +22,10 @@ public class PaymentOutboxCleanerScheduler implements OutboxScheduler {
 
     private final PaymentOutboxHelper paymentOutboxHelper;
     private final PaymentRequestMessagePublisher paymentRequestMessagePublisher;
-    private final OutboxProcessor outboxProcessor = new OutboxProcessor(
-            OutboxStatus.COMPLETED,
-            SagaStatus.SUCCEEDED,
-            SagaStatus.COMPENSATED,
-            SagaStatus.FAILED);
 
-    public PaymentOutboxCleanerScheduler(PaymentOutboxHelper paymentOutboxHelper, PaymentRequestMessagePublisher paymentRequestMessagePublisher) {
+    public PaymentOutboxCleanerScheduler(PaymentOutboxHelper paymentOutboxHelper,
+            PaymentRequestMessagePublisher paymentRequestMessagePublisher) {
+
         this.paymentOutboxHelper = paymentOutboxHelper;
         this.paymentRequestMessagePublisher = paymentRequestMessagePublisher;
     }
@@ -40,7 +36,12 @@ public class PaymentOutboxCleanerScheduler implements OutboxScheduler {
     public void processOutboxMessage() {
 
         Optional<List<OrderPaymentOutboxMessage>> outboxMessageResponse =
-                paymentOutboxHelper.getPaymentOutboxMessageByOutboxStatusAndSagaStatus(outboxProcessor);
+                paymentOutboxHelper.getPaymentOutboxMessageByOutboxStatusAndSagaStatus(
+                        OutboxStatus.COMPLETED,
+                        SagaStatus.SUCCEEDED,
+                        SagaStatus.COMPENSATED,
+                        SagaStatus.FAILED
+                );
 
         if (outboxMessageResponse.isPresent()) {
             List<OrderPaymentOutboxMessage> outboxMessages = outboxMessageResponse.get();
@@ -54,7 +55,11 @@ public class PaymentOutboxCleanerScheduler implements OutboxScheduler {
                     OrderPaymentOutboxMessage.class.getSimpleName(),
                     concatenatedMessages));
 
-            paymentOutboxHelper.delete(outboxProcessor);
+            paymentOutboxHelper.delete(
+                    OutboxStatus.COMPLETED,
+                    SagaStatus.SUCCEEDED,
+                    SagaStatus.COMPENSATED,
+                    SagaStatus.FAILED);
 
             log.info(ORDER_MESSAGES_DELETED.build(
                     outboxMessages.size(),

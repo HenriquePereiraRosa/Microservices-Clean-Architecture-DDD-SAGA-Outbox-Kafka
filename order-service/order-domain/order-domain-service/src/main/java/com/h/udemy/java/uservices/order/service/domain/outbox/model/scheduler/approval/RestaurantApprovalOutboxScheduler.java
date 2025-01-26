@@ -1,10 +1,8 @@
 package com.h.udemy.java.uservices.order.service.domain.outbox.model.scheduler.approval;
 
-import com.h.udemy.java.uservices.order.service.domain.outbox.model.OutboxProcessor;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.approval.OrderApprovalOutboxMessage;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.restaurantapproval.RestaurantApprovalRequestMessagePublisher;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.ApprovalOutboxRepository;
 import com.h.udemy.java.uservices.outbox.OutboxScheduler;
 import com.h.udemy.java.uservices.outbox.OutboxStatus;
 import com.h.udemy.java.uservices.saga.SagaStatus;
@@ -26,8 +24,6 @@ public class RestaurantApprovalOutboxScheduler implements OutboxScheduler {
 
     private final ApprovalOutboxHelper approvalOutboxHelper;
     private final RestaurantApprovalRequestMessagePublisher restaurantApprovalRequestMessagePublisher;
-    private final OutboxProcessor outboxProcessor =  new OutboxProcessor(
-            OutboxStatus.STARTED,  SagaStatus.PROCESSING);
 
     public RestaurantApprovalOutboxScheduler(
             ApprovalOutboxHelper approvalOutboxRepository,
@@ -45,7 +41,7 @@ public class RestaurantApprovalOutboxScheduler implements OutboxScheduler {
 
         Optional<List<OrderApprovalOutboxMessage>> outboxMessageResponse =
                 approvalOutboxHelper.getApprovalOutboxMessageByOutboxStatusAndSagaStatus(
-                        outboxProcessor);
+                        OutboxStatus.STARTED,  SagaStatus.PROCESSING);
 
         if (outboxMessageResponse.map(messages -> !messages.isEmpty()).orElse(false)) {
             List<OrderApprovalOutboxMessage> outboxMessages = outboxMessageResponse.get();

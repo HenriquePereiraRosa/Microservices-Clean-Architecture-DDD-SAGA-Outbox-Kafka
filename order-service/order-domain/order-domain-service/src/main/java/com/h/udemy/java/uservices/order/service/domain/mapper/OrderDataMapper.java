@@ -2,6 +2,7 @@ package com.h.udemy.java.uservices.order.service.domain.mapper;
 
 import com.h.udemy.java.uservices.domain.valueobject.PaymentOrderStatus;
 import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
+import com.h.udemy.java.uservices.domain.valueobject.RestaurantOrderStatus;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderResponse;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.OrderAddressDTO;
@@ -12,6 +13,9 @@ import com.h.udemy.java.uservices.order.service.domain.entity.OrderItem;
 import com.h.udemy.java.uservices.order.service.domain.entity.Product;
 import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
+import com.h.udemy.java.uservices.order.service.domain.event.OrderPaidEvent;
+import com.h.udemy.java.uservices.order.service.domain.outbox.model.approval.OrderApprovalEventPayload;
+import com.h.udemy.java.uservices.order.service.domain.outbox.model.approval.OrderApprovalEventProduct;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentEventPayload;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.StreetAddress;
 import org.springframework.stereotype.Component;
@@ -84,6 +88,21 @@ public class OrderDataMapper {
                 .price(orderCreatedEvent.getOrder().getPrice().getAmount())
                 .paymentOrderStatus(PaymentOrderStatus.PENDING.name())
                 .createdAt(orderCreatedEvent.getCreatedAt())
+                .build();
+    }
+
+    public OrderApprovalEventPayload orderPaidEventToOrderApprovalEventPayload(OrderPaidEvent orderPaidEvent) {
+        return OrderApprovalEventPayload.builder()
+                .orderId(orderPaidEvent.getOrder().getId().getValue())
+                .restaurantId(orderPaidEvent.getOrder().getRestaurantId().getValue())
+                .restaurantOrderStatus(RestaurantOrderStatus.PAID.name())
+                .products(orderPaidEvent.getOrder().getItems().stream().map(orderItem ->
+                        OrderApprovalEventProduct.builder()
+                                .id(orderItem.getProduct().getId().getValue().toString())
+                                .quantity(orderItem.getQuantity())
+                                .build()).collect(Collectors.toList()))
+                .price(orderPaidEvent.getOrder().getPrice().getAmount())
+                .createdAt(orderPaidEvent.getCreatedAt())
                 .build();
     }
 

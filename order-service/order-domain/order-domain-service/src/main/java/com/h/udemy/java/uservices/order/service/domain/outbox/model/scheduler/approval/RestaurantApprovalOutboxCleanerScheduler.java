@@ -1,9 +1,7 @@
 package com.h.udemy.java.uservices.order.service.domain.outbox.model.scheduler.approval;
 
-import com.h.udemy.java.uservices.order.service.domain.outbox.model.OutboxProcessor;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.approval.OrderApprovalOutboxMessage;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
-import com.h.udemy.java.uservices.order.service.domain.outbox.model.scheduler.payment.PaymentOutboxHelper;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher;
 import com.h.udemy.java.uservices.outbox.OutboxScheduler;
 import com.h.udemy.java.uservices.outbox.OutboxStatus;
@@ -26,11 +24,6 @@ public class RestaurantApprovalOutboxCleanerScheduler implements OutboxScheduler
 
     private final ApprovalOutboxHelper approvalOutboxHelper;
     private final PaymentRequestMessagePublisher paymentRequestMessagePublisher;
-    private final OutboxProcessor outboxProcessor = new OutboxProcessor(
-            OutboxStatus.COMPLETED,
-            SagaStatus.SUCCEEDED,
-            SagaStatus.COMPENSATED,
-            SagaStatus.FAILED);
 
     public RestaurantApprovalOutboxCleanerScheduler(
             ApprovalOutboxHelper ApprovalOutboxHelper,
@@ -46,7 +39,11 @@ public class RestaurantApprovalOutboxCleanerScheduler implements OutboxScheduler
     public void processOutboxMessage() {
 
         Optional<List<OrderApprovalOutboxMessage>> outboxMessageResponse = approvalOutboxHelper
-                .getApprovalOutboxMessageByOutboxStatusAndSagaStatus(outboxProcessor);
+                .getApprovalOutboxMessageByOutboxStatusAndSagaStatus(
+                        OutboxStatus.COMPLETED,
+                        SagaStatus.SUCCEEDED,
+                        SagaStatus.COMPENSATED,
+                        SagaStatus.FAILED);
 
         if (outboxMessageResponse.isPresent()) {
             List<OrderApprovalOutboxMessage> outboxMessages = outboxMessageResponse.get();
@@ -61,7 +58,11 @@ public class RestaurantApprovalOutboxCleanerScheduler implements OutboxScheduler
                     concatenatedMessages));
 
             approvalOutboxHelper
-                    .deleteApprovalOutboxMessageByOutboxStatusAndSagaStatus(outboxProcessor);
+                    .deleteApprovalOutboxMessageByOutboxStatusAndSagaStatus(
+                            OutboxStatus.COMPLETED,
+                            SagaStatus.SUCCEEDED,
+                            SagaStatus.COMPENSATED,
+                            SagaStatus.FAILED);
 
             log.info(ORDER_MESSAGES_DELETED.build(
                     outboxMessages.size(),

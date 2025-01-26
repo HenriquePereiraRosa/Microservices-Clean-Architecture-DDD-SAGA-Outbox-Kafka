@@ -1,6 +1,5 @@
 package com.h.udemy.java.uservices.order.service.domain.outbox.model.scheduler.payment;
 
-import com.h.udemy.java.uservices.order.service.domain.outbox.model.OutboxProcessor;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher;
 import com.h.udemy.java.uservices.outbox.OutboxScheduler;
@@ -24,12 +23,10 @@ public class PaymentOutboxScheduler implements OutboxScheduler {
 
     private final PaymentOutboxHelper paymentOutboxHelper;
     private final PaymentRequestMessagePublisher paymentRequestMessagePublisher;
-    private final OutboxProcessor outboxProcessor = new OutboxProcessor(
-            OutboxStatus.STARTED,
-            SagaStatus.STARTED,
-            SagaStatus.COMPENSATING);
 
-    public PaymentOutboxScheduler(PaymentOutboxHelper paymentOutboxHelper, PaymentRequestMessagePublisher paymentRequestMessagePublisher) {
+    public PaymentOutboxScheduler(PaymentOutboxHelper paymentOutboxHelper,
+            PaymentRequestMessagePublisher paymentRequestMessagePublisher) {
+
         this.paymentOutboxHelper = paymentOutboxHelper;
         this.paymentRequestMessagePublisher = paymentRequestMessagePublisher;
     }
@@ -42,7 +39,10 @@ public class PaymentOutboxScheduler implements OutboxScheduler {
     public void processOutboxMessage() {
 
         Optional<List<OrderPaymentOutboxMessage>> outboxMessageResponse =
-                paymentOutboxHelper.getPaymentOutboxMessageByOutboxStatusAndSagaStatus(outboxProcessor);
+                paymentOutboxHelper.getPaymentOutboxMessageByOutboxStatusAndSagaStatus(
+                        OutboxStatus.STARTED,
+                        SagaStatus.STARTED,
+                        SagaStatus.COMPENSATING);
 
         if (outboxMessageResponse.map(messages -> !messages.isEmpty()).orElse(false)) {
             List<OrderPaymentOutboxMessage> outboxMessages = outboxMessageResponse.get();

@@ -6,7 +6,7 @@ import com.h.udemy.java.uservices.payment.domain.core.entity.Payment;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-public abstract class PaymentEvent implements DomainEvent<Payment> {
+public abstract class PaymentEvent implements DomainEvent {
 
     private final Payment payment;
     private final ZonedDateTime createdAt;

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.h.udemy.java.uservices.domain.valueobject.OrderStatus;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
-import com.h.udemy.java.uservices.order.service.domain.outbox.model.OutboxProcessor;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.PaymentOutboxRepository;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentEventPayload;
@@ -39,12 +38,14 @@ public class PaymentOutboxHelper {
 
     @Transactional(readOnly = true)
     public Optional<List<OrderPaymentOutboxMessage>>
-    getPaymentOutboxMessageByOutboxStatusAndSagaStatus(OutboxProcessor outboxProcessor) {
+    getPaymentOutboxMessageByOutboxStatusAndSagaStatus(
+            OutboxStatus outboxStatus,
+            SagaStatus... sagaStatuses) {
 
         return paymentOutboxRepository.findByTypeAndOutboxStatusAndSagaStatus(
                 ORDER_SAGA_NAME,
-                outboxProcessor.outboxStatus(),
-                outboxProcessor.sagaStatuses());
+                outboxStatus,
+                sagaStatuses);
 
     }
 
@@ -89,7 +90,7 @@ public class PaymentOutboxHelper {
             OutboxStatus outboxStatus,
             UUID sagaId) {
 
-        save(OrderPaymentOutboxMessage.builder()
+        this.save(OrderPaymentOutboxMessage.builder()
                 .id(UUID.randomUUID())
                 .sagaId(sagaId)
                 .createdAt(paymentEventPayload.getCreatedAt())
@@ -103,7 +104,7 @@ public class PaymentOutboxHelper {
             return objectMapper.writeValueAsString(paymentEventPayload);
         } catch (JsonProcessingException e) {
 
-            String eMsg = ERR_ORDER_COULD_NOT_BE_MAPPED.build(
+            final String eMsg = ERR_ORDER_COULD_NOT_BE_MAPPED.build(
                     OrderPaymentEventPayload.class.getSimpleName(),
                     paymentEventPayload.getOrderId());
             log.info(eMsg);
@@ -112,11 +113,13 @@ public class PaymentOutboxHelper {
     }
 
     @Transactional
-    public void delete(OutboxProcessor outboxProcessor) {
+    public void delete(
+            OutboxStatus outboxStatus,
+            SagaStatus... sagaStatuses) {
 
         paymentOutboxRepository.deleteByTypeAndOutboxStatusAndSagaStatus(
                 ORDER_SAGA_NAME,
-                outboxProcessor.outboxStatus(),
-                outboxProcessor.sagaStatuses());
+                outboxStatus,
+                sagaStatuses);
     }
 }

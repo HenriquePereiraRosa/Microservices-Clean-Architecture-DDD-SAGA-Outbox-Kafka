@@ -16,6 +16,9 @@ public enum LogMessages {
     EVENT_SENT_TO_KAFKA_AT("{0} sent to KAFKA at:  {1}"),
     EVENT_ERR_SENT_TO_KAFKA("Error while sending {0} message to KAFKA with {1} id: {2}, error: {3}"),
 
+    PROCESS_OPERATION_COMPLETED("{0} operation process with ID: {1}, is complete."),
+    PROCESS_ROLLBACK_OPERATION_COMPLETED("{0} rollback operation with ID: {1}, is complete. failures messages {2}"),
+    OUTBOX_MESSAGE_ALREADY_PROCESSED("{0} with SAGA ID: {1}, already processed."),
 
     // ORDER
     ORDER_RECEIVED_ID("Received OrderCreatedEvent. orderId: {0}"),
