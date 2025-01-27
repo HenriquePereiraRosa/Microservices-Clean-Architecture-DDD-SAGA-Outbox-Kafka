@@ -16,7 +16,7 @@ static {
     strategies.put(OrderStatus.CANCELLED, new CancelledSagaStatusStrategy());
 }
 
-public static SagaStatus getSagaStatus(OrderStatus orderStatus) {
+public static SagaStatus getSagaStatusFromOrderStatus(OrderStatus orderStatus) {
     return strategies.getOrDefault(orderStatus, new DefaultSagaStatusStrategy()).getSagaStatus();
 }
 }

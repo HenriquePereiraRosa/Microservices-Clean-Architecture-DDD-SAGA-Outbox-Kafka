@@ -9,6 +9,7 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.OUTBOX_
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.OUTBOX_MESSAGE_COULD_NOT_BE_FOUND;
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.OUTBOX_MESSAGE_SAGA_ID_ALREADY_ROLLED_BACK;
 import static com.h.udemy.java.uservices.order.service.domain.saga.strategy.OderPaymentSagaStatusStrategyContext.getSagaStatusFromPaymentStatus;
+import static com.h.udemy.java.uservices.saga.strategy.SagaStatusStrategyContext.getSagaStatusFromOrderStatus;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -41,7 +42,6 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
     private final IOrderDomainService orderDomainService;
     private final OrderSagaHelper sagaHelper;
     private final PaymentOutboxHelper paymentOutboxHelper;
-    private final OrderSagaHelper orderSagaHelper;
     private final ApprovalOutboxHelper approvalOutboxHelper;
     private final OrderDataMapper orderDataMapper;
 
@@ -49,14 +49,12 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
             IOrderDomainService orderDomainService,
             OrderSagaHelper sagaHelper,
             PaymentOutboxHelper paymentOutboxHelper,
-            OrderSagaHelper orderSagaHelper,
             ApprovalOutboxHelper approvalOutboxHelper,
             OrderDataMapper orderDataMapper) {
 
         this.orderDomainService = orderDomainService;
         this.sagaHelper = sagaHelper;
         this.paymentOutboxHelper = paymentOutboxHelper;
-        this.orderSagaHelper = orderSagaHelper;
         this.approvalOutboxHelper = approvalOutboxHelper;
         this.orderDataMapper = orderDataMapper;
     }
@@ -78,8 +76,8 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
 
         OrderPaidEvent orderPaidEvent = completePaymentForOrder(paymentResponse);
 
-        SagaStatus sagaStatus = orderSagaHelper
-                .orderStatusToSagaStatus(orderPaidEvent.getOrder().getOrderStatus());
+        SagaStatus sagaStatus =
+                getSagaStatusFromOrderStatus(orderPaidEvent.getOrder().getOrderStatus());
         paymentOutboxHelper.save(getUpdatedPaymentOutboxMessage(
                 paymentOutboxMessage.get(),
                 orderPaidEvent.getOrder().getOrderStatus(),
@@ -111,7 +109,6 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
         paymentOutboxMessage.setProcessedAt(getZonedDateTimeNow());
         paymentOutboxMessage.setOrderStatus(orderStatus);
         paymentOutboxMessage.setSagaStatus(sagaStatus);
-
         return paymentOutboxMessage;
     }
 
@@ -132,11 +129,9 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
         }
 
         OrderApprovalOutboxMessage orderApprovalOutboxMessage = approvalOutboxMessageResponse.get();
-
         orderApprovalOutboxMessage.setProcessedAt(getZonedDateTimeNow());
         orderApprovalOutboxMessage.setOrderStatus(orderStatus);
         orderApprovalOutboxMessage.setSagaStatus(sagaStatus);
-
         return orderApprovalOutboxMessage;
     }
 
@@ -144,21 +139,21 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
     @Transactional
     public void rollback(PaymentResponse paymentResponse) {
 
-        Optional<OrderPaymentOutboxMessage> paymentOutboxMessageResponse =
+        Optional<OrderPaymentOutboxMessage> paymentOutboxMessage =
                 paymentOutboxHelper.getPaymentOutboxMessageBySagaIdAndSagaStatus(
                         UUID.fromString(paymentResponse.getSagaId()),
                         getSagaStatusFromPaymentStatus(paymentResponse.getPaymentStatus()));
 
-        if (paymentOutboxMessageResponse.isEmpty()) {
+        if (paymentOutboxMessage.isEmpty()) {
             log.info(OUTBOX_MESSAGE_SAGA_ID_ALREADY_ROLLED_BACK.build(paymentResponse.getSagaId()));
             return;
         }
 
         Order order = rollbackPaymentForOrder(paymentResponse);
+        SagaStatus sagaStatus = getSagaStatusFromOrderStatus(order.getOrderStatus());
 
-        SagaStatus sagaStatus = orderSagaHelper.orderStatusToSagaStatus(order.getOrderStatus());
         paymentOutboxHelper.save(getUpdatedPaymentOutboxMessage(
-                paymentOutboxMessageResponse.get(),
+                paymentOutboxMessage.get(),
                 order.getOrderStatus(),
                 sagaStatus));
 
