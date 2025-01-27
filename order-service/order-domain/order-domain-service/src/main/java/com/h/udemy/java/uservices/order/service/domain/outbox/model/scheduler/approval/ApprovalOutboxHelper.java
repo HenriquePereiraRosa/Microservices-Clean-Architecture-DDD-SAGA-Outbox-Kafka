@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain.outbox.model.scheduler.approval;
 
-import static com.h.udemy.java.uservices.domain.Constants.ZONED_DATE_TIME;
+import static com.h.udemy.java.uservices.domain.Constants.getZonedDateTimeNow;
 import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.ERR_ORDER_COULD_NOT_BE_MAPPED;
 import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.ERR_OUTBOX_MESSAGE_COULD_NOT_BE_SAVED;
 import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.OUTBOX_MESSAGE_SAVED;
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.h.udemy.java.uservices.domain.Constants;
 import com.h.udemy.java.uservices.domain.valueobject.OrderStatus;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.approval.OrderApprovalEventPayload;
@@ -57,7 +56,7 @@ public class ApprovalOutboxHelper {
 
     @Transactional(readOnly = true)
     public Optional<OrderApprovalOutboxMessage>
-    getPaymentOutboxMessageBySagaIdAndSagaStatus(
+    getApprovalOutboxMessageBySagaIdAndSagaStatus(
             UUID uuid,
             SagaStatus... sagaStatuses) {
 
@@ -99,7 +98,7 @@ public class ApprovalOutboxHelper {
         save(OrderApprovalOutboxMessage.builder()
                 .id(UUID.randomUUID())
                 .sagaId(sagaId)
-                .createdAt(ZONED_DATE_TIME)
+                .createdAt(getZonedDateTimeNow())
                 .type(ORDER_SAGA_NAME)
                 .payload(createPayload(orderApprovalEventPayload))
                 .orderStatus(orderStatus)

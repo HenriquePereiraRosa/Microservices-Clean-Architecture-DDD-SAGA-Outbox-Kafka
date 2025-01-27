@@ -1,6 +1,7 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
 import static com.h.udemy.java.uservices.domain.Constants.ZONED_UTC;
+import static com.h.udemy.java.uservices.domain.Constants.getZonedDateTimeNow;
 import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_RESTAURANT_ID_NOT_ACTIVE;
 
 import java.time.ZonedDateTime;
@@ -43,7 +44,7 @@ public class OrderDomainService implements IOrderDomainService {
     public OrderPaidEvent payOrder(Order order) {
         order.pay();
         log.info("Order with id: {} is paid", order.getId().getValue()); // todo: change this messages
-        return new OrderPaidEvent(order, ZonedDateTime.now(ZONED_UTC));
+        return new OrderPaidEvent(order, getZonedDateTimeNow());
     }
 
     @Override

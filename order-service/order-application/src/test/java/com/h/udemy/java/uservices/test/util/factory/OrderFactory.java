@@ -1,6 +1,17 @@
 package com.h.udemy.java.uservices.test.util.factory;
 
-import com.h.udemy.java.uservices.domain.event.DomainEventPublisher;
+import static com.h.udemy.java.uservices.domain.Constants.getZonedDateTimeNow;
+import static com.h.udemy.java.uservices.test.util.ConstTestUtils.CUSTOMER_ID;
+import static com.h.udemy.java.uservices.test.util.ConstTestUtils.ORDER_ID;
+import static com.h.udemy.java.uservices.test.util.ConstTestUtils.PRODUCT_ID;
+import static com.h.udemy.java.uservices.test.util.ConstTestUtils.RESTAURANT_ID;
+import static com.h.udemy.java.uservices.test.util.ConstTestUtils.STREET_ADDRESS_ID;
+import static com.h.udemy.java.uservices.test.util.ConstTestUtils.TRACKING_ID;
+
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
+
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.OrderAddressDTO;
@@ -11,21 +22,10 @@ import com.h.udemy.java.uservices.order.service.domain.entity.Product;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.OrderItemId;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.StreetAddress;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.math.BigDecimal;
-import java.time.ZonedDateTime;
-import java.util.Arrays;
-
-import static com.h.udemy.java.uservices.domain.Constants.ZONED_UTC;
-import static com.h.udemy.java.uservices.test.util.ConstTestUtils.*;
 
 public class OrderFactory {
 
-    @Autowired
-    private static DomainEventPublisher<OrderCreatedEvent> createdEventPublisher;
-
-    static public CreateOrderCommand createCreateOrderCommand() {
+    public static CreateOrderCommand createCreateOrderCommand() {
 
         OrderAddressDTO orderAddressDTO = new OrderAddressDTO("sweet street",
                 "01234-99",
@@ -33,7 +33,7 @@ public class OrderFactory {
 
         OrderItemDTO item = OrderItemDTO.builder()
                 .productId(PRODUCT_ID.getValue())
-                .price(new BigDecimal(10.99))
+                .price(new BigDecimal("10.99"))
                 .quantity(5)
                 .build();
 
@@ -41,12 +41,12 @@ public class OrderFactory {
                 .customerId(CUSTOMER_ID.getValue())
                 .restaurantId(RESTAURANT_ID.getValue())
                 .address(orderAddressDTO)
-                .price(new BigDecimal(54.95))
-                .items(Arrays.asList(item))
+                .price(new BigDecimal("54.95"))
+                .items(Collections.singletonList(item))
                 .build();
     }
 
-    static public Order createOrderSaved() {
+    public static Order createOrderSaved() {
 
         StreetAddress address = new StreetAddress(STREET_ADDRESS_ID,
                 "sweet street",
@@ -57,8 +57,8 @@ public class OrderFactory {
                 .orderItemId(new OrderItemId(112L))
                 .product(new Product(PRODUCT_ID,
                         "product name",
-                        new Money(new BigDecimal(10.99))))
-                .price(new Money(new BigDecimal(10.99)))
+                        new Money(new BigDecimal("10.99"))))
+                .price(new Money(new BigDecimal("10.99")))
                 .quantity(5)
                 .build();
 
@@ -67,13 +67,13 @@ public class OrderFactory {
                 .customerId(CUSTOMER_ID)
                 .restaurantId(RESTAURANT_ID)
                 .deliveryAddress(address)
-                .price(new Money(new BigDecimal(54.95)))
-                .items(Arrays.asList(item))
+                .price(new Money(new BigDecimal("54.95")))
+                .items(List.of(item))
                 .trackingId(TRACKING_ID)
                 .build();
     }
 
-    static public OrderCreatedEvent createOrderCreatedEvent(Order order) {
-        return new OrderCreatedEvent(order, ZonedDateTime.now(ZONED_UTC), createdEventPublisher);
+    public static OrderCreatedEvent createOrderCreatedEvent(Order order) {
+        return new OrderCreatedEvent(order, getZonedDateTimeNow());
     }
 }

@@ -10,5 +10,7 @@ public class Constants {
     public static final String BASE_PACKAGE = "com.h.udemy.java.uservices";
     public static final ZoneId ZONED_UTC = ZoneId.of("UTC");
 
-    public static final ZonedDateTime ZONED_DATE_TIME = ZonedDateTime.now(ZONED_UTC);
+    public static ZonedDateTime getZonedDateTimeNow() {
+        return ZonedDateTime.now(ZONED_UTC);
+    }
 }

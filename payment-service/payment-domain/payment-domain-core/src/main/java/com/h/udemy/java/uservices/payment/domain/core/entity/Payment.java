@@ -12,6 +12,7 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 import static com.h.udemy.java.uservices.domain.Constants.ZONED_UTC;
+import static com.h.udemy.java.uservices.domain.Constants.getZonedDateTimeNow;
 import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_PAYMENT_TOTAL_PRICE_MUST_BE_GRATER_THAN_ZERO;
 
 @Getter
@@ -90,7 +91,7 @@ public class Payment extends AggregateRoot<PaymentId> {
 
     public void initializePayment() {
         setId(new PaymentId(UUID.randomUUID()));
-        createdAt = ZonedDateTime.now(ZONED_UTC);
+        createdAt = getZonedDateTimeNow();
     }
 
     public String validatePaymentReturningFailuresMsgs() {

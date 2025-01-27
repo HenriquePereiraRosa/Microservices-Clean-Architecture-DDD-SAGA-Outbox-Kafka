@@ -20,6 +20,7 @@ import java.time.ZonedDateTime;
 import java.util.*;
 
 import static com.h.udemy.java.uservices.domain.Constants.ZONED_UTC;
+import static com.h.udemy.java.uservices.domain.Constants.getZonedDateTimeNow;
 import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_PAYMENT_NOT_ENOUGH_CREDIT;
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.*;
 import static org.apache.logging.log4j.util.Strings.isBlank;
@@ -47,7 +48,7 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
             payment.updateStatus(PaymentStatus.COMPLETED);
 
             return new PaymentCompletedEvent(payment,
-                    ZonedDateTime.now(ZONED_UTC),
+                    getZonedDateTimeNow(),
                     completedEventPublisher);
         }
 
@@ -55,7 +56,7 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
         payment.updateStatus(PaymentStatus.FAILED);
 
         return new PaymentFailedEvent(payment,
-                ZonedDateTime.now(ZONED_UTC),
+                getZonedDateTimeNow(),
                 failureMessages,
                 failedEventPublisher);
     }
@@ -85,7 +86,7 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
         payment.updateStatus(PaymentStatus.FAILED);
 
         return new PaymentFailedEvent(payment,
-                ZonedDateTime.now(ZONED_UTC),
+                getZonedDateTimeNow(),
                 failureMessages,
                 failedEventPublisher);
     }

@@ -19,6 +19,8 @@ public enum LogMessages {
     PROCESS_OPERATION_COMPLETED("{0} operation process with ID: {1}, is complete."),
     PROCESS_ROLLBACK_OPERATION_COMPLETED("{0} rollback operation with ID: {1}, is complete. failures messages {2}"),
     OUTBOX_MESSAGE_ALREADY_PROCESSED("{0} with SAGA ID: {1}, already processed."),
+    OUTBOX_MESSAGE_SAGA_ID_ALREADY_ROLLED_BACK("An Outbox Message with SAGA ID: {0}, already Rolled back!"),
+    OUTBOX_MESSAGE_COULD_NOT_BE_FOUND("{0} with SAGA Status: {1}, could NOT be found!"),
 
     // ORDER
     ORDER_RECEIVED_ID("Received OrderCreatedEvent. orderId: {0}"),
