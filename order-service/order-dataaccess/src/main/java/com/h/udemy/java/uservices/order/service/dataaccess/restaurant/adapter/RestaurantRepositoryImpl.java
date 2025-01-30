@@ -1,10 +1,10 @@
 package com.h.udemy.java.uservices.order.service.dataaccess.restaurant.adapter;
 
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.RestaurantRepository;
 import com.h.udemy.java.uservices.restaurant.dataaccess.entity.RestaurantEntity;
-import com.h.udemy.java.uservices.restaurant.dataaccess.repository.IRestaurantJpaRepository;
+import com.h.udemy.java.uservices.restaurant.dataaccess.repository.RestaurantJpaRepository;
 import com.h.udemy.java.uservices.order.service.dataaccess.restaurant.mapper.RestaurantDataAccessMapper;
 import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IRestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,10 +13,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class RestaurantRepository implements IRestaurantRepository {
+public class RestaurantRepositoryImpl implements RestaurantRepository {
 
     @Autowired
-    private IRestaurantJpaRepository restaurantJpaRepository;
+    private RestaurantJpaRepository restaurantJpaRepository;
 
     @Autowired
     private RestaurantDataAccessMapper restaurantDataAccessMapper;

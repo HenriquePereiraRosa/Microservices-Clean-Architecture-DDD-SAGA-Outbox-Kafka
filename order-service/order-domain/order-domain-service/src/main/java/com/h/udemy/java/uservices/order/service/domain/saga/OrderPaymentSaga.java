@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.h.udemy.java.uservices.domain.valueobject.OrderStatus;
 import com.h.udemy.java.uservices.domain.valueobject.PaymentStatus;
-import com.h.udemy.java.uservices.order.service.domain.IOrderDomainService;
+import com.h.udemy.java.uservices.order.service.domain.OrderDomainService;
 import com.h.udemy.java.uservices.order.service.domain.dto.message.PaymentResponse;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderPaidEvent;
@@ -39,14 +39,14 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class OrderPaymentSaga implements SagaStep<PaymentResponse> {
 
-    private final IOrderDomainService orderDomainService;
+    private final OrderDomainService orderDomainService;
     private final OrderSagaHelper sagaHelper;
     private final PaymentOutboxHelper paymentOutboxHelper;
     private final ApprovalOutboxHelper approvalOutboxHelper;
     private final OrderDataMapper orderDataMapper;
 
     public OrderPaymentSaga(
-            IOrderDomainService orderDomainService,
+            OrderDomainService orderDomainService,
             OrderSagaHelper sagaHelper,
             PaymentOutboxHelper paymentOutboxHelper,
             ApprovalOutboxHelper approvalOutboxHelper,

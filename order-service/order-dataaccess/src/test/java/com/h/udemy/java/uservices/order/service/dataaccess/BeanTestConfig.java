@@ -1,7 +1,7 @@
 package com.h.udemy.java.uservices.order.service.dataaccess;
 
-import com.h.udemy.java.uservices.restaurant.dataaccess.repository.IRestaurantJpaRepository;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
+import com.h.udemy.java.uservices.restaurant.dataaccess.repository.RestaurantJpaRepository;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.OrderRepository;
 import org.mockito.Mockito;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -11,29 +11,14 @@ import org.springframework.context.annotation.Primary;
 public class BeanTestConfig {
 
     @Bean
-    public OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher() {
-        return Mockito.mock(OrderCreatedPaymentRequestMessagePublisher.class);
-    }
-
-    @Bean
-    public OrderCancelledPaymentRequestRequestMessagePublisher orderCancelledPaymentRequestRequestMessagePublisher() {
-        return Mockito.mock(OrderCancelledPaymentRequestRequestMessagePublisher.class);
-    }
-
-    @Bean
-    public OrderPaidRestaurantRequestMessagePublisher orderPaidRestaurantRequestRequestMessagePublisher() {
-        return Mockito.mock(OrderPaidRestaurantRequestMessagePublisher.class);
-    }
-
-    @Bean
-    public IRestaurantJpaRepository restaurantJpaRepository() {
-        return Mockito.mock(IRestaurantJpaRepository.class);
+    public RestaurantJpaRepository restaurantJpaRepository() {
+        return Mockito.mock(RestaurantJpaRepository.class);
     }
 
     @Bean
     @Primary
-    public IOrderRepository orderJpaRepository() {
-        return Mockito.mock(IOrderRepository.class);
+    public OrderRepository orderJpaRepository() {
+        return Mockito.mock(OrderRepository.class);
     }
 
 }

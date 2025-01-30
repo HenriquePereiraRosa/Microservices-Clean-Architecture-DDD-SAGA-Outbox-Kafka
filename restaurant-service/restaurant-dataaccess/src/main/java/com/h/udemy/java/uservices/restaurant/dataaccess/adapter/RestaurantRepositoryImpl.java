@@ -1,10 +1,10 @@
 package com.h.udemy.java.uservices.restaurant.dataaccess.adapter;
 
 import com.h.udemy.java.uservices.restaurant.dataaccess.entity.RestaurantEntity;
-import com.h.udemy.java.uservices.restaurant.dataaccess.repository.IRestaurantJpaRepository;
+import com.h.udemy.java.uservices.restaurant.dataaccess.repository.RestaurantJpaRepository;
 import com.h.udemy.java.uservices.restaurant.dataaccess.mapper.RestaurantDataAccessMapper;
 import com.h.udemy.java.uservices.restaurant.domain.core.entity.Restaurant;
-import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.repository.IRestaurantRepository;
+import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.repository.RestaurantRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,13 +12,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class RestaurantRepository implements IRestaurantRepository {
+public class RestaurantRepositoryImpl implements RestaurantRepository {
 
-    private final IRestaurantJpaRepository restaurantJpaRepository;
+    private final RestaurantJpaRepository restaurantJpaRepository;
     private final RestaurantDataAccessMapper restaurantDataAccessMapper;
 
-    public RestaurantRepository(IRestaurantJpaRepository restaurantJpaRepository,
-                                RestaurantDataAccessMapper restaurantDataAccessMapper) {
+    public RestaurantRepositoryImpl(RestaurantJpaRepository restaurantJpaRepository,
+                                    RestaurantDataAccessMapper restaurantDataAccessMapper) {
         this.restaurantJpaRepository = restaurantJpaRepository;
         this.restaurantDataAccessMapper = restaurantDataAccessMapper;
     }

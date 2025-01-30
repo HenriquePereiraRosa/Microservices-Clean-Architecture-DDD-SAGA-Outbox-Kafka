@@ -9,7 +9,7 @@ import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import com.h.udemy.java.uservices.order.service.domain.entity.OrderItem;
 import com.h.udemy.java.uservices.order.service.domain.entity.Product;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.OrderRepository;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.OrderItemId;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.StreetAddress;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.TrackingId;
@@ -35,7 +35,7 @@ class CustomerRepositoryTest extends ApiEnvTestConfig {
     private final TrackingId TRACKING_ID = new TrackingId(UUID.randomUUID());
 
     @Autowired
-    IOrderRepository orderRepository;
+    OrderRepository orderRepository;
 
 
     private final Order order = this.getOne();

@@ -4,7 +4,7 @@ import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCom
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderResponse;
 import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderQuery;
 import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderResponse;
-import com.h.udemy.java.uservices.order.service.domain.ports.input.service.IOrderApplicationService;
+import com.h.udemy.java.uservices.order.service.domain.ports.input.service.OrderApplicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +29,9 @@ import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMe
     produces = "application/vnd.api.v1+json")
 public class OrderControllerV1 {
 
-    private final IOrderApplicationService orderApplicationService;
+    private final OrderApplicationService orderApplicationService;
 
-    public OrderControllerV1(IOrderApplicationService orderApplicationService) {
+    public OrderControllerV1(OrderApplicationService orderApplicationService) {
         this.orderApplicationService = orderApplicationService;
     }
 

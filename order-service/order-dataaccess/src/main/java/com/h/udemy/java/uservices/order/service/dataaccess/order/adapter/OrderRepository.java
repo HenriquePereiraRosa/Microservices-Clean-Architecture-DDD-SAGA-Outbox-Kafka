@@ -5,7 +5,6 @@ import com.h.udemy.java.uservices.order.service.dataaccess.order.entity.OrderEnt
 import com.h.udemy.java.uservices.order.service.dataaccess.order.mapper.OrderDataAccessMapper;
 import com.h.udemy.java.uservices.order.service.dataaccess.order.repository.IOrderJpaRepository;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.TrackingId;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class OrderRepository implements IOrderRepository {
+public class OrderRepository implements com.h.udemy.java.uservices.order.service.domain.ports.output.repository.OrderRepository {
 
     private final IOrderJpaRepository orderJpaRepository;
     private final OrderDataAccessMapper orderDataAccessMapper;

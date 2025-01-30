@@ -8,7 +8,7 @@ import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderRespo
 import javax.validation.Valid;
 import java.util.List;
 
-public interface IOrderApplicationService {
+public interface OrderApplicationService {
 
     CreateOrderResponse createOrder(@Valid CreateOrderCommand createOrderCommand);
 

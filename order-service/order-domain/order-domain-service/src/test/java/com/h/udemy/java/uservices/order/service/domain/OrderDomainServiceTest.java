@@ -1,12 +1,10 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.h.udemy.java.uservices.domain.Constants;
 import com.h.udemy.java.uservices.domain.messages.Messages;
-import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
-import com.h.udemy.java.uservices.domain.valueobject.Money;
-import com.h.udemy.java.uservices.domain.valueobject.OrderId;
-import com.h.udemy.java.uservices.domain.valueobject.OrderStatus;
-import com.h.udemy.java.uservices.domain.valueobject.ProductId;
-import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
+import com.h.udemy.java.uservices.domain.valueobject.*;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderResponse;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.OrderAddressDTO;
@@ -17,10 +15,12 @@ import com.h.udemy.java.uservices.order.service.domain.entity.Product;
 import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
 import com.h.udemy.java.uservices.order.service.domain.mapper.OrderDataMapper;
-import com.h.udemy.java.uservices.order.service.domain.ports.input.service.IOrderApplicationService;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.ICustomerRepository;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IRestaurantRepository;
+import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentEventPayload;
+import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
+import com.h.udemy.java.uservices.order.service.domain.ports.input.service.OrderApplicationService;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.*;
+import com.h.udemy.java.uservices.outbox.OutboxStatus;
+import com.h.udemy.java.uservices.saga.SagaStatus;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.h.udemy.java.uservices.domain.Constants.getZonedDateTimeNow;
 import static com.h.udemy.java.uservices.domain.messages.Messages.*;
+import static com.h.udemy.java.uservices.saga.order.SagaConstants.ORDER_SAGA_NAME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -45,20 +47,25 @@ import static org.mockito.Mockito.when;
 class OrderDomainServiceTest extends ApiEnvTestConfig {
 
     @Autowired
-    private IOrderApplicationService iOrderAplicationService;
+    private OrderApplicationService orderApplicationService;
 
     @Autowired
     private OrderDataMapper orderDataMapper;
 
     @Autowired
-    private IOrderRepository iOrderRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
-    private ICustomerRepository iCustomerRepository;
+    private CustomerRepository customerRepository;
 
     @Autowired
-    private IRestaurantRepository iRestaurantRepository;
+    private RestaurantRepository restaurantRepository;
 
+    @Autowired
+    private PaymentOutboxRepository paymentOutboxRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private CreateOrderCommand createOrderCommand;
     private CreateOrderCommand createOrderCommandWrongPrice;
@@ -67,6 +74,7 @@ class OrderDomainServiceTest extends ApiEnvTestConfig {
     private final UUID RESTAURANT_ID = UUID.randomUUID();
     private final UUID PRODUCT_ID = UUID.randomUUID();
     private final UUID ORDER_ID = UUID.randomUUID();
+    private final UUID SAGA_ID = UUID.randomUUID();
     private final BigDecimal PRICE = new BigDecimal("200.00");
 
 
@@ -151,22 +159,57 @@ class OrderDomainServiceTest extends ApiEnvTestConfig {
         Order order = orderDataMapper.createOrderCommandToOrder(createOrderCommand);
         order.setId(new OrderId(ORDER_ID));
 
-        when(iCustomerRepository.findCustomer(CUSTOMER_ID))
+        when(customerRepository.findCustomer(CUSTOMER_ID))
                 .thenReturn(Optional.of(customer));
 
-        when(iRestaurantRepository.findRestaurantInformation(orderDataMapper
+        when(restaurantRepository.findRestaurantInformation(orderDataMapper
                 .createOrderCommandToRestaurant(createOrderCommand)))
                 .thenReturn(Optional.of(restaurantResponse));
 
-        when(iOrderRepository.insertOrder(any(Order.class)))
+        when(orderRepository.insertOrder(any(Order.class)))
                 .thenReturn(order);
+
+        when(paymentOutboxRepository.save(any(OrderPaymentOutboxMessage.class)))
+                .thenReturn(mockOrderPaymentOutBoxMessage());
+    }
+
+    private OrderPaymentOutboxMessage mockOrderPaymentOutBoxMessage() {
+        OrderPaymentEventPayload orderPaymentEventPayload =
+                OrderPaymentEventPayload.builder()
+                        .orderId(ORDER_ID.toString())
+                        .customerId(CUSTOMER_ID.toString())
+                        .price(PRICE)
+                        .paymentOrderStatus(PaymentOrderStatus.PENDING.name())
+                        .createdAt(getZonedDateTimeNow())
+                        .build();
+
+        return OrderPaymentOutboxMessage.builder()
+                .id(UUID.randomUUID())
+                .sagaId(SAGA_ID)
+                .type(ORDER_SAGA_NAME)
+                .payload(createPayload(orderPaymentEventPayload))
+                .orderStatus(OrderStatus.PENDING)
+                .sagaStatus(SagaStatus.STARTED)
+                .outboxStatus(OutboxStatus.STARTED)
+                .version(0)
+                .createdAt(getZonedDateTimeNow())
+                .build();
+    }
+
+    private String createPayload(OrderPaymentEventPayload orderPaymentEventPayload) {
+        try {
+            return objectMapper.writeValueAsString(orderPaymentEventPayload);
+        } catch (JsonProcessingException e) {
+            throw new OrderDomainException("Could Not Create "
+                    + OrderPaymentEventPayload.class.getSimpleName() + " object!");
+        }
     }
 
 
     @Test
     @org.junit.jupiter.api.Order(1)
     void createOrder_ok_success() {
-        CreateOrderResponse createOrderResponse = iOrderAplicationService.createOrder(createOrderCommand);
+        CreateOrderResponse createOrderResponse = orderApplicationService.createOrder(createOrderCommand);
 
         assertEquals(OrderStatus.PENDING, createOrderResponse.getOrderStatus());
         assertEquals(Messages.ORDER_CREATED_SUCCESSFULLY.get(), createOrderResponse.getMessage());
@@ -178,7 +221,7 @@ class OrderDomainServiceTest extends ApiEnvTestConfig {
     void createOrder_nok_WrongTotalPrice() {
         OrderDomainException orderDomainException = assertThrows(OrderDomainException.class,
                 () -> {
-                    iOrderAplicationService.createOrder(createOrderCommandWrongPrice);
+                    orderApplicationService.createOrder(createOrderCommandWrongPrice);
                 });
 
         final String exceptionMsg = ERR_ORDER_TOTAL_AND_ORDER_PRICES_DIFF.get()
@@ -192,7 +235,7 @@ class OrderDomainServiceTest extends ApiEnvTestConfig {
     void createOrder_nok_WrongProductPrice() {
         OrderDomainException orderDomainException = assertThrows(OrderDomainException.class,
                 () -> {
-                    iOrderAplicationService.createOrder(createOrderCommandWrongProductPrice);
+                    orderApplicationService.createOrder(createOrderCommandWrongProductPrice);
                 });
 
         final String exceptionMsg = ERR_ORDER_ITEM_PRICE_INVALID.get() + ": 210.00";
@@ -217,13 +260,13 @@ class OrderDomainServiceTest extends ApiEnvTestConfig {
                 .active(false) // inactive restaurant
                 .build();
 
-        when(iRestaurantRepository.findRestaurantInformation(orderDataMapper
+        when(restaurantRepository.findRestaurantInformation(orderDataMapper
                 .createOrderCommandToRestaurant(createOrderCommand)))
                 .thenReturn(Optional.of(restaurantResponse));
 
         OrderDomainException orderDomainException = assertThrows(OrderDomainException.class,
                 () -> {
-                    iOrderAplicationService.createOrder(createOrderCommand);
+                    orderApplicationService.createOrder(createOrderCommand);
                 });
 
         final String exceptionMsg = ERR_RESTAURANT_ID_NOT_ACTIVE.get() + RESTAURANT_ID;

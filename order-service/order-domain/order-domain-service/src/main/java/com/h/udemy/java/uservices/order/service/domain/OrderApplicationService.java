@@ -4,7 +4,6 @@ import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCom
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderResponse;
 import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderQuery;
 import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderResponse;
-import com.h.udemy.java.uservices.order.service.domain.ports.input.service.IOrderApplicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -15,7 +14,7 @@ import java.util.List;
 @Validated
 @Service
 public
-class OrderApplicationService implements IOrderApplicationService {
+class OrderApplicationService implements com.h.udemy.java.uservices.order.service.domain.ports.input.service.OrderApplicationService {
 
     private final OrderCreateCommandHandler orderCreateCommandHandler;
 

@@ -6,9 +6,9 @@ import com.h.udemy.java.uservices.order.service.domain.entity.Customer;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.ICustomerRepository;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IRestaurantRepository;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.CustomerRepository;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.OrderRepository;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.RestaurantRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -19,7 +19,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -52,11 +51,11 @@ class OrderControllerV1Test extends ApiEnvTestConfig {
     private final OrderCreatedEvent orderCreatedEvent = createOrderCreatedEvent(orderSaved);
 
     @Autowired
-    IOrderRepository orderRepository;
+    OrderRepository orderRepository;
     @Autowired
-    ICustomerRepository customerRepository;
+    CustomerRepository customerRepository;
     @Autowired
-    IRestaurantRepository restaurantRepository;
+    RestaurantRepository restaurantRepository;
 
     @BeforeAll
     public void setup() {

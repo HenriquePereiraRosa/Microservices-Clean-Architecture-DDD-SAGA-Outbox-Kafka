@@ -7,7 +7,7 @@ import com.h.udemy.java.uservices.order.service.domain.valueobject.TrackingId;
 import java.util.List;
 import java.util.Optional;
 
-public interface IOrderRepository {
+public interface OrderRepository {
 
     Order insertOrder(Order order);
 

@@ -16,6 +16,7 @@ import java.util.UUID;
 
 import static com.h.udemy.java.uservices.domain.messages.Messages.ORDER_ID_CREATED;
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_ID_CREATED_ORDER_RESPONSE;
+import static com.h.udemy.java.uservices.saga.strategy.SagaStatusStrategyContext.getSagaStatusFromOrderStatus;
 
 @Slf4j
 @Component
@@ -24,18 +25,14 @@ public class OrderCreateCommandHandler {
     private final OrderCreateHelper orderCreateHelper;
     private final OrderDataMapper orderDataMapper;
     private final PaymentOutboxHelper paymentOutboxHelper;
-    private final OrderSagaHelper orderSagaHelper;
-
 
     public OrderCreateCommandHandler(OrderCreateHelper orderCreateHelper,
                                      OrderDataMapper orderDataMapper,
-                                     PaymentOutboxHelper paymentOutboxHelper,
-                                     OrderSagaHelper orderSagaHelper) {
+                                     PaymentOutboxHelper paymentOutboxHelper) {
 
         this.orderCreateHelper = orderCreateHelper;
         this.orderDataMapper = orderDataMapper;
         this.paymentOutboxHelper = paymentOutboxHelper;
-        this.orderSagaHelper = orderSagaHelper;
     }
 
     @Transactional
@@ -51,7 +48,7 @@ public class OrderCreateCommandHandler {
         paymentOutboxHelper.savePaymentOutboxMessage(
                 orderDataMapper.orderCreatedEventToOrderPaymentEventPayload(orderCreatedEvent),
                 orderCreatedEvent.getOrder().getOrderStatus(),
-                orderSagaHelper.orderStatusToSagaStatus(orderCreatedEvent.getOrder().getOrderStatus()),
+                getSagaStatusFromOrderStatus(orderCreatedEvent.getOrder().getOrderStatus()),
                 OutboxStatus.STARTED,
                 UUID.randomUUID());
 

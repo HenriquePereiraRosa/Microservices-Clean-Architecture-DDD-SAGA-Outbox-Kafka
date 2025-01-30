@@ -10,7 +10,7 @@ import com.h.udemy.java.uservices.restaurant.domain.service.mapper.RestaurantDat
 import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.message.publisher.OrderApprovedMessagePublisher;
 import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.message.publisher.OrderRejectedMessagePublisher;
 import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.repository.IOrderApprovalRepository;
-import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.repository.IRestaurantRepository;
+import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.repository.RestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +27,7 @@ import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_RESTAURANT
 public class RestaurantApprovalRequestHelper {
     private final RestaurantDomainService restaurantDomainService;
     private final RestaurantDataMapper restaurantMapper;
-    private final IRestaurantRepository restaurantRepository;
+    private final RestaurantRepository restaurantRepository;
     private final IOrderApprovalRepository orderApprovalRepository;
     private final OrderApprovedMessagePublisher approvedMessagePublisher;
     private final OrderRejectedMessagePublisher rejectedMessagePublisher;
@@ -35,7 +35,7 @@ public class RestaurantApprovalRequestHelper {
 
     public RestaurantApprovalRequestHelper(RestaurantDomainService restaurantDomainService,
                                            RestaurantDataMapper restaurantMapper,
-                                           IRestaurantRepository restaurantRepository,
+                                           RestaurantRepository restaurantRepository,
                                            IOrderApprovalRepository orderApprovalRepository,
                                            OrderApprovedMessagePublisher approvedMessagePublisher,
                                            OrderRejectedMessagePublisher rejectedMessagePublisher) {
