@@ -57,8 +57,8 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
 
         return new PaymentFailedEvent(payment,
                 getZonedDateTimeNow(),
-                failureMessages,
-                failedEventPublisher);
+                failureMessages
+        );
     }
 
     @Override
@@ -87,8 +87,8 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
 
         return new PaymentFailedEvent(payment,
                 getZonedDateTimeNow(),
-                failureMessages,
-                failedEventPublisher);
+                failureMessages
+        );
     }
 
     private static List<String> validateAndAddMessages(Payment payment) {

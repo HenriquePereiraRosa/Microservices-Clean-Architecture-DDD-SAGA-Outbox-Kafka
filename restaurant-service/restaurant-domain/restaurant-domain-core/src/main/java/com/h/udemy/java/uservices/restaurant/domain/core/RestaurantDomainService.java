@@ -10,10 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-import static com.h.udemy.java.uservices.domain.Constants.ZONED_DATE_TIME;
-import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.RESTAURANT_APPROVED_ORDER_ID;
-import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.RESTAURANT_REJECTED_ORDER_ID;
-import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.RESTAURANT_VALIDATING_ORDER_ID;
+import static com.h.udemy.java.uservices.domain.Constants.getZonedDateTimeNow;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.*;
 
 @Slf4j
 public class RestaurantDomainService implements IRestaurantDomainService {
@@ -39,8 +37,8 @@ public class RestaurantDomainService implements IRestaurantDomainService {
             return new OrderApprovedEvent(restaurant.getOrderApproval(),
                     restaurant.getId(),
                     failureMessages,
-                    ZONED_DATE_TIME,
-                    orderApprovedPublisher);
+                    getZonedDateTimeNow()
+            );
         }
 
 
@@ -51,7 +49,7 @@ public class RestaurantDomainService implements IRestaurantDomainService {
         return new OrderRejectedEvent(restaurant.getOrderApproval(),
                 restaurant.getId(),
                 failureMessages,
-                ZONED_DATE_TIME,
-                orderRejectedPublisher);
+                getZonedDateTimeNow()
+        );
     }
 }

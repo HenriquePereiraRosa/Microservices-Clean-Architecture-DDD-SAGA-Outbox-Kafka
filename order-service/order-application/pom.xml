@@ -36,6 +36,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>outbox</artifactId>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 

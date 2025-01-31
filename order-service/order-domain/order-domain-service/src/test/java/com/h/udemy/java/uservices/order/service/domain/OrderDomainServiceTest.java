@@ -2,7 +2,6 @@ package com.h.udemy.java.uservices.order.service.domain;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.h.udemy.java.uservices.domain.Constants;
 import com.h.udemy.java.uservices.domain.messages.Messages;
 import com.h.udemy.java.uservices.domain.valueobject.*;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
@@ -19,6 +18,7 @@ import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.Orde
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
 import com.h.udemy.java.uservices.order.service.domain.ports.input.service.OrderApplicationService;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.*;
+import com.h.udemy.java.uservices.order.service.domain.test.config.ApiEnvTestConfig;
 import com.h.udemy.java.uservices.outbox.OutboxStatus;
 import com.h.udemy.java.uservices.saga.SagaStatus;
 import org.junit.jupiter.api.BeforeAll;

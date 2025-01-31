@@ -14,7 +14,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication(scanBasePackages = "com.h.udemy.java.uservices")
+@SpringBootApplication(scanBasePackages = "com.h.udemy.java.uservices.messaging")
 public class BeanTestConfig {
 
     @Bean

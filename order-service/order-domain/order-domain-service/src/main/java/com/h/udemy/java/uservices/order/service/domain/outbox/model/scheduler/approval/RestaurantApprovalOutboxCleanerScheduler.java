@@ -23,14 +23,12 @@ import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMe
 public class RestaurantApprovalOutboxCleanerScheduler implements OutboxScheduler {
 
     private final ApprovalOutboxHelper approvalOutboxHelper;
-    private final PaymentRequestMessagePublisher paymentRequestMessagePublisher;
 
     public RestaurantApprovalOutboxCleanerScheduler(
             ApprovalOutboxHelper ApprovalOutboxHelper,
             PaymentRequestMessagePublisher paymentRequestMessagePublisher) {
 
         this.approvalOutboxHelper = ApprovalOutboxHelper;
-        this.paymentRequestMessagePublisher = paymentRequestMessagePublisher;
     }
 
     @Override

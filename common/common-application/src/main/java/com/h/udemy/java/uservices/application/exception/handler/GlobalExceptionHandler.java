@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.application.exception.handler;
 
-import com.h.udemy.java.uservices.application.exception.handler.model.ErrorDTO;
+import com.h.udemy.java.uservices.application.exception.handler.model.ErrorTo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 
         log.error(exception.getMessage(), exception);
 
-        ErrorDTO errorbody = ErrorDTO.builder()
+        ErrorTo errorbody = ErrorTo.builder()
                 .code(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                 .message(UNEXPECTED_ERROR.get())
                 .build();
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
             final String violations = this.extractViolations((ConstraintViolationException) exception);
             log.error(exception.getMessage(), exception);
 
-            ErrorDTO errorbody = ErrorDTO.builder()
+            ErrorTo errorbody = ErrorTo.builder()
                     .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
                     .message(violations)
                     .build();
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
         } else {
             log.error(exception.getMessage(), exception);
 
-            ErrorDTO errorBody = ErrorDTO.builder()
+            ErrorTo errorBody = ErrorTo.builder()
                     .code(HttpStatus.BAD_REQUEST.getReasonPhrase())
                     .message(exception.getMessage())
                     .build();

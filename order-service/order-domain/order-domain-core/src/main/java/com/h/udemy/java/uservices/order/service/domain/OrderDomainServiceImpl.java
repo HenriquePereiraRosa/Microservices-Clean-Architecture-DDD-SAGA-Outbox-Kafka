@@ -94,9 +94,8 @@ public class OrderDomainServiceImpl implements OrderDomainService {
 
         // n + n = O(2n) -> linear
         Map<ProductId, Product> restaurantProductMap = new HashMap<>();
-        restaurant.getProducts().forEach(restaurantProduct ->{
-            restaurantProductMap.put(restaurantProduct.getId(), restaurantProduct);
-        });
+        restaurant.getProducts().forEach(restaurantProduct ->
+                restaurantProductMap.put(restaurantProduct.getId(), restaurantProduct));
         order.getItems().forEach(orderItem ->  {
             Product currentProduct = orderItem.getProduct();
             Product restaurantProduct = restaurantProductMap.get(currentProduct.getId());

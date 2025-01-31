@@ -52,7 +52,7 @@ public class RestaurantApprovalRequestHelper {
     @Transactional
     public OrderApprovalEvent persistOrderApproval(RestaurantApprovalRequest approvalRequest) {
 
-        log.info("Processing restaurant approval for order id: {0}", approvalRequest.getOrderId());
+        log.info("Processing restaurant approval for order id: {}", approvalRequest.getOrderId());
 
         List<String> failureMessages = new ArrayList<>();
         Restaurant restaurant = findRestaurant(approvalRequest);

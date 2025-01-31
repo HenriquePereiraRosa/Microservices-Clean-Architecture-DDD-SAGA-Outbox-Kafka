@@ -23,6 +23,6 @@ public class RestaurantApprovalRequestMessageListener implements IRestaurantAppr
         OrderApprovalEvent orderApprovalEvent = approvalRequestHelper
                 .persistOrderApproval(restaurantApprovalRequest);
 
-        orderApprovalEvent.fire();
+//        orderApprovalEvent.fire();
     }
 }

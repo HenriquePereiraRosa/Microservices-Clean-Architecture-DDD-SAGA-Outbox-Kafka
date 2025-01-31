@@ -3,7 +3,7 @@
     <module name="order-domain-core" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.h.udemy.java.uservices.order.service.domain.*" />
+        <option name="PATTERN" value="com.h.udemy.java.uservices.order.service.domain.test.config.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
@@ -21,6 +21,7 @@
       <option name="myRunnerSettings" />
       <option name="myRunnerParameters">
         <MavenRunnerParameters>
+          <option name="cmdOptions" />
           <option name="profiles">
             <set />
           </option>
@@ -32,9 +33,13 @@
               <option value="package" />
             </list>
           </option>
+          <option name="multimoduleDir" />
           <option name="pomFileName" />
           <option name="profilesMap">
             <map />
+          </option>
+          <option name="projectsCmdOptionValues">
+            <list />
           </option>
           <option name="resolveToWorkspace" value="false" />
           <option name="workingDirPath" value="$PROJECT_DIR$/order-service/order-domain/order-domain-core" />
