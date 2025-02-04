@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_ORDER_NOT_CORRECT_INIT_STATE;
@@ -92,9 +92,7 @@ class OrderTest extends ApiEnvTestConfig {
         order.pay();
 
         Throwable exceptionThatWasThrown =
-                assertThrows(OrderDomainInitialStateException.class, () -> {
-                    order.validateOrder();
-                });
+                assertThrows(OrderDomainInitialStateException.class, order::validateOrder);
 
         assertEquals(exceptionThatWasThrown.getMessage(),
                 ERR_ORDER_NOT_CORRECT_INIT_STATE.get());
@@ -126,8 +124,8 @@ class OrderTest extends ApiEnvTestConfig {
                 .orderItemId(new OrderItemId(112L))
                 .product(new Product(new ProductId(UUID.randomUUID()),
                         "product name",
-                        new Money(new BigDecimal(10.99))))
-                .price(new Money(new BigDecimal(10.99)))
+                        new Money(new BigDecimal("10.99"))))
+                .price(new Money(new BigDecimal("10.99")))
                 .quantity(5)
                 .build();
 
@@ -135,8 +133,8 @@ class OrderTest extends ApiEnvTestConfig {
                 .customerId(new CustomerId(UUID.randomUUID()))
                 .restaurantId(new RestaurantId(UUID.randomUUID()))
                 .deliveryAddress(address)
-                .price(new Money(new BigDecimal(54.95)))
-                .items(Arrays.asList(item))
+                .price(new Money(new BigDecimal("54.95")))
+                .items(List.of(item))
                 .trackingId(new TrackingId(UUID.randomUUID()))
                 .build();
     }
