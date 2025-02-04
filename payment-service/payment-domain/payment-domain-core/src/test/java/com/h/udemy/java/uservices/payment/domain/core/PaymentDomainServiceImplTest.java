@@ -15,6 +15,7 @@ import com.h.udemy.java.uservices.payment.domain.core.test.util.factory.CreditHi
 import com.h.udemy.java.uservices.payment.domain.core.test.util.factory.PaymentFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -32,11 +33,11 @@ class PaymentDomainServiceImplTest extends ApiEnvTest {
 
     @Autowired
     PaymentDomainServiceImpl paymentDomainServiceImpl;
-    @Autowired
+    @MockBean
     DomainEventPublisher<PaymentCompletedEvent> completedEventPublisher;
-    @Autowired
+    @MockBean
     DomainEventPublisher<PaymentCancelledEvent> cancelledEventPublisher;
-    @Autowired
+    @MockBean
     DomainEventPublisher<PaymentFailedEvent> failedEventPublisher;
 
     @Test
