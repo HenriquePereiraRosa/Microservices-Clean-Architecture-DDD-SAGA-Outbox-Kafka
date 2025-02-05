@@ -12,15 +12,18 @@ public enum LogMessages {
     KAFKA_PROCESSING_FOR_ID("Processing {0} for order id: {1}"),
 
     EVENT_RECEIVED("Received {0} for {1} id: {2}"),
-    EVENT_SENT_TO_KAFKA("{0} sent to KAFKA for {1} id: {2}"),
+    EVENT_SENT_TO_KAFKA("{0} sent to KAFKA. OrderId [{2}]"),
     EVENT_SENT_TO_KAFKA_AT("{0} sent to KAFKA at:  {1}"),
-    EVENT_ERR_SENT_TO_KAFKA("Error while sending {0} message to KAFKA with {1} id: {2}, error: {3}"),
+    EVENT_ERR_SENT_TO_KAFKA("Error while sending {0} message to KAFKA with {1} Order id [{2}] and Saga id [{3}], error: {4}"),
+    EVENT_ERR_OPTIMISTIC_LOCK("Caught optimistic locking exception in {0} for order id: {1}"),
 
     PROCESS_OPERATION_COMPLETED("{0} operation process with ID: {1}, is complete."),
     PROCESS_ROLLBACK_OPERATION_COMPLETED("{0} rollback operation with ID: {1}, is complete. failures messages {2}"),
     OUTBOX_MESSAGE_ALREADY_PROCESSED("{0} with SAGA ID: {1}, already processed."),
     OUTBOX_MESSAGE_SAGA_ID_ALREADY_ROLLED_BACK("An Outbox Message with SAGA ID: {0}, already Rolled back!"),
     OUTBOX_MESSAGE_COULD_NOT_BE_FOUND("{0} with SAGA Status: {1}, could NOT be found!"),
+    OUTBOX_MESSAGE_COULD_NOT_BE_READ("{0} could not be mapped!"),
+    OUTBOX_MESSAGE_RECEIVED("Received {0}. Order id [{1}], Saga id [{2}]."),
 
     // ORDER
     ORDER_RECEIVED_ID("Received OrderCreatedEvent. orderId: {0}"),
@@ -44,6 +47,7 @@ public enum LogMessages {
 
     ORDER_ERROR_WHILE_SENDING_REQUEST_AVRO("Error while sending {0} message {1} to topic {2}"),
     ORDER_ERROR_MSG_SENDING_REQ_AVRO_KAFKA("Error while sending {0} message to Kafka. orderId {1}, error: {2}"),
+    ORDER_ERROR_NOT_FOUND("Order id [{0}] not found!"),
 
 
     // PAYMENT

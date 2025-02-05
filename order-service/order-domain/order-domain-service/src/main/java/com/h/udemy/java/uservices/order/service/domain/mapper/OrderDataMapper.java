@@ -104,8 +104,8 @@ public class OrderDataMapper {
 
     public OrderApprovalEventPayload orderPaidEventToOrderApprovalEventPayload(OrderPaidEvent orderPaidEvent) {
         return OrderApprovalEventPayload.builder()
-                .orderId(orderPaidEvent.getOrder().getId().getValue())
-                .restaurantId(orderPaidEvent.getOrder().getRestaurantId().getValue())
+                .orderId(orderPaidEvent.getOrder().getId().getValue().toString())
+                .restaurantId(orderPaidEvent.getOrder().getRestaurantId().getValue().toString())
                 .restaurantOrderStatus(RestaurantOrderStatus.PAID.name())
                 .products(orderPaidEvent.getOrder().getItems().stream().map(orderItem ->
                         OrderApprovalEventProduct.builder()

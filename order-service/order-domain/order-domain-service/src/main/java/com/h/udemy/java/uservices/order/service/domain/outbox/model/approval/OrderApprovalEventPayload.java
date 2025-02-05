@@ -8,7 +8,6 @@ import lombok.Getter;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Builder
@@ -16,9 +15,9 @@ import java.util.UUID;
 public class OrderApprovalEventPayload {
 
     @JsonProperty
-    private UUID orderId;
+    private String orderId;
     @JsonProperty
-    private UUID restaurantId;
+    private String restaurantId;
     @JsonProperty
     private BigDecimal price;
     @JsonProperty
