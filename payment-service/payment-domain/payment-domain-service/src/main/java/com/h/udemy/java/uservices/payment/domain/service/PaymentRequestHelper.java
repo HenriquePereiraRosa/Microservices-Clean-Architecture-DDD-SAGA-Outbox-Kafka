@@ -9,12 +9,9 @@ import com.h.udemy.java.uservices.payment.domain.core.event.PaymentEvent;
 import com.h.udemy.java.uservices.payment.domain.service.dto.PaymentRequest;
 import com.h.udemy.java.uservices.payment.domain.service.exception.PaymentDomainServiceException;
 import com.h.udemy.java.uservices.payment.domain.service.mapper.PaymentDataMapper;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentCancelledMessagePublisher;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentCompletedMessagePublisher;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentFailedMessagePublisher;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.ICreditEntryRepository;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.ICreditHistoryRepository;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.IPaymentRepository;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.CreditEntryRepository;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.CreditHistoryRepository;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.PaymentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,18 +30,18 @@ public class PaymentRequestHelper {
 
     private final PaymentDomainServiceImpl paymentDomainServiceImpl;
     private final PaymentDataMapper paymentDataMapper;
-    private final IPaymentRepository paymentRepository;
-    private final ICreditEntryRepository creditEntryRepository;
-    private final ICreditHistoryRepository creditHistoryRepository;
+    private final PaymentRepository paymentRepository;
+    private final CreditEntryRepository creditEntryRepository;
+    private final CreditHistoryRepository creditHistoryRepository;
     private final PaymentCompletedMessagePublisher paymentCompletedEventPublisher;
     private final PaymentCancelledMessagePublisher paymentCancelledEventPublisher;
     private final PaymentFailedMessagePublisher paymentFailedEventPublisher;
 
     public PaymentRequestHelper(PaymentDomainServiceImpl paymentDomainServiceImpl,
                                 PaymentDataMapper paymentDataMapper,
-                                IPaymentRepository paymentRepository,
-                                ICreditEntryRepository creditEntryRepository,
-                                ICreditHistoryRepository creditHistoryRepository,
+                                PaymentRepository paymentRepository,
+                                CreditEntryRepository creditEntryRepository,
+                                CreditHistoryRepository creditHistoryRepository,
                                 PaymentCompletedMessagePublisher paymentCompletedEventPublisher,
                                 PaymentCancelledMessagePublisher paymentCancelledEventPublisher,
                                 PaymentFailedMessagePublisher paymentFailedEventPublisher) {

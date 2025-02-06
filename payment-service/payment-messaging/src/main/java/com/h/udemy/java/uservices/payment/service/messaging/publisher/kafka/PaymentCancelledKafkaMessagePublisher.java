@@ -1,11 +1,11 @@
 package com.h.udemy.java.uservices.payment.service.messaging.publisher.kafka;
 
+import com.h.udemy.java.uservices.domain.event.DomainEventPublisher;
 import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentResponseAvroModel;
 import com.h.udemy.java.uservices.kafka.producer.KafkaMessageHelper;
 import com.h.udemy.java.uservices.kafka.producer.service.impl.KafkaProducer;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCancelledEvent;
 import com.h.udemy.java.uservices.payment.domain.service.config.PaymentServiceConfigData;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentCancelledMessagePublisher;
 import com.h.udemy.java.uservices.payment.service.messaging.mapper.PaymentMessagingDataMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.EVENT_S
 
 @Slf4j
 @Component
-public class PaymentCancelledKafkaMessagePublisher implements PaymentCancelledMessagePublisher {
+public class PaymentCancelledKafkaMessagePublisher implements DomainEventPublisher<PaymentCancelledEvent> {
 
     public static final String AVRO_MODEL_NAME = "PaymentResponseAvroModel";
     public static final String TARGET_NAME = "OrderId";

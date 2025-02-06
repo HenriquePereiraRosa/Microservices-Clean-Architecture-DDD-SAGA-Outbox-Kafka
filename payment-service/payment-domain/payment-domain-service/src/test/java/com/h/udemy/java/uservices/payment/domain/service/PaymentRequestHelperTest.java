@@ -7,9 +7,9 @@ import com.h.udemy.java.uservices.payment.domain.core.entity.Payment;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentEvent;
 import com.h.udemy.java.uservices.payment.domain.service.dto.PaymentRequest;
 import com.h.udemy.java.uservices.payment.domain.service.exception.PaymentDomainServiceException;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.ICreditEntryRepository;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.ICreditHistoryRepository;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.IPaymentRepository;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.CreditEntryRepository;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.CreditHistoryRepository;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.PaymentRepository;
 import com.h.udemy.java.uservices.payment.domain.service.test.config.ApiEnvTest;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +43,11 @@ class PaymentRequestHelperTest extends ApiEnvTest {
     PaymentRequestHelper paymentRequestHelper;
 
     @Autowired
-    IPaymentRepository paymentRepository;
+    PaymentRepository paymentRepository;
     @Autowired
-    ICreditEntryRepository creditEntryRepository;
+    CreditEntryRepository creditEntryRepository;
     @Autowired
-    ICreditHistoryRepository creditHistoryRepository;
+    CreditHistoryRepository creditHistoryRepository;
 
 
     @Test

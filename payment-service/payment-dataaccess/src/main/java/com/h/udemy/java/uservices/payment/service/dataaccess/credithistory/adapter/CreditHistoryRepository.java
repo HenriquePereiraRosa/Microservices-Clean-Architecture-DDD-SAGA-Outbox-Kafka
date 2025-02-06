@@ -3,7 +3,6 @@ package com.h.udemy.java.uservices.payment.service.dataaccess.credithistory.adap
 
 import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditHistory;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.ICreditHistoryRepository;
 import com.h.udemy.java.uservices.payment.service.dataaccess.credithistory.entity.CreditHistoryEntity;
 import com.h.udemy.java.uservices.payment.service.dataaccess.credithistory.mapper.CreditHistoryDataAccessMapper;
 import com.h.udemy.java.uservices.payment.service.dataaccess.credithistory.repository.CreditHistoryJpaRepository;
@@ -14,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-public class CreditHistoryRepository implements ICreditHistoryRepository {
+public class CreditHistoryRepository implements com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.CreditHistoryRepository {
 
     private final CreditHistoryJpaRepository creditHistoryJpaRepository;
     private final CreditHistoryDataAccessMapper creditHistoryDataAccessMapper;

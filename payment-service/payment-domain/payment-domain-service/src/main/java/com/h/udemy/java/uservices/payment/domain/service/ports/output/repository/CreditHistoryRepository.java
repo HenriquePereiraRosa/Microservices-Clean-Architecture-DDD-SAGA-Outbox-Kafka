@@ -6,7 +6,7 @@ import com.h.udemy.java.uservices.payment.domain.core.entity.CreditHistory;
 import java.util.List;
 import java.util.Optional;
 
-public interface ICreditHistoryRepository {
+public interface CreditHistoryRepository {
     CreditHistory save(CreditHistory creditHistory);
     Optional<List<CreditHistory>> findByCustomerId(CustomerId customerId);
 }

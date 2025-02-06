@@ -2,7 +2,6 @@ package com.h.udemy.java.uservices.payment.service.dataaccess.payment.adapter;
 
 
 import com.h.udemy.java.uservices.payment.domain.core.entity.Payment;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.IPaymentRepository;
 import com.h.udemy.java.uservices.payment.service.dataaccess.payment.mapper.PaymentDataAccessMapper;
 import com.h.udemy.java.uservices.payment.service.dataaccess.payment.repository.IPaymentJpaRepository;
 import org.springframework.stereotype.Component;
@@ -11,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class PaymentRepository implements IPaymentRepository {
+public class PaymentRepository implements com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.PaymentRepository {
 
     private final IPaymentJpaRepository paymentJpaRepository;
     private final PaymentDataAccessMapper paymentDataAccessMapper;

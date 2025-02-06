@@ -4,12 +4,9 @@ import com.h.udemy.java.uservices.domain.event.DomainEventPublisher;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCancelledEvent;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCompletedEvent;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentFailedEvent;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentCompletedMessagePublisher;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentCancelledMessagePublisher;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.message.publisher.PaymentFailedMessagePublisher;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.ICreditEntryRepository;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.ICreditHistoryRepository;
-import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.IPaymentRepository;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.CreditEntryRepository;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.CreditHistoryRepository;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.PaymentRepository;
 import org.mockito.Mockito;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -46,17 +43,17 @@ public class BeanTestConfig {
     }
 
     @Bean
-    public IPaymentRepository iPaymentRepository() {
-        return Mockito.mock(IPaymentRepository.class);
+    public PaymentRepository iPaymentRepository() {
+        return Mockito.mock(PaymentRepository.class);
     }
 
     @Bean
-    public ICreditEntryRepository iCreditEntryRepository() {
-        return Mockito.mock(ICreditEntryRepository.class);
+    public CreditEntryRepository iCreditEntryRepository() {
+        return Mockito.mock(CreditEntryRepository.class);
     }
 
     @Bean
-    public ICreditHistoryRepository iCreditHistoryRepository() {
-        return Mockito.mock(ICreditHistoryRepository.class);
+    public CreditHistoryRepository iCreditHistoryRepository() {
+        return Mockito.mock(CreditHistoryRepository.class);
     }
 }
