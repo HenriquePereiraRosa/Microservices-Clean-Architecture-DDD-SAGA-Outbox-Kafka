@@ -1,0 +1,86 @@
+digraph "parent" {
+  node [shape="box",style="rounded",fontname="Helvetica",fontsize="14"]
+  edge [fontsize="10",fontname="Helvetica"]
+
+  // Node Definitions:
+  "com.h.udemy.java.uservices:order-domain-core:jar:compile"[label=<order-domain-core>]
+  "com.h.udemy.java.uservices:common-domain:jar:compile"[label=<common-domain>]
+  "com.h.udemy.java.uservices:saga:jar:compile"[label=<saga>]
+  "com.h.udemy.java.uservices:order-domain-service:jar:compile"[label=<order-domain-service>]
+  "com.h.udemy.java.uservices:outbox:jar:compile"[label=<outbox>]
+  "com.h.udemy.java.uservices:common-application:jar:compile"[label=<common-application>]
+  "com.h.udemy.java.uservices:order-application:jar:compile"[label=<order-application>]
+  "com.h.udemy.java.uservices:order-dataaccess:jar:compile"[label=<order-dataaccess>]
+  "com.h.udemy.java.uservices:common-dataaccess:jar:compile"[label=<common-dataaccess>]
+  "com.h.udemy.java.uservices:kafka-producer:jar:compile"[label=<kafka-producer>]
+  "com.h.udemy.java.uservices:kafka-model:jar:compile"[label=<kafka-model>]
+  "com.h.udemy.java.uservices:kafka-config-data:jar:compile"[label=<kafka-config-data>]
+  "com.h.udemy.java.uservices:kafka-consumer:jar:compile"[label=<kafka-consumer>]
+  "com.h.udemy.java.uservices:order-messaging:jar:compile"[label=<order-messaging>]
+  "com.h.udemy.java.uservices:order-container:jar:compile"[label=<order-container>]
+  "com.h.udemy.java.uservices:payment-domain-core:jar:compile"[label=<payment-domain-core>]
+  "com.h.udemy.java.uservices:payment-domain-service:jar:compile"[label=<payment-domain-service>]
+  "com.h.udemy.java.uservices:payment-dataaccess:jar:compile"[label=<payment-dataaccess>]
+  "com.h.udemy.java.uservices:payment-messaging:jar:compile"[label=<payment-messaging>]
+  "com.h.udemy.java.uservices:payment-container:jar:compile"[label=<payment-container>]
+  "com.h.udemy.java.uservices:restaurant-domain-core:jar:compile"[label=<restaurant-domain-core>]
+  "com.h.udemy.java.uservices:restaurant-domain-service:jar:compile"[label=<restaurant-domain-service>]
+  "com.h.udemy.java.uservices:restaurant-dataaccess:jar:compile"[label=<restaurant-dataaccess>]
+  "com.h.udemy.java.uservices:restaurant-messaging:jar:compile"[label=<restaurant-messaging>]
+  "com.h.udemy.java.uservices:restaurant-container:jar:compile"[label=<restaurant-container>]
+
+  // Edge Definitions:
+  "com.h.udemy.java.uservices:order-domain-core:jar:compile" -> "com.h.udemy.java.uservices:common-domain:jar:compile"
+  "com.h.udemy.java.uservices:saga:jar:compile" -> "com.h.udemy.java.uservices:common-domain:jar:compile"
+  "com.h.udemy.java.uservices:order-domain-service:jar:compile" -> "com.h.udemy.java.uservices:order-domain-core:jar:compile"
+  "com.h.udemy.java.uservices:order-domain-service:jar:compile" -> "com.h.udemy.java.uservices:common-domain:jar:compile"
+  "com.h.udemy.java.uservices:order-domain-service:jar:compile" -> "com.h.udemy.java.uservices:saga:jar:compile"
+  "com.h.udemy.java.uservices:order-domain-service:jar:compile" -> "com.h.udemy.java.uservices:outbox:jar:compile"
+  "com.h.udemy.java.uservices:common-application:jar:compile" -> "com.h.udemy.java.uservices:common-domain:jar:compile"
+  "com.h.udemy.java.uservices:order-application:jar:compile" -> "com.h.udemy.java.uservices:common-application:jar:compile"
+  "com.h.udemy.java.uservices:order-application:jar:compile" -> "com.h.udemy.java.uservices:order-domain-service:jar:compile"
+  "com.h.udemy.java.uservices:order-dataaccess:jar:compile" -> "com.h.udemy.java.uservices:common-dataaccess:jar:compile"
+  "com.h.udemy.java.uservices:order-dataaccess:jar:compile" -> "com.h.udemy.java.uservices:order-domain-service:jar:compile"
+  "com.h.udemy.java.uservices:order-dataaccess:jar:compile" -> "com.h.udemy.java.uservices:outbox:jar:compile"
+  "com.h.udemy.java.uservices:kafka-producer:jar:compile" -> "com.h.udemy.java.uservices:kafka-model:jar:compile"
+  "com.h.udemy.java.uservices:kafka-producer:jar:compile" -> "com.h.udemy.java.uservices:kafka-config-data:jar:compile"
+  "com.h.udemy.java.uservices:kafka-producer:jar:compile" -> "com.h.udemy.java.uservices:order-domain-core:jar:compile"
+  "com.h.udemy.java.uservices:kafka-producer:jar:compile" -> "com.h.udemy.java.uservices:common-domain:jar:compile"
+  "com.h.udemy.java.uservices:kafka-producer:jar:compile" -> "com.h.udemy.java.uservices:outbox:jar:compile"
+  "com.h.udemy.java.uservices:kafka-consumer:jar:compile" -> "com.h.udemy.java.uservices:kafka-config-data:jar:compile"
+  "com.h.udemy.java.uservices:order-messaging:jar:compile" -> "com.h.udemy.java.uservices:order-domain-service:jar:compile"
+  "com.h.udemy.java.uservices:order-messaging:jar:compile" -> "com.h.udemy.java.uservices:kafka-producer:jar:compile"
+  "com.h.udemy.java.uservices:order-messaging:jar:compile" -> "com.h.udemy.java.uservices:kafka-consumer:jar:compile"
+  "com.h.udemy.java.uservices:order-messaging:jar:compile" -> "com.h.udemy.java.uservices:kafka-config-data:jar:compile"
+  "com.h.udemy.java.uservices:order-messaging:jar:compile" -> "com.h.udemy.java.uservices:kafka-model:jar:compile"
+  "com.h.udemy.java.uservices:order-messaging:jar:compile" -> "com.h.udemy.java.uservices:outbox:jar:compile"
+  "com.h.udemy.java.uservices:order-container:jar:compile" -> "com.h.udemy.java.uservices:order-domain-core:jar:compile"
+  "com.h.udemy.java.uservices:order-container:jar:compile" -> "com.h.udemy.java.uservices:order-domain-service:jar:compile"
+  "com.h.udemy.java.uservices:order-container:jar:compile" -> "com.h.udemy.java.uservices:order-application:jar:compile"
+  "com.h.udemy.java.uservices:order-container:jar:compile" -> "com.h.udemy.java.uservices:order-dataaccess:jar:compile"
+  "com.h.udemy.java.uservices:order-container:jar:compile" -> "com.h.udemy.java.uservices:order-messaging:jar:compile"
+  "com.h.udemy.java.uservices:payment-domain-core:jar:compile" -> "com.h.udemy.java.uservices:common-domain:jar:compile"
+  "com.h.udemy.java.uservices:payment-domain-service:jar:compile" -> "com.h.udemy.java.uservices:payment-domain-core:jar:compile"
+  "com.h.udemy.java.uservices:payment-dataaccess:jar:compile" -> "com.h.udemy.java.uservices:payment-domain-service:jar:compile"
+  "com.h.udemy.java.uservices:payment-messaging:jar:compile" -> "com.h.udemy.java.uservices:payment-domain-service:jar:compile"
+  "com.h.udemy.java.uservices:payment-messaging:jar:compile" -> "com.h.udemy.java.uservices:kafka-producer:jar:compile"
+  "com.h.udemy.java.uservices:payment-messaging:jar:compile" -> "com.h.udemy.java.uservices:kafka-consumer:jar:compile"
+  "com.h.udemy.java.uservices:payment-messaging:jar:compile" -> "com.h.udemy.java.uservices:kafka-model:jar:compile"
+  "com.h.udemy.java.uservices:payment-container:jar:compile" -> "com.h.udemy.java.uservices:payment-domain-core:jar:compile"
+  "com.h.udemy.java.uservices:payment-container:jar:compile" -> "com.h.udemy.java.uservices:payment-domain-service:jar:compile"
+  "com.h.udemy.java.uservices:payment-container:jar:compile" -> "com.h.udemy.java.uservices:payment-dataaccess:jar:compile"
+  "com.h.udemy.java.uservices:payment-container:jar:compile" -> "com.h.udemy.java.uservices:payment-messaging:jar:compile"
+  "com.h.udemy.java.uservices:restaurant-domain-core:jar:compile" -> "com.h.udemy.java.uservices:common-domain:jar:compile"
+  "com.h.udemy.java.uservices:restaurant-domain-service:jar:compile" -> "com.h.udemy.java.uservices:restaurant-domain-core:jar:compile"
+  "com.h.udemy.java.uservices:restaurant-domain-service:jar:compile" -> "com.h.udemy.java.uservices:common-domain:jar:compile"
+  "com.h.udemy.java.uservices:restaurant-dataaccess:jar:compile" -> "com.h.udemy.java.uservices:common-dataaccess:jar:compile"
+  "com.h.udemy.java.uservices:restaurant-dataaccess:jar:compile" -> "com.h.udemy.java.uservices:restaurant-domain-service:jar:compile"
+  "com.h.udemy.java.uservices:restaurant-messaging:jar:compile" -> "com.h.udemy.java.uservices:restaurant-domain-service:jar:compile"
+  "com.h.udemy.java.uservices:restaurant-messaging:jar:compile" -> "com.h.udemy.java.uservices:kafka-model:jar:compile"
+  "com.h.udemy.java.uservices:restaurant-messaging:jar:compile" -> "com.h.udemy.java.uservices:kafka-consumer:jar:compile"
+  "com.h.udemy.java.uservices:restaurant-messaging:jar:compile" -> "com.h.udemy.java.uservices:kafka-producer:jar:compile"
+  "com.h.udemy.java.uservices:restaurant-container:jar:compile" -> "com.h.udemy.java.uservices:restaurant-domain-core:jar:compile"
+  "com.h.udemy.java.uservices:restaurant-container:jar:compile" -> "com.h.udemy.java.uservices:restaurant-domain-service:jar:compile"
+  "com.h.udemy.java.uservices:restaurant-container:jar:compile" -> "com.h.udemy.java.uservices:restaurant-dataaccess:jar:compile"
+  "com.h.udemy.java.uservices:restaurant-container:jar:compile" -> "com.h.udemy.java.uservices:restaurant-messaging:jar:compile"
+}

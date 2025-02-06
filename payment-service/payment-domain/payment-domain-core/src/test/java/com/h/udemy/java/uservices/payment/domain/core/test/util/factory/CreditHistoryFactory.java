@@ -9,8 +9,8 @@ import com.h.udemy.java.uservices.payment.domain.core.valueobject.TransactionTyp
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.h.udemy.java.uservices.domain.test.constants.ConstantsTest.CREDIT_HISTORY_UUID;
-import static com.h.udemy.java.uservices.domain.test.constants.ConstantsTest.CUSTOMER_UUID;
+import static com.h.udemy.java.uservices.constants.TestConstants.CREDIT_HISTORY_ID;
+import static com.h.udemy.java.uservices.constants.TestConstants.CUSTOMER_ID;
 
 public class CreditHistoryFactory {
 
@@ -25,8 +25,8 @@ public class CreditHistoryFactory {
 
         for (int i = 0; i < pListSize; i++) {
             historyList.add(CreditHistory.builder()
-                    .creditHistoryId(new CreditHistoryId(CREDIT_HISTORY_UUID))
-                    .customerId(new CustomerId(CUSTOMER_UUID))
+                    .creditHistoryId(new CreditHistoryId(CREDIT_HISTORY_ID))
+                    .customerId(new CustomerId(CUSTOMER_ID))
                     .amount(new Money(CREDIT_VALUE))
                     .transactionType(sortType(i))
                     .build());
@@ -39,8 +39,8 @@ public class CreditHistoryFactory {
         List<CreditHistory> historyList = new ArrayList<>();
         for (int i = 0; i < LIST_SIZE; i++) {
             historyList.add(CreditHistory.builder()
-                    .creditHistoryId(new CreditHistoryId(CREDIT_HISTORY_UUID))
-                    .customerId(new CustomerId(CUSTOMER_UUID))
+                    .creditHistoryId(new CreditHistoryId(CREDIT_HISTORY_ID))
+                    .customerId(new CustomerId(CUSTOMER_ID))
                     .amount(new Money(CREDIT_VALUE))
                     .transactionType(sortType(i))
                     .build());
@@ -49,8 +49,8 @@ public class CreditHistoryFactory {
         //Add debit only
         for (int i = 0; i < DEBIT_LIST_SIZE; i++) {
             historyList.add(CreditHistory.builder()
-                    .creditHistoryId(new CreditHistoryId(CREDIT_HISTORY_UUID))
-                    .customerId(new CustomerId(CUSTOMER_UUID))
+                    .creditHistoryId(new CreditHistoryId(CREDIT_HISTORY_ID))
+                    .customerId(new CustomerId(CUSTOMER_ID))
                     .amount(new Money(CREDIT_VALUE))
                     .transactionType(TransactionType.DEBIT)
                     .build());

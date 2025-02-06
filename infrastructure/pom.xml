@@ -16,6 +16,7 @@
     <modules>
         <module>saga</module>
         <module>kafka</module>
+        <module>outbox</module>
     </modules>
 
 </project>

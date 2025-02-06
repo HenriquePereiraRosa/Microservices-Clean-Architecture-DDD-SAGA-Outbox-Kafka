@@ -16,6 +16,7 @@
         <module>common-domain</module>
         <module>common-application</module>
         <module>common-dataaccess</module>
+        <module>test-utils</module>
     </modules>
 
 </project>

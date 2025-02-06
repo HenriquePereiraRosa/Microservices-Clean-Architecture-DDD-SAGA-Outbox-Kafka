@@ -32,6 +32,7 @@
 		<common-domain.version>1.0.0</common-domain.version>
 		<common-dataaccess.version>1.0.0</common-dataaccess.version>
 		<common-application.version>1.0.0</common-application.version>
+		<test-utils.version>1.0.0</test-utils.version>
 
 		<domain.core.version>1.0.0</domain.core.version>
 		<domain.api.service.version>1.0.0</domain.api.service.version>
@@ -68,7 +69,6 @@
         <module>customer-service</module>
         <module>payment-service</module>
 		<module>restaurant-service</module>
-        <module>infrastructure/outbox</module>
     </modules>
 
 	<dependencyManagement>
@@ -129,6 +129,12 @@
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>common-application</artifactId>
 				<version>${common-application.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>test-utils</artifactId>
+				<version>${test-utils.version}</version>
 			</dependency>
 
 

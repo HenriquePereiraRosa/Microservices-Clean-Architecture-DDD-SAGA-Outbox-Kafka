@@ -1,5 +1,6 @@
 package com.h.udemy.java.uservices.order.service.application.test.util.factory;
 
+import com.h.udemy.java.uservices.constants.TestConstants;
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.domain.valueobject.OrderStatus;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static com.h.udemy.java.uservices.domain.Constants.getZonedDateTimeNow;
-import static com.h.udemy.java.uservices.order.service.application.test.util.ConstTestUtils.*;
+import static com.h.udemy.java.uservices.order.service.application.test.util.OrderTestConstants.*;
 import static com.h.udemy.java.uservices.saga.order.SagaConstants.ORDER_SAGA_NAME;
 
 public class OrderFactory {
@@ -88,7 +89,7 @@ public class OrderFactory {
                 .orderStatus(OrderStatus.APPROVED)
                 .sagaStatus(SagaStatus.COMPENSATING)
                 .outboxStatus(OutboxStatus.STARTED)
-                .version(VERSION)
+                .version(TestConstants.VERSION)
                 .build();
     }
 

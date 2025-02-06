@@ -24,7 +24,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.h.udemy.java.uservices.domain.test.constants.ConstantsTest.ERROR_PRICE;
+import static com.h.udemy.java.uservices.constants.TestConstants.ERROR_PRICE;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

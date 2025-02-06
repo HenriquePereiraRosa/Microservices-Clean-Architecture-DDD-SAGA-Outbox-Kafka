@@ -23,15 +23,15 @@ select * from restaurant.restaurants;
 select * from restaurant.order_approval;
 select * from restaurant.order_restaurant_m_view;
 
-select * from order.tb_orders;
-select * from order.tb_order_items;
-select * from order.tb_order_address;
+select * from order.orders;
+select * from order.order_items;
+select * from order.order_address;
 
-select * from payment.tb_payments;
-select * from payment.tb_credit_entry;
-select * from payment.tb_credit_history;
+select * from payment.payments;
+select * from payment.credit_entry;
+select * from payment.credit_history;
 
-select * from customer.tb_customers;
+select * from customer.customers;
 ````
 
 

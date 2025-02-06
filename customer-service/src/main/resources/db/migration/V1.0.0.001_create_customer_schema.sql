@@ -4,7 +4,7 @@ CREATE SCHEMA customer;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TABLE customer.tb_customers
+CREATE TABLE customer.customers
 (
     id uuid NOT NULL,
     username character varying COLLATE pg_catalog."default" NOT NULL,
@@ -22,7 +22,7 @@ AS
     username,
     first_name,
     last_name
-   FROM customer.tb_customers
+   FROM customer.customers
 WITH DATA;
 
 refresh materialized VIEW customer.vw_order_customer;
@@ -38,9 +38,9 @@ BEGIN
 END;
 '  LANGUAGE plpgsql;
 
-DROP trigger IF EXISTS refresh_vw_order_customer ON customer.tb_customers;
+DROP trigger IF EXISTS refresh_vw_order_customer ON customer.customers;
 
 CREATE trigger refresh_vw_order_customer
 after INSERT OR UPDATE OR DELETE OR truncate
-ON customer.tb_customers FOR each statement
+ON customer.customers FOR each statement
 EXECUTE PROCEDURE customer.refresh_vw_order_customer();

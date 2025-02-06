@@ -30,7 +30,7 @@ import static com.h.udemy.java.uservices.order.service.domain.entity.Order.FAILU
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tb_orders")
+@Table(name = "orders")
 public class OrderEntity {
 
     @Id

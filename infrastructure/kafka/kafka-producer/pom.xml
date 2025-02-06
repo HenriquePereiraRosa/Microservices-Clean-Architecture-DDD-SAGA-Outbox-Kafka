@@ -44,7 +44,6 @@
             <artifactId>kafka-avro-serializer</artifactId>
             <version>${kafka-avro-serializer.version}</version>
         </dependency>
-
         <dependency>
             <groupId>com.h.udemy.java.uservices</groupId>
             <artifactId>outbox</artifactId>

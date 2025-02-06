@@ -7,8 +7,8 @@ import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static com.h.udemy.java.uservices.order.service.application.test.util.ConstTestUtils.PRODUCT_ID;
-import static com.h.udemy.java.uservices.order.service.application.test.util.ConstTestUtils.RESTAURANT_ID;
+import static com.h.udemy.java.uservices.order.service.application.test.util.OrderTestConstants.PRODUCT_ID;
+import static com.h.udemy.java.uservices.order.service.application.test.util.OrderTestConstants.RESTAURANT_ID;
 
 public class RestaurantFactory {
 
