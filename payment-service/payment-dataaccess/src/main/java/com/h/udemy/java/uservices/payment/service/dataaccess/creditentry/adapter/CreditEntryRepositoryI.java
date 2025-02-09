@@ -2,6 +2,7 @@ package com.h.udemy.java.uservices.payment.service.dataaccess.creditentry.adapte
 
 import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditEntry;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.CreditEntryRepository;
 import com.h.udemy.java.uservices.payment.service.dataaccess.creditentry.mapper.CreditEntryDataAccessMapper;
 import com.h.udemy.java.uservices.payment.service.dataaccess.creditentry.repository.CreditEntryJpaRepository;
 import org.springframework.stereotype.Component;
@@ -9,20 +10,20 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class CreditEntryRepository implements com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.CreditEntryRepository {
+public class CreditEntryRepositoryI implements CreditEntryRepository {
 
     private final CreditEntryJpaRepository creditEntryJpaRepository;
     private final CreditEntryDataAccessMapper creditEntryDataAccessMapper;
 
-    public CreditEntryRepository(CreditEntryJpaRepository creditEntryJpaRepository,
-                                 CreditEntryDataAccessMapper creditEntryDataAccessMapper) {
+    public CreditEntryRepositoryI(CreditEntryJpaRepository creditEntryJpaRepository,
+                                  CreditEntryDataAccessMapper creditEntryDataAccessMapper) {
         this.creditEntryJpaRepository = creditEntryJpaRepository;
         this.creditEntryDataAccessMapper = creditEntryDataAccessMapper;
     }
 
     @Override
-    public CreditEntry save(CreditEntry creditEntry) {
-        return creditEntryDataAccessMapper
+    public void save(CreditEntry creditEntry) {
+        creditEntryDataAccessMapper
                 .creditEntryEntityToCreditEntry(creditEntryJpaRepository
                         .save(creditEntryDataAccessMapper.creditEntryToCreditEntryEntity(creditEntry)));
     }

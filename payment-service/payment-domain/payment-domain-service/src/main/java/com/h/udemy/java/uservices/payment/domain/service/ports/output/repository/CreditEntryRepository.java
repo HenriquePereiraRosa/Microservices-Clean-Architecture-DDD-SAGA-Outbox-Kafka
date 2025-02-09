@@ -6,6 +6,6 @@ import com.h.udemy.java.uservices.payment.domain.core.entity.CreditEntry;
 import java.util.Optional;
 
 public interface CreditEntryRepository {
-    CreditEntry save(CreditEntry creditEntry);
+    void save(CreditEntry creditEntry);
     Optional<CreditEntry> findByCustomerId(CustomerId customerId);
 }

@@ -24,6 +24,10 @@ public enum LogMessages {
     OUTBOX_MESSAGE_COULD_NOT_BE_FOUND("{0} with SAGA Status: {1}, could NOT be found!"),
     OUTBOX_MESSAGE_COULD_NOT_BE_READ("{0} could not be mapped!"),
     OUTBOX_MESSAGE_RECEIVED("Received {0}. Order id [{1}], Saga id [{2}]."),
+    OUTBOX_MESSAGE_SAVED("{0} saved with ID: [{1}]"),
+
+    ERR_OUTBOX_MESSAGE_COULD_NOT_BE_SAVED("{0} with ID [{1}], could not be saved!"),
+    ERR_ORDER_COULD_NOT_BE_MAPPED("{0} with ID {1}, could not be serialized to JSON."),
 
     // ORDER
     ORDER_RECEIVED_ID("Received OrderCreatedEvent. orderId: {0}"),

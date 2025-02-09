@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.h.udemy.java.uservices.domain.valueobject.OrderStatus;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
+import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentEventPayload;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.PaymentOutboxRepository;
-import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentEventPayload;
 import com.h.udemy.java.uservices.outbox.OutboxStatus;
 import com.h.udemy.java.uservices.saga.SagaStatus;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.h.udemy.java.uservices.order.service.domain.messages.log.LogMessages.*;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.*;
 import static com.h.udemy.java.uservices.saga.order.SagaConstants.ORDER_SAGA_NAME;
 import static java.util.Objects.isNull;
 

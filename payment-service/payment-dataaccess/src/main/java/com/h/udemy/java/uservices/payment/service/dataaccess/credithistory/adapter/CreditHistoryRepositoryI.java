@@ -3,6 +3,7 @@ package com.h.udemy.java.uservices.payment.service.dataaccess.credithistory.adap
 
 import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditHistory;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.CreditHistoryRepository;
 import com.h.udemy.java.uservices.payment.service.dataaccess.credithistory.entity.CreditHistoryEntity;
 import com.h.udemy.java.uservices.payment.service.dataaccess.credithistory.mapper.CreditHistoryDataAccessMapper;
 import com.h.udemy.java.uservices.payment.service.dataaccess.credithistory.repository.CreditHistoryJpaRepository;
@@ -13,20 +14,20 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-public class CreditHistoryRepository implements com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.CreditHistoryRepository {
+public class CreditHistoryRepositoryI implements CreditHistoryRepository {
 
     private final CreditHistoryJpaRepository creditHistoryJpaRepository;
     private final CreditHistoryDataAccessMapper creditHistoryDataAccessMapper;
 
-    public CreditHistoryRepository(CreditHistoryJpaRepository creditHistoryJpaRepository,
-                                   CreditHistoryDataAccessMapper creditHistoryDataAccessMapper) {
+    public CreditHistoryRepositoryI(CreditHistoryJpaRepository creditHistoryJpaRepository,
+                                    CreditHistoryDataAccessMapper creditHistoryDataAccessMapper) {
         this.creditHistoryJpaRepository = creditHistoryJpaRepository;
         this.creditHistoryDataAccessMapper = creditHistoryDataAccessMapper;
     }
 
     @Override
-    public CreditHistory save(CreditHistory creditHistory) {
-        return creditHistoryDataAccessMapper.creditHistoryEntityToCreditHistory(creditHistoryJpaRepository
+    public void save(CreditHistory creditHistory) {
+        creditHistoryDataAccessMapper.creditHistoryEntityToCreditHistory(creditHistoryJpaRepository
                 .save(creditHistoryDataAccessMapper.creditHistoryToCreditHistoryEntity(creditHistory)));
     }
 

@@ -48,7 +48,7 @@ public class BeanTestConfig {
     }
 
     @Bean
-    public CreditEntryRepository iCreditEntryRepository() {
+    public CreditEntryRepository creditEntryRepository() {
         return Mockito.mock(CreditEntryRepository.class);
     }
 
