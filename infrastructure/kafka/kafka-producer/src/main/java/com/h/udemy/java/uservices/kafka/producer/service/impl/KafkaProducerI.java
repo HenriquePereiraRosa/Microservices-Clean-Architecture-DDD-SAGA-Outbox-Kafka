@@ -1,7 +1,6 @@
 package com.h.udemy.java.uservices.kafka.producer.service.impl;
 
 import com.h.udemy.java.uservices.kafka.producer.exception.KafkaProducerException;
-import com.h.udemy.java.uservices.kafka.producer.service.IKafkaProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.springframework.kafka.KafkaException;
@@ -16,11 +15,12 @@ import java.io.Serializable;
 
 @Slf4j
 @Component
-public class KafkaProducer<K extends Serializable, V extends SpecificRecordBase> implements IKafkaProducer<K, V> {
+public class KafkaProducerI<K extends Serializable, V extends SpecificRecordBase> implements
+        com.h.udemy.java.uservices.kafka.producer.service.KafkaProducer<K, V> {
 
     private final KafkaTemplate<K, V> kafkaTemplate;
 
-    public KafkaProducer(KafkaTemplate<K, V> kafkaTemplate) {
+    public KafkaProducerI(KafkaTemplate<K, V> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 

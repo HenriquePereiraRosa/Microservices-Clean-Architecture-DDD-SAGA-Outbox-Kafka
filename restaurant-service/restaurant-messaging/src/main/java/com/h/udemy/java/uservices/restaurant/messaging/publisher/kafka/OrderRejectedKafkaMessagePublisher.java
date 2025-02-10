@@ -2,7 +2,7 @@ package com.h.udemy.java.uservices.restaurant.messaging.publisher.kafka;
 
 import com.h.udemy.java.uservices.kafka.order.avro.model.RestaurantApprovalResponseAvroModel;
 import com.h.udemy.java.uservices.kafka.producer.KafkaMessageHelper;
-import com.h.udemy.java.uservices.kafka.producer.service.impl.KafkaProducer;
+import com.h.udemy.java.uservices.kafka.producer.service.impl.KafkaProducerI;
 import com.h.udemy.java.uservices.restaurant.domain.core.event.OrderRejectedEvent;
 import com.h.udemy.java.uservices.restaurant.domain.service.config.RestaurantServiceConfigData;
 import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.message.publisher.OrderRejectedMessagePublisher;
@@ -23,12 +23,12 @@ public class OrderRejectedKafkaMessagePublisher implements OrderRejectedMessageP
     public static final String EVENT_NAME = "OrderApprovedEvent";
 
     private final RestaurantMessagingDataMapper restaurantMessagingDataMapper;
-    private final KafkaProducer<String, RestaurantApprovalResponseAvroModel> kafkaProducer;
+    private final KafkaProducerI<String, RestaurantApprovalResponseAvroModel> kafkaProducer;
     private final RestaurantServiceConfigData restaurantServiceConfigData;
     private final KafkaMessageHelper kafkaMessageHelper;
 
     public OrderRejectedKafkaMessagePublisher(RestaurantMessagingDataMapper restaurantMessagingDataMapper,
-                                              KafkaProducer<String, RestaurantApprovalResponseAvroModel> kafkaProducer,
+                                              KafkaProducerI<String, RestaurantApprovalResponseAvroModel> kafkaProducer,
                                               RestaurantServiceConfigData restaurantServiceConfigData,
                                               KafkaMessageHelper kafkaMessageHelper) {
         this.restaurantMessagingDataMapper = restaurantMessagingDataMapper;

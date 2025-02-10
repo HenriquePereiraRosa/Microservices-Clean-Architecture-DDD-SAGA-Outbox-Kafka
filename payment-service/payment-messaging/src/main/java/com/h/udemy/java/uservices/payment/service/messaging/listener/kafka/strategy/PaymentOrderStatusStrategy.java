@@ -5,7 +5,7 @@ import com.h.udemy.java.uservices.payment.domain.service.dto.PaymentRequest;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface IPaymentOrderStatusStrategy {
+public interface PaymentOrderStatusStrategy {
     void processPayment(PaymentRequestMessageListener paymentRequestListener,
                         PaymentRequest paymentRequest);
 }

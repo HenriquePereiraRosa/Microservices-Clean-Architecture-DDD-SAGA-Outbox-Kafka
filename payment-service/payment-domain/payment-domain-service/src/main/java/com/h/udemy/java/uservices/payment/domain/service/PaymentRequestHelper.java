@@ -86,7 +86,7 @@ public class PaymentRequestHelper {
             final String errMsg = format(ERR_PAYMENT_COULD_NOT_BE_FOUND_WITH_ORDER_ID.get(),
                     paymentRequest.getOrderId());
             log.info(errMsg);
-            throw new PaymentDomainServiceException(errMsg);
+            throw new PaymentDomainServiceException(errMsg, e);
         }
 
         Payment payment = paymentResponse.get();
@@ -115,7 +115,7 @@ public class PaymentRequestHelper {
             final String msg = format(ERR_PAYMENT_COULD_NOT_FIND_CREDIT_ENTRY_FOR_CUSTOMER_ID.get(),
                     customerId.getValue());
             log.info(msg);
-            throw new PaymentDomainServiceException(msg);
+            throw new PaymentDomainServiceException(msg, e);
         }
         return creditEntry.get();
     }
@@ -126,7 +126,7 @@ public class PaymentRequestHelper {
             final String msg = format(ERR_PAYMENT_COULD_NOT_FIND_CREDIT_HISTORY_FOR_CUSTOMER_ID.get(),
                     customerId.getValue());
             log.info(msg);
-            throw new PaymentDomainServiceException(msg);
+            throw new PaymentDomainServiceException(msg, e);
         }
         return creditHistories.get();
     }

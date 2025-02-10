@@ -3,7 +3,7 @@ package com.h.udemy.java.uservices.order.message.publisher.kafka;
 import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentRequestAvroModel;
 import com.h.udemy.java.uservices.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
 import com.h.udemy.java.uservices.kafka.producer.KafkaMessageHelper;
-import com.h.udemy.java.uservices.kafka.producer.service.impl.KafkaProducer;
+import com.h.udemy.java.uservices.kafka.producer.service.impl.KafkaProducerI;
 import com.h.udemy.java.uservices.order.message.mapper.OrderMessagingDataMapper;
 import com.h.udemy.java.uservices.order.service.domain.config.OrderServiceConfigData;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.approval.OrderApprovalOutboxMessage;
@@ -23,17 +23,17 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.*;
 public class OrderPaymentEventKafkaPublisher implements PaymentRequestMessagePublisher {
 
     private static final String OUTBOX_MESSAGE_CLASS_NAME = OrderApprovalOutboxMessage.class.getSimpleName();
-    private static final String AVRO_MODEL_CLASS_NAME = RestaurantApprovalRequestAvroModel.class.getSimpleName();
+    private static final String AVRO_MODEL_NAME = RestaurantApprovalRequestAvroModel.class.getSimpleName();
 
     private final OrderMessagingDataMapper orderMessagingDataMapper;
     private final OrderServiceConfigData orderServiceConfigData;
-    private final KafkaProducer<String, PaymentRequestAvroModel> kafkaProducer;
+    private final KafkaProducerI<String, PaymentRequestAvroModel> kafkaProducer;
     private final KafkaMessageHelper kafkaMessageHelper;
 
     public OrderPaymentEventKafkaPublisher(
             OrderMessagingDataMapper orderMessagingDataMapper,
             OrderServiceConfigData orderServiceConfigData,
-            KafkaProducer<String, PaymentRequestAvroModel> kafkaProducer,
+            KafkaProducerI<String, PaymentRequestAvroModel> kafkaProducer,
             KafkaMessageHelper kafkaMessageHelper) {
         this.orderMessagingDataMapper = orderMessagingDataMapper;
         this.orderServiceConfigData = orderServiceConfigData;
@@ -72,18 +72,18 @@ public class OrderPaymentEventKafkaPublisher implements PaymentRequestMessagePub
                             paymentRequestAvroModel,
                             orderPaymentOutboxMessage,
                             outboxCallback,
-                            PaymentRequestAvroModel.class.getSimpleName(),
+                            AVRO_MODEL_NAME,
                             orderPaymentEventPayload.getOrderId()));
 
             log.info(EVENT_SENT_TO_KAFKA.build(
-                    OrderPaymentOutboxMessage.class.getSimpleName(),
+                    OUTBOX_MESSAGE_CLASS_NAME,
                     orderPaymentEventPayload.getOrderId(),
                     sagaId));
 
         } catch (Exception e) {
             log.error(EVENT_ERR_SENT_TO_KAFKA.build(
-                            OrderPaymentOutboxMessage.class.getSimpleName(),
-                            PaymentRequestAvroModel.class.getSimpleName(),
+                            OUTBOX_MESSAGE_CLASS_NAME,
+                            AVRO_MODEL_NAME,
                             orderPaymentEventPayload.getOrderId(),
                             sagaId,
                             e.getMessage()),

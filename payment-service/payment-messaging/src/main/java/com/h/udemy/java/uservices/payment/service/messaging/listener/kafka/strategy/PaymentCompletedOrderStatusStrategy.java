@@ -10,14 +10,15 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.KAFKA_P
 
 @Slf4j
 @Component
-public class PaymentCompletedOrderStatusStrategy implements IPaymentOrderStatusStrategy {
+public class PaymentCompletedOrderStatusStrategy implements PaymentOrderStatusStrategy {
 
-    private static final String REQUEST_SERVICE_NAME = "Payment Request";
     @Override
     public void processPayment(PaymentRequestMessageListener paymentRequestListener,
                                PaymentRequest paymentRequest) {
         if (PaymentOrderStatus.PENDING == PaymentOrderStatus.valueOf(paymentRequest.getPaymentOrderStatus().name())) {
-            log.info(KAFKA_PROCESSING_FOR_ID.build(paymentRequest.getOrderId()));
+            log.info(KAFKA_PROCESSING_FOR_ID.build(
+                    PaymentRequest.class.getSimpleName(),
+                    paymentRequest.getOrderId()));
 
             paymentRequestListener.completePayment(paymentRequest);
         }

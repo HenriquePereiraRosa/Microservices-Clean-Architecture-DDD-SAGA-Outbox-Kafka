@@ -1,5 +1,7 @@
 package com.h.udemy.java.uservices.order.service.dataaccess.outbox.restaurantapproval.adapter;
 
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.OUTBOX_OBJ_COULD_NOT_BE_FOUND;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +9,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
+import com.h.udemy.java.uservices.order.service.dataaccess.outbox.restaurantapproval.entity.ApprovalOutboxEntity;
 import com.h.udemy.java.uservices.order.service.dataaccess.outbox.restaurantapproval.exception.ApprovalOutboxNotFoundException;
 import com.h.udemy.java.uservices.order.service.dataaccess.outbox.restaurantapproval.mapper.ApprovalOutboxDataAccessMapper;
 import com.h.udemy.java.uservices.order.service.dataaccess.outbox.restaurantapproval.repository.ApprovalOutboxJpaRepository;
@@ -44,8 +47,9 @@ public class ApprovalOutboxRepositoryImpl implements ApprovalOutboxRepository {
 
         return Optional.of(approvalOutboxJpaRepository.findByTypeAndOutboxStatusAndSagaStatusIn(sagaType, outboxStatus,
                         Arrays.asList(sagaStatus))
-                .orElseThrow(() -> new ApprovalOutboxNotFoundException("Approval outbox object " +
-                        "could be found for saga type " + sagaType))
+                .orElseThrow(() -> new ApprovalOutboxNotFoundException(OUTBOX_OBJ_COULD_NOT_BE_FOUND.build(
+                        ApprovalOutboxEntity.class.getSimpleName(),
+                        sagaType)))
                 .stream()
                 .map(approvalOutboxDataAccessMapper::approvalOutboxEntityToOrderApprovalOutboxMessage)
                 .toList());

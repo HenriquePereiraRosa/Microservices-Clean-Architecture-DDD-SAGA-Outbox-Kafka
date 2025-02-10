@@ -16,6 +16,8 @@ public enum LogMessages {
     EVENT_SENT_TO_KAFKA_AT("{0} sent to KAFKA at:  {1}"),
     EVENT_ERR_SENT_TO_KAFKA("Error while sending {0} message to KAFKA with {1} Order id [{2}] and Saga id [{3}], error: {4}"),
     EVENT_ERR_OPTIMISTIC_LOCK("Caught optimistic locking exception in {0} for order id: {1}"),
+    ERR_UNIQUE_VIOLATION_IN_REQUEST_LISTENER("Caught unique constraint exception with sql state: {0}  in {1} for order id: {2}"),
+    ERR_RETHROWN_DATA_ACCESS_EXCEPTION("Throwing DataAccessException in {0}"),
 
     PROCESS_OPERATION_COMPLETED("{0} operation process with ID: {1}, is complete."),
     PROCESS_ROLLBACK_OPERATION_COMPLETED("{0} rollback operation with ID: {1}, is complete. failures messages {2}"),
@@ -27,6 +29,7 @@ public enum LogMessages {
     OUTBOX_MESSAGES_RECEIVED_SENDING_TO_KAFKA("Received {0} {1}s with ids: [ {2} ], sending to kafka!"),
     OUTBOX_MESSAGE_SAVED("{0} saved with ID: [{1}]"),
     OUTBOX_MESSAGES_SENT_TO_MSG_BUS("{0} {1} sent to message bus!"),
+    OUTBOX_OBJ_COULD_NOT_BE_FOUND("{0} outbox object could NOT be found for type {1}!"),
 
     ERR_OUTBOX_MESSAGE_COULD_NOT_BE_SAVED("{0} with ID [{1}], could not be saved!"),
     ERR_ORDER_COULD_NOT_BE_MAPPED("{0} with ID {1}, could not be serialized to JSON."),
@@ -70,6 +73,7 @@ public enum LogMessages {
     PAYMENT_ERR_CREDIT_HISTORY_NOT_EQUALS("Credit history total and Current credit is not equal for CustomerId: {0}!"),
     PAYMENT_ERR_FAILED_FOR_ORDER_ID("Payment request failed for order id: {0}!"),
     PAYMENT_ERR_STATUS_UNSUPPORTED("Unsupported payment order status: {0}"),
+    PAYMENT_ERR_ID_NOT_FOUND("No payment found for order id: {0}"),
 
 
     // RESTAURANT

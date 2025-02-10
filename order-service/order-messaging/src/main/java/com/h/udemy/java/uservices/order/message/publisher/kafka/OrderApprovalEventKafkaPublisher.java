@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.h.udemy.java.uservices.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
 import com.h.udemy.java.uservices.kafka.producer.KafkaMessageHelper;
-import com.h.udemy.java.uservices.kafka.producer.service.impl.KafkaProducer;
+import com.h.udemy.java.uservices.kafka.producer.service.impl.KafkaProducerI;
 import com.h.udemy.java.uservices.order.message.mapper.OrderMessagingDataMapper;
 import com.h.udemy.java.uservices.order.service.domain.config.OrderServiceConfigData;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.approval.OrderApprovalEventPayload;
@@ -24,17 +24,17 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderApprovalEventKafkaPublisher implements RestaurantApprovalRequestMessagePublisher {
 
     private static final String OUTBOX_MESSAGE_CLASS_NAME = OrderApprovalOutboxMessage.class.getSimpleName();
-    private static final String AVRO_MODEL_CLASS_NAME = RestaurantApprovalRequestAvroModel.class.getSimpleName();
+    private static final String AVRO_MODEL_NAME = RestaurantApprovalRequestAvroModel.class.getSimpleName();
 
     private final OrderMessagingDataMapper orderMessagingDataMapper;
     private final OrderServiceConfigData orderServiceConfigData;
-    private final KafkaProducer<String, RestaurantApprovalRequestAvroModel> kafkaProducer;
+    private final KafkaProducerI<String, RestaurantApprovalRequestAvroModel> kafkaProducer;
     private final KafkaMessageHelper kafkaMessageHelper;
 
     public OrderApprovalEventKafkaPublisher(
             OrderMessagingDataMapper orderMessagingDataMapper,
             OrderServiceConfigData orderServiceConfigData,
-            KafkaProducer<String, RestaurantApprovalRequestAvroModel> kafkaProducer,
+            KafkaProducerI<String, RestaurantApprovalRequestAvroModel> kafkaProducer,
             KafkaMessageHelper kafkaMessageHelper) {
         this.orderMessagingDataMapper = orderMessagingDataMapper;
         this.orderServiceConfigData = orderServiceConfigData;
@@ -74,7 +74,7 @@ public class OrderApprovalEventKafkaPublisher implements RestaurantApprovalReque
                             approvalRequestAvroModel,
                             orderApprovalOutboxMessage,
                             outboxCallback,
-                            AVRO_MODEL_CLASS_NAME,
+                            AVRO_MODEL_NAME,
                             orderApprovalEventPayload.getOrderId()));
 
             log.info(EVENT_SENT_TO_KAFKA.build(
@@ -85,7 +85,7 @@ public class OrderApprovalEventKafkaPublisher implements RestaurantApprovalReque
         } catch (Exception e) {
             log.error(EVENT_ERR_SENT_TO_KAFKA.build(
                             OUTBOX_MESSAGE_CLASS_NAME,
-                            AVRO_MODEL_CLASS_NAME,
+                            AVRO_MODEL_NAME,
                             orderApprovalEventPayload.getOrderId(),
                             sagaId,
                             e.getMessage()),

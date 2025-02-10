@@ -1,5 +1,7 @@
 package com.h.udemy.java.uservices.order.service.dataaccess.outbox.payment.adapter;
 
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.OUTBOX_OBJ_COULD_NOT_BE_FOUND;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.h.udemy.java.uservices.order.service.dataaccess.outbox.payment.entity.PaymentOutboxEntity;
 import com.h.udemy.java.uservices.order.service.dataaccess.outbox.payment.exception.PaymentOutboxNotFoundException;
 import com.h.udemy.java.uservices.order.service.dataaccess.outbox.payment.mapper.PaymentOutboxDataAccessMapper;
 import com.h.udemy.java.uservices.order.service.dataaccess.outbox.payment.repository.PaymentOutboxJpaRepository;
@@ -43,8 +46,9 @@ public class PaymentOutboxRepositoryImpl implements PaymentOutboxRepository {
         return Optional.of(paymentOutboxJpaRepository.findByTypeAndOutboxStatusAndSagaStatusIn(sagaType,
                         outboxStatus,
                         Arrays.asList(sagaStatus))
-                .orElseThrow(() -> new PaymentOutboxNotFoundException("Payment outbox object " +
-                        "could not be found for saga type " + sagaType))
+                .orElseThrow(() -> new PaymentOutboxNotFoundException(OUTBOX_OBJ_COULD_NOT_BE_FOUND.build(
+                        PaymentOutboxEntity.class.getSimpleName(),
+                        sagaType)))
                 .stream()
                 .map(paymentOutboxDataAccessMapper::paymentOutboxEntityToOrderPaymentOutboxMessage)
                 .collect(Collectors.toList()));

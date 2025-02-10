@@ -9,7 +9,7 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.PAYMENT
 
 @Slf4j
 @Component
-public class PaymentCancelledOrderStatusStrategy implements IPaymentOrderStatusStrategy {
+public class PaymentCancelledOrderStatusStrategy implements PaymentOrderStatusStrategy {
     @Override
     public void processPayment(PaymentRequestMessageListener paymentRequestListener,
                                PaymentRequest paymentRequest) {
