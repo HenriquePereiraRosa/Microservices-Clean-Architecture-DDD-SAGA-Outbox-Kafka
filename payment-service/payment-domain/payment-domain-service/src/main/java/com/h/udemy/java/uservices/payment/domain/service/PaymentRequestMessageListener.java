@@ -14,38 +14,18 @@ import static java.text.MessageFormat.format;
 public class PaymentRequestMessageListener implements IPaymentRequestMessageListener {
 
     private final PaymentRequestHelper paymentRequestHelper;
-    private final PaymentCompletedMessagePublisher iPaymentCompletedMessagePublisher;
-    private final PaymentCancelledMessagePublisher iPaymentCancelledMessagePublisher;
-    private final PaymentFailedMessagePublisher iPaymentFailedMessagePublisher;
 
-    public PaymentRequestMessageListener(PaymentRequestHelper paymentRequestHelper,
-                                         PaymentCompletedMessagePublisher iPaymentCompletedMessagePublisher,
-                                         PaymentCancelledMessagePublisher iPaymentCancelledMessagePublisher,
-                                         PaymentFailedMessagePublisher iPaymentFailedMessagePublisher) {
+    public PaymentRequestMessageListener(PaymentRequestHelper paymentRequestHelper) {
         this.paymentRequestHelper = paymentRequestHelper;
-        this.iPaymentCompletedMessagePublisher = iPaymentCompletedMessagePublisher;
-        this.iPaymentCancelledMessagePublisher = iPaymentCancelledMessagePublisher;
-        this.iPaymentFailedMessagePublisher = iPaymentFailedMessagePublisher;
     }
 
     @Override
     public void completePayment(PaymentRequest paymentRequest) {
-        PaymentEvent paymentEvent = paymentRequestHelper.persistPayment(paymentRequest);
-        fireEvent(paymentEvent);
+        paymentRequestHelper.persistPayment(paymentRequest);
     }
 
     @Override
     public void cancelPayment(PaymentRequest paymentRequest) {
-        PaymentEvent paymentEvent = paymentRequestHelper.persistCancelPayment(paymentRequest);
-        fireEvent(paymentEvent);
-
-    }
-
-    private void fireEvent(PaymentEvent paymentEvent) {
-        log.info(format(PAYMENT_PUB_EVENT_PAYMENT_AND_ORDER_FOR_ID.get(),
-                paymentEvent.getPayment().getId().getValue(),
-                paymentEvent.getPayment().getOrderId().getValue()));
-
-//        paymentEvent.fire();
+        paymentRequestHelper.persistCancelPayment(paymentRequest);
     }
 }

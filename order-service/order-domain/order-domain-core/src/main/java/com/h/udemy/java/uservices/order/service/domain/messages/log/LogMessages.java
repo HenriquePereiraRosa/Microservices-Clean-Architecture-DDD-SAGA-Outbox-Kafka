@@ -19,14 +19,7 @@ public enum LogMessages {
     ORDER_ID_CREATING("order.id.creating"), //todo: do refactor
 
     ORDER_TRACKING_ALL("order.id.all-track-order"), //todo: do refactor
-    ORDER_TRACKING_BY_TRACKING_ID("order.id.track-order-by-tracking-id"), //todo: do refactor
-
-    ORDER_RECEIVED("Received {0} OrderPaymentOutboxMessage with ids: [ {1} ], sending to message bus!"),
-
-    ORDER_ID_STATUS_UPDATED("{0} with ID [{1}] updated with STATUS : {2}"),
-
-    ORDER_MESSAGES_RECEIVED_FOR_CLEANUP("Received {0} {1} for clean-up. Payloads: {2}"),
-    ORDER_MESSAGES_DELETED("{0} {1} deleted.");
+    ORDER_TRACKING_BY_TRACKING_ID("order.id.track-order-by-tracking-id"); //todo: do refactor
 
     final static String FILE_PATH = "messages_order_domain.log.log-messages";
     final String key;

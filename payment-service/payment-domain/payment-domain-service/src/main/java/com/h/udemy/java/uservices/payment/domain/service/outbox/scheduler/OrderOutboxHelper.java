@@ -53,7 +53,6 @@ public class OrderOutboxHelper {
         return orderOutboxRepository.findByTypeAndOutboxStatus(ORDER_SAGA_NAME, outboxStatus);
     }
 
-    @Transactional
     public void save(OrderOutboxMessage orderOutboxMessage) {
 
         OrderOutboxMessage response = orderOutboxRepository.save(orderOutboxMessage);
@@ -100,6 +99,17 @@ public class OrderOutboxHelper {
             log.info(eMsg);
             throw new PaymentDomainException(eMsg, e);
         }
+    }
+
+    @Transactional
+    public void updateOutboxStatus(OrderOutboxMessage orderOutboxMessage, OutboxStatus outboxStatus) {
+        orderOutboxMessage.setOutboxStatus(outboxStatus);
+        this.save(orderOutboxMessage);
+
+        log.info(ORDER_ID_STATUS_UPDATED.build(
+                OrderOutboxMessage.class.getSimpleName(),
+                orderOutboxMessage.getId(),
+                outboxStatus.name()));
     }
 
     @Transactional

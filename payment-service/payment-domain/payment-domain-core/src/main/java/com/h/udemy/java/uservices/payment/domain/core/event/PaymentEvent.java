@@ -12,7 +12,7 @@ public abstract class PaymentEvent implements DomainEvent {
     private final ZonedDateTime createdAt;
     private final List<String> failureMessages;
 
-    public PaymentEvent(Payment payment, ZonedDateTime createdAt, List<String> failureMessages) {
+    protected PaymentEvent(Payment payment, ZonedDateTime createdAt, List<String> failureMessages) {
         this.payment = payment;
         this.createdAt = createdAt;
         this.failureMessages = failureMessages;

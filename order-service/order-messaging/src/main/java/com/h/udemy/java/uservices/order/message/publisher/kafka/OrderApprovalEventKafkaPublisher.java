@@ -1,5 +1,13 @@
 package com.h.udemy.java.uservices.order.message.publisher.kafka;
 
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.EVENT_ERR_SENT_TO_KAFKA;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.EVENT_SENT_TO_KAFKA;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.OUTBOX_MESSAGE_RECEIVED;
+
+import java.util.function.BiConsumer;
+
+import org.springframework.stereotype.Component;
+
 import com.h.udemy.java.uservices.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
 import com.h.udemy.java.uservices.kafka.producer.KafkaMessageHelper;
 import com.h.udemy.java.uservices.kafka.producer.service.impl.KafkaProducer;
@@ -10,11 +18,6 @@ import com.h.udemy.java.uservices.order.service.domain.outbox.model.approval.Ord
 import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.restaurantapproval.RestaurantApprovalRequestMessagePublisher;
 import com.h.udemy.java.uservices.outbox.OutboxStatus;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-
-import java.util.function.BiConsumer;
-
-import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.*;
 
 @Slf4j
 @Component

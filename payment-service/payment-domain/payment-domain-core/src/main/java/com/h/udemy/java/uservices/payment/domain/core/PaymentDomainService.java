@@ -16,14 +16,10 @@ public interface PaymentDomainService {
     PaymentEvent validateAndInitiatePayment(Payment payment,
                                             CreditEntry creditEntry,
                                             List<CreditHistory> creditHistories,
-                                            List<String> failureMessages,
-                                            DomainEventPublisher<PaymentCompletedEvent> completedEventPublisher,
-                                            DomainEventPublisher<PaymentFailedEvent> failedEventPublisher);
+                                            List<String> failureMessages);
 
     PaymentEvent validateAndCancelPayment(Payment payment,
                                             CreditEntry creditEntry,
                                             List<CreditHistory> creditHistories,
-                                            List<String> failureMessages,
-                                          DomainEventPublisher<PaymentCancelledEvent> cancelledEventPublisher,
-                                          DomainEventPublisher<PaymentFailedEvent> failedEventPublisher);
+                                            List<String> failureMessages);
 }

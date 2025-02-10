@@ -42,6 +42,12 @@
             <artifactId>kafka-model</artifactId>
         </dependency>
 
+        <!--  todo: check if outbox is necessary here -->
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>outbox</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

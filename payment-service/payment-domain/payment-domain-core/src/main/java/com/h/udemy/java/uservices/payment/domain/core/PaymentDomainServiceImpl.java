@@ -1,6 +1,22 @@
 package com.h.udemy.java.uservices.payment.domain.core;
 
-import com.h.udemy.java.uservices.domain.event.DomainEventPublisher;
+import static com.h.udemy.java.uservices.domain.Constants.getZonedDateTimeNow;
+import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_PAYMENT_NOT_ENOUGH_CREDIT;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.PAYMENT_ERR_CREDIT_HISTORY_NOT_EQUALS;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.PAYMENT_ERR_FAILED_FOR_ORDER_ID;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.PAYMENT_ERR_NOT_ENOUGH_CREDIT;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.PAYMENT_REQUEST_CANCELED_FOR_ID;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.PAYMENT_REQUEST_SUCCESS_FOR_ID;
+import static org.apache.logging.log4j.util.Strings.isBlank;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
 import com.h.udemy.java.uservices.domain.valueobject.Money;
 import com.h.udemy.java.uservices.domain.valueobject.PaymentStatus;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditEntry;
@@ -13,17 +29,6 @@ import com.h.udemy.java.uservices.payment.domain.core.event.PaymentFailedEvent;
 import com.h.udemy.java.uservices.payment.domain.core.valueobject.CreditHistoryId;
 import com.h.udemy.java.uservices.payment.domain.core.valueobject.TransactionType;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
-
-import java.time.ZonedDateTime;
-import java.util.*;
-
-import static com.h.udemy.java.uservices.domain.Constants.ZONED_UTC;
-import static com.h.udemy.java.uservices.domain.Constants.getZonedDateTimeNow;
-import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_PAYMENT_NOT_ENOUGH_CREDIT;
-import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.*;
-import static org.apache.logging.log4j.util.Strings.isBlank;
 
 @Slf4j
 @Component
@@ -33,9 +38,7 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
     public PaymentEvent validateAndInitiatePayment(Payment payment,
                                                    CreditEntry creditEntry,
                                                    List<CreditHistory> creditHistories,
-                                                   List<String> failureMessages,
-                                                   DomainEventPublisher<PaymentCompletedEvent> completedEventPublisher,
-                                                   DomainEventPublisher<PaymentFailedEvent> failedEventPublisher) {
+                                                   List<String> failureMessages) {
         failureMessages = validateAndAddMessages(payment);
         payment.initializePayment();
         validateCreditEntry(payment, creditEntry, failureMessages);
@@ -47,15 +50,16 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
             log.info(PAYMENT_REQUEST_SUCCESS_FOR_ID.build(payment.getOrderId().getValue()));
             payment.updateStatus(PaymentStatus.COMPLETED);
 
-            return new PaymentCompletedEvent(payment,
-                    getZonedDateTimeNow(),
-                    completedEventPublisher);
+            return new PaymentCompletedEvent(
+                    payment,
+                    getZonedDateTimeNow());
         }
 
         log.info(PAYMENT_ERR_FAILED_FOR_ORDER_ID.build(payment.getOrderId().getValue()));
         payment.updateStatus(PaymentStatus.FAILED);
 
-        return new PaymentFailedEvent(payment,
+        return new PaymentFailedEvent(
+                payment,
                 getZonedDateTimeNow(),
                 failureMessages
         );
@@ -65,9 +69,7 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
     public PaymentEvent validateAndCancelPayment(Payment payment,
                                                  CreditEntry creditEntry,
                                                  List<CreditHistory> creditHistories,
-                                                 List<String> failureMessages,
-                                                 DomainEventPublisher<PaymentCancelledEvent> cancelledEventPublisher,
-                                                 DomainEventPublisher<PaymentFailedEvent> failedEventPublisher) {
+                                                 List<String> failureMessages) {
 
         failureMessages = validateAndAddMessages(payment);
         creditEntry.addCreditAmount(payment.getPrice());
@@ -77,9 +79,9 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
             log.info(PAYMENT_REQUEST_CANCELED_FOR_ID.build(payment.getOrderId().getValue()));
             payment.updateStatus(PaymentStatus.CANCELLED);
 
-            return new PaymentCancelledEvent(payment,
-                    ZonedDateTime.now(ZONED_UTC),
-                    cancelledEventPublisher);
+            return new PaymentCancelledEvent(
+                    payment,
+                    getZonedDateTimeNow());
         }
 
         log.info(PAYMENT_ERR_FAILED_FOR_ORDER_ID.build(payment.getOrderId().getValue()));

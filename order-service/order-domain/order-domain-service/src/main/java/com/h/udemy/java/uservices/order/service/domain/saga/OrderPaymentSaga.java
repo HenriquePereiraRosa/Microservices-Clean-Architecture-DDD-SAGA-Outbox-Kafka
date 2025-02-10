@@ -8,7 +8,7 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_P
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.OUTBOX_MESSAGE_ALREADY_PROCESSED;
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.OUTBOX_MESSAGE_COULD_NOT_BE_FOUND;
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.OUTBOX_MESSAGE_SAGA_ID_ALREADY_ROLLED_BACK;
-import static com.h.udemy.java.uservices.order.service.domain.saga.strategy.OderPaymentSagaStatusStrategyContext.getSagaStatusFromPaymentStatus;
+import static com.h.udemy.java.uservices.order.service.domain.saga.strategy.OrderPaymentSagaStatusStrategyContext.getSagaStatusFromPaymentStatus;
 import static com.h.udemy.java.uservices.saga.strategy.SagaStatusStrategyContext.getSagaStatusFromOrderStatus;
 
 import java.util.Optional;

@@ -24,7 +24,9 @@ public enum LogMessages {
     OUTBOX_MESSAGE_COULD_NOT_BE_FOUND("{0} with SAGA Status: {1}, could NOT be found!"),
     OUTBOX_MESSAGE_COULD_NOT_BE_READ("{0} could not be mapped!"),
     OUTBOX_MESSAGE_RECEIVED("Received {0}. Order id [{1}], Saga id [{2}]."),
+    OUTBOX_MESSAGES_RECEIVED_SENDING_TO_KAFKA("Received {0} {1}s with ids: [ {2} ], sending to kafka!"),
     OUTBOX_MESSAGE_SAVED("{0} saved with ID: [{1}]"),
+    OUTBOX_MESSAGES_SENT_TO_MSG_BUS("{0} {1} sent to message bus!"),
 
     ERR_OUTBOX_MESSAGE_COULD_NOT_BE_SAVED("{0} with ID [{1}], could not be saved!"),
     ERR_ORDER_COULD_NOT_BE_MAPPED("{0} with ID {1}, could not be serialized to JSON."),
@@ -48,6 +50,11 @@ public enum LogMessages {
     ORDER_ID_PUBLISHING_ORDER_CANCELLED_EVENT("Publishing OrderCancelledEvent for Oder id: {0} with failure " +
             "messages: {1}."),
     ORDER_ID_CREATED_ORDER_RESPONSE("Returning {0} with ID: {1}"),
+
+    ORDER_ID_STATUS_UPDATED("{0} with ID [{1}] updated with STATUS : {2}"),
+
+    ORDER_MESSAGES_RECEIVED_FOR_CLEANUP("Received {0} {1} for clean-up. Payloads: {2}"),
+    ORDER_MESSAGES_DELETED("{0} {1} deleted."),
 
     ORDER_ERROR_WHILE_SENDING_REQUEST_AVRO("Error while sending {0} message {1} to topic {2}"),
     ORDER_ERROR_MSG_SENDING_REQ_AVRO_KAFKA("Error while sending {0} message to Kafka. orderId {1}, error: {2}"),
