@@ -1,8 +1,8 @@
 package com.h.udemy.java.uservices.payment.service.messaging.listener.kafka.strategy;
 
 import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentOrderStatus;
-import com.h.udemy.java.uservices.payment.domain.service.PaymentRequestMessageListener;
 import com.h.udemy.java.uservices.payment.domain.service.dto.PaymentRequest;
+import com.h.udemy.java.uservices.payment.domain.service.ports.input.message.listener.PaymentRequestMessageListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

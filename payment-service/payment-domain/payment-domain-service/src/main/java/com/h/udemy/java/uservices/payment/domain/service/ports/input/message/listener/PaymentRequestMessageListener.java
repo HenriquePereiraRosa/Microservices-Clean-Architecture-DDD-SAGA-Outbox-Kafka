@@ -2,7 +2,7 @@ package com.h.udemy.java.uservices.payment.domain.service.ports.input.message.li
 
 import com.h.udemy.java.uservices.payment.domain.service.dto.PaymentRequest;
 
-public interface IPaymentRequestMessageListener {
+public interface PaymentRequestMessageListener {
     void completePayment(PaymentRequest paymentRequest);
     void cancelPayment(PaymentRequest paymentRequest);
 }

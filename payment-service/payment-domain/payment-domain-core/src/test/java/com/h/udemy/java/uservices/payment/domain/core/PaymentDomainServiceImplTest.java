@@ -50,9 +50,7 @@ class PaymentDomainServiceImplTest extends ApiEnvTest {
                 .validateAndInitiatePayment(payment,
                         creditEntry,
                         historyList,
-                        new ArrayList<>(),
-                        completedEventPublisher,
-                        failedEventPublisher);
+                        new ArrayList<>());
 
         assertEquals(PaymentStatus.COMPLETED, paymentEvent.getPayment().getPaymentStatus());
         assertTrue(CollectionUtils.isEmpty(paymentEvent.getFailureMessages()));
@@ -68,9 +66,7 @@ class PaymentDomainServiceImplTest extends ApiEnvTest {
                 .validateAndInitiatePayment(payment,
                         creditEntry,
                         new ArrayList<>(),
-                        new ArrayList<>(),
-                        completedEventPublisher,
-                        failedEventPublisher);
+                        new ArrayList<>());
 
         assertEquals(PaymentStatus.FAILED, paymentEvent.getPayment().getPaymentStatus());
     }
@@ -86,9 +82,7 @@ class PaymentDomainServiceImplTest extends ApiEnvTest {
                 .validateAndInitiatePayment(payment,
                         creditEntry,
                         historyList,
-                        new ArrayList<>(),
-                        completedEventPublisher,
-                        failedEventPublisher);
+                        new ArrayList<>());
 
         assertEquals(PaymentStatus.FAILED, paymentEvent.getPayment().getPaymentStatus());
     }
@@ -102,9 +96,7 @@ class PaymentDomainServiceImplTest extends ApiEnvTest {
                 .validateAndCancelPayment(payment,
                         creditEntry,
                         new ArrayList<>(),
-                        new ArrayList<>(),
-                        cancelledEventPublisher,
-                        failedEventPublisher);
+                        new ArrayList<>());
 
         assertEquals(PaymentStatus.CANCELLED, paymentEvent.getPayment().getPaymentStatus());
     }
@@ -118,9 +110,7 @@ class PaymentDomainServiceImplTest extends ApiEnvTest {
                 .validateAndCancelPayment(payment,
                         creditEntry,
                         new ArrayList<>(),
-                        new ArrayList<>(),
-                        cancelledEventPublisher,
-                        failedEventPublisher);
+                        new ArrayList<>());
 
         assertEquals(PaymentStatus.FAILED, paymentEvent.getPayment().getPaymentStatus());
     }

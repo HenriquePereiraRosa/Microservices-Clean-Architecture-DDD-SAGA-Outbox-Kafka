@@ -1,6 +1,5 @@
 package com.h.udemy.java.uservices.payment.domain.service.outbox.scheduler;
 
-import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_ID_STATUS_UPDATED;
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.OUTBOX_MESSAGES_RECEIVED_SENDING_TO_KAFKA;
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.OUTBOX_MESSAGES_SENT_TO_MSG_BUS;
 
@@ -59,7 +58,7 @@ public class OrderOutboxScheduler implements OutboxScheduler {
             outboxMessages.forEach(outboxMessage ->
                     paymentResponseMessagePublisher.publish(
                             outboxMessage,
-                            orderOutboxHelper::updateOutboxStatus));
+                            orderOutboxHelper::updateOutboxMessageStatus));
             log.info(OUTBOX_MESSAGES_SENT_TO_MSG_BUS.build(
                     outboxMessages.size(),
                     OUTBOX_MESSAGE_CLASS_NAME

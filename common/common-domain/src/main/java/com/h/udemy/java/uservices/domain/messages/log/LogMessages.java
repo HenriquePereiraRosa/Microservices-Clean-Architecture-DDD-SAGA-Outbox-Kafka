@@ -28,6 +28,8 @@ public enum LogMessages {
     OUTBOX_MESSAGE_RECEIVED("Received {0}. Order id [{1}], Saga id [{2}]."),
     OUTBOX_MESSAGES_RECEIVED_SENDING_TO_KAFKA("Received {0} {1}s with ids: [ {2} ], sending to kafka!"),
     OUTBOX_MESSAGE_SAVED("{0} saved with ID: [{1}]"),
+    OUTBOX_MESSAGE_UPDATED("Order outbox table status is updated as: {0}"),
+    OUTBOX_MESSAGE_ALREADY_SAVED("An outbox message with saga id [{0}] is already saved to database!"),
     OUTBOX_MESSAGES_SENT_TO_MSG_BUS("{0} {1} sent to message bus!"),
     OUTBOX_OBJ_COULD_NOT_BE_FOUND("{0} outbox object could NOT be found for type {1}!"),
 

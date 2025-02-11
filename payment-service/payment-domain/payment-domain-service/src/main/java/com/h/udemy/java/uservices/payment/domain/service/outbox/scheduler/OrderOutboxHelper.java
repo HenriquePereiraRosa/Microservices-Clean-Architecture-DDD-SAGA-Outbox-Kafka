@@ -53,6 +53,7 @@ public class OrderOutboxHelper {
         return orderOutboxRepository.findByTypeAndOutboxStatus(ORDER_SAGA_NAME, outboxStatus);
     }
 
+    @Transactional
     public void save(OrderOutboxMessage orderOutboxMessage) {
 
         OrderOutboxMessage response = orderOutboxRepository.save(orderOutboxMessage);
@@ -102,9 +103,9 @@ public class OrderOutboxHelper {
     }
 
     @Transactional
-    public void updateOutboxStatus(OrderOutboxMessage orderOutboxMessage, OutboxStatus outboxStatus) {
+    public void updateOutboxMessageStatus(OrderOutboxMessage orderOutboxMessage, OutboxStatus outboxStatus) {
         orderOutboxMessage.setOutboxStatus(outboxStatus);
-        this.save(orderOutboxMessage);
+        save(orderOutboxMessage);
 
         log.info(ORDER_ID_STATUS_UPDATED.build(
                 OrderOutboxMessage.class.getSimpleName(),
