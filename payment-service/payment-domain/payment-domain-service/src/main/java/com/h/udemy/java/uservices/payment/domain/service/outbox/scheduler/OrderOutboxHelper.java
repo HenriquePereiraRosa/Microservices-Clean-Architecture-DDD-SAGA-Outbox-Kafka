@@ -2,6 +2,7 @@ package com.h.udemy.java.uservices.payment.domain.service.outbox.scheduler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.h.udemy.java.uservices.domain.Constants;
 import com.h.udemy.java.uservices.domain.valueobject.PaymentStatus;
 import com.h.udemy.java.uservices.outbox.OutboxStatus;
 import com.h.udemy.java.uservices.payment.domain.core.exception.PaymentDomainException;
@@ -12,13 +13,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.h.udemy.java.uservices.domain.Constants.getZonedDateTimeNow;
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.*;
 import static com.h.udemy.java.uservices.saga.order.SagaConstants.ORDER_SAGA_NAME;
 import static java.util.Objects.isNull;
+import static org.assertj.core.api.InstanceOfAssertFactories.type;
 
 @Slf4j
 @Component
@@ -84,8 +89,11 @@ public class OrderOutboxHelper {
                 .id(UUID.randomUUID())
                 .sagaId(sagaId)
                 .createdAt(orderEventPayload.getCreatedAt())
+                .processedAt(getZonedDateTimeNow())
                 .type(ORDER_SAGA_NAME)
                 .payload(createPayload(orderEventPayload))
+                .paymentStatus(paymentStatus)
+                .outboxStatus(outboxStatus)
                 .build());
     }
 
