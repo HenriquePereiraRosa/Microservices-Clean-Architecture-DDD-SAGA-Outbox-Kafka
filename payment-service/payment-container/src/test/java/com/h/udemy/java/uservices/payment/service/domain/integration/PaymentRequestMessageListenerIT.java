@@ -57,7 +57,7 @@ public class PaymentRequestMessageListenerIT {
     }
 
     @Test
-    void givenSameSagaId_whenCompletePaymentCalledConcurrently_thenEnsureSinglePaymentProcessed() {
+    void givenSameSagaId_whenCompletePaymentCalledConcurrently_thenEnsureThatOnlyOnePaymentHasBeenProcessed() {
         String sagaId = UUID.randomUUID().toString();
         ExecutorService executor = null;
 
