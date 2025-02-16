@@ -7,9 +7,7 @@ import com.h.udemy.java.uservices.restaurant.domain.core.event.OrderApprovalEven
 import com.h.udemy.java.uservices.restaurant.domain.core.exception.RestaurantNotFoundException;
 import com.h.udemy.java.uservices.restaurant.domain.service.dto.RestaurantApprovalRequest;
 import com.h.udemy.java.uservices.restaurant.domain.service.mapper.RestaurantDataMapper;
-import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.message.publisher.OrderApprovedMessagePublisher;
-import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.message.publisher.OrderRejectedMessagePublisher;
-import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.repository.IOrderApprovalRepository;
+import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.repository.OrderApprovalRepository;
 import com.h.udemy.java.uservices.restaurant.domain.service.ports.output.repository.RestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,7 +26,7 @@ public class RestaurantApprovalRequestHelper {
     private final RestaurantDomainService restaurantDomainService;
     private final RestaurantDataMapper restaurantMapper;
     private final RestaurantRepository restaurantRepository;
-    private final IOrderApprovalRepository orderApprovalRepository;
+    private final OrderApprovalRepository orderApprovalRepository;
     private final OrderApprovedMessagePublisher approvedMessagePublisher;
     private final OrderRejectedMessagePublisher rejectedMessagePublisher;
 
@@ -36,7 +34,7 @@ public class RestaurantApprovalRequestHelper {
     public RestaurantApprovalRequestHelper(RestaurantDomainService restaurantDomainService,
                                            RestaurantDataMapper restaurantMapper,
                                            RestaurantRepository restaurantRepository,
-                                           IOrderApprovalRepository orderApprovalRepository,
+                                           OrderApprovalRepository orderApprovalRepository,
                                            OrderApprovedMessagePublisher approvedMessagePublisher,
                                            OrderRejectedMessagePublisher rejectedMessagePublisher) {
 

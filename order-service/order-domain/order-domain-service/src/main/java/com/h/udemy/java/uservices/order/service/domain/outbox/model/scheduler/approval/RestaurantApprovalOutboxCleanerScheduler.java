@@ -1,26 +1,27 @@
 package com.h.udemy.java.uservices.order.service.domain.outbox.model.scheduler.approval;
 
-import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_MESSAGES_DELETED;
-import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_MESSAGES_RECEIVED_FOR_CLEANUP;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.approval.OrderApprovalOutboxMessage;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
 import com.h.udemy.java.uservices.outbox.OutboxScheduler;
 import com.h.udemy.java.uservices.outbox.OutboxStatus;
 import com.h.udemy.java.uservices.saga.SagaStatus;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_MESSAGES_DELETED;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_MESSAGES_RECEIVED_FOR_CLEANUP;
 
 @Slf4j
 @Component
 public class RestaurantApprovalOutboxCleanerScheduler implements OutboxScheduler {
+
+    public static final String OUTBOX_MSG_CLASS_NAME = OrderPaymentOutboxMessage.class.getSimpleName();
 
     private final ApprovalOutboxHelper approvalOutboxHelper;
 
@@ -42,7 +43,7 @@ public class RestaurantApprovalOutboxCleanerScheduler implements OutboxScheduler
                         SagaStatus.COMPENSATED,
                         SagaStatus.FAILED);
 
-        if (outboxMessageResponse.isPresent()) {
+        if (outboxMessageResponse.map(messages -> !messages.isEmpty()).orElse(false)) {
             List<OrderApprovalOutboxMessage> outboxMessages = outboxMessageResponse.get();
 
             String concatenatedMessages = outboxMessages.stream()
@@ -51,7 +52,7 @@ public class RestaurantApprovalOutboxCleanerScheduler implements OutboxScheduler
 
             log.info(ORDER_MESSAGES_RECEIVED_FOR_CLEANUP.build(
                     outboxMessages.size(),
-                    OrderPaymentOutboxMessage.class.getSimpleName(),
+                    OUTBOX_MSG_CLASS_NAME,
                     concatenatedMessages));
 
             approvalOutboxHelper
@@ -63,7 +64,7 @@ public class RestaurantApprovalOutboxCleanerScheduler implements OutboxScheduler
 
             log.info(ORDER_MESSAGES_DELETED.build(
                     outboxMessages.size(),
-                    OrderPaymentOutboxMessage.class.getSimpleName(),
+                    OUTBOX_MSG_CLASS_NAME,
                     concatenatedMessages));
         }
     }

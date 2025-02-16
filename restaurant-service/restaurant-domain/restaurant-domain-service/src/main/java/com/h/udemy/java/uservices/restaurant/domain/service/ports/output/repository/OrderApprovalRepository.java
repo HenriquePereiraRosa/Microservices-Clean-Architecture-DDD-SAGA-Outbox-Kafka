@@ -2,8 +2,8 @@ package com.h.udemy.java.uservices.restaurant.domain.service.ports.output.reposi
 
 import com.h.udemy.java.uservices.restaurant.domain.core.entity.OrderApproval;
 
-public interface IOrderApprovalRepository {
+public interface OrderApprovalRepository {
 
-    OrderApproval save(OrderApproval orderApproval);
+    void save(OrderApproval orderApproval);
 
 }

@@ -21,7 +21,7 @@ public class RestaurantDataMapper {
                 .orderDetail(OrderDetail.builder()
                         .orderId(new OrderId(UUID.fromString(approvalRequest.getOrderId())))
                         .products(approvalRequest
-                                .getRestaurantProducts()
+                                .getProducts()
                                 .stream()
                                 .map(restaurantProduct -> RestaurantProduct.builder()
                                         .productId(restaurantProduct.getId())

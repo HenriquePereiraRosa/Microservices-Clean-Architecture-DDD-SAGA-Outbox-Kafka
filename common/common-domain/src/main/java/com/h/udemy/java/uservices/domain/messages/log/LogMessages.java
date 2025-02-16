@@ -14,7 +14,7 @@ public enum LogMessages {
     EVENT_RECEIVED("Received {0} for {1} id: {2}"),
     EVENT_SENT_TO_KAFKA("{0} sent to KAFKA. OrderId [{2}]"),
     EVENT_SENT_TO_KAFKA_AT("{0} sent to KAFKA at:  {1}"),
-    EVENT_ERR_SENT_TO_KAFKA("Error while sending {0} message to KAFKA with {1} Order id [{2}] and Saga id [{3}], error: {4}"),
+    EVENT_ERR_SENT_TO_KAFKA("Error while sending {0} message to KAFKA with {1}. Order id [{2}] and Saga id [{3}], error: {4}"),
     EVENT_ERR_OPTIMISTIC_LOCK("Caught optimistic locking exception in {0} for order id: {1}"),
     ERR_UNIQUE_VIOLATION_IN_REQUEST_LISTENER("Caught unique constraint exception with sql state: {0}  in {1} for order id: {2}"),
     ERR_RETHROWN_DATA_ACCESS_EXCEPTION("Throwing DataAccessException in {0}"),

@@ -16,12 +16,27 @@
 
         <dependency>
             <groupId>com.h.udemy.java.uservices</groupId>
-            <artifactId>common-dataaccess</artifactId>
+            <artifactId>outbox</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.h.udemy.java.uservices</groupId>
             <artifactId>restaurant-domain-service</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>common-dataaccess</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
         </dependency>
 
     </dependencies>

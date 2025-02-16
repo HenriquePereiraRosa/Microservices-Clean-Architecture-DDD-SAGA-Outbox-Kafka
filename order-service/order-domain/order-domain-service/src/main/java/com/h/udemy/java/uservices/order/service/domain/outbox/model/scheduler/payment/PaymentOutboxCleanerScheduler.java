@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher;
 import com.h.udemy.java.uservices.outbox.OutboxScheduler;
 import com.h.udemy.java.uservices.outbox.OutboxStatus;
 import com.h.udemy.java.uservices.saga.SagaStatus;
