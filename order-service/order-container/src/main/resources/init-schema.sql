@@ -30,7 +30,7 @@ CREATE TABLE "order".order_items
     product_id uuid NOT NULL,
     price numeric(10,2) NOT NULL,
     quantity integer NOT NULL,
-    sub_total numeric(10,2) NOT NULL,
+--    sub_total numeric(10,2) NOT NULL, //todo: check  if is really need a sub_total column since we  just need to multiply price by quantity
     CONSTRAINT order_items_pkey PRIMARY KEY (id, order_id)
 );
 

@@ -8,8 +8,10 @@ import static java.text.MessageFormat.format;
 public enum LogMessages {
 
     // COMMON
-    KAFKA_X_REQUESTS_RECEIVED("{0} number of {1} request received with keys: {2}, partitions: {3}, and offsets: {4}"),
+    KAFKA_X_REQUESTS_RECEIVED("{0} of {1} request received with keys: {2}, partitions: {3}, and offsets: {4}"),
     KAFKA_PROCESSING_FOR_ID("Processing {0} for order id: {1}"),
+
+    PUB_PROCESSING_APPROVAL_FOR_ID("Processing [{0}] approval for order id: [{1}]"),
 
     EVENT_RECEIVED("Received {0} for {1} id: {2}"),
     EVENT_SENT_TO_KAFKA("{0} sent to KAFKA. OrderId [{2}]"),
@@ -44,8 +46,6 @@ public enum LogMessages {
             " Topic: {1}, Partition: {2}, Offset: {3}, Timestamp {4}"),
     ORDER_ID_PROCESSED_SUCCESS("Order {0} processed successfully"),
     ORDER_ID_PROCESSED_FAILED("Order {0} failed!"),
-    ORDER_KAFKA_NUMBER_MODEL_RESPONSES_RECEIVED("{0} number of {1} responses received." +
-            " Keys: {2}, Partitions: {3}, Offsets: {4}"),
     ORDER_COMPLETING_PAYMENT_FOR_ID("Completing payment for order with id: {0}"),
     ORDER_PAID_FOR_ID("Order id: {0} PAID."),
     ORDER_ID_CANCELLING("Cancelling payment for order with id: {0}"),

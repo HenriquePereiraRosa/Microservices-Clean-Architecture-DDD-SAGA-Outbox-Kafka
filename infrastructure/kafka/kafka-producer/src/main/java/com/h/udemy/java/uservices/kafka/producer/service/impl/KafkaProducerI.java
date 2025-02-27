@@ -26,7 +26,7 @@ public class KafkaProducerI<K extends Serializable, V extends SpecificRecordBase
 
     @Override
     public void send(String topicName, K key, V message, ListenableFutureCallback<SendResult<K, V>> callback) {
-        log.info("Sending message={} to topic={}", message, topicName);
+        log.info("Sending message={} to topic={}", message, topicName); //todo: mode to LogMessages
         try {
             ListenableFuture<SendResult<K, V>> kafkaResultFuture = kafkaTemplate.send(topicName, key, message);
             kafkaResultFuture.addCallback(callback);

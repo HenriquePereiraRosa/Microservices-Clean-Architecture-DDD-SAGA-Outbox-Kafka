@@ -20,7 +20,6 @@ import static com.h.udemy.java.uservices.domain.Constants.getZonedDateTimeNow;
 import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.*;
 import static com.h.udemy.java.uservices.saga.order.SagaConstants.ORDER_SAGA_NAME;
 import static java.util.Objects.isNull;
-import static org.assertj.core.api.InstanceOfAssertFactories.type;
 
 @Slf4j
 @Component

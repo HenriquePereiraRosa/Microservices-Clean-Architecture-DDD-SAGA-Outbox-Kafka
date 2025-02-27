@@ -1,7 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain.outbox.model.scheduler.approval;
 
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.approval.OrderApprovalOutboxMessage;
-import com.h.udemy.java.uservices.order.service.domain.outbox.model.payment.OrderPaymentOutboxMessage;
 import com.h.udemy.java.uservices.outbox.OutboxScheduler;
 import com.h.udemy.java.uservices.outbox.OutboxStatus;
 import com.h.udemy.java.uservices.saga.SagaStatus;
@@ -21,7 +20,7 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_M
 @Component
 public class RestaurantApprovalOutboxCleanerScheduler implements OutboxScheduler {
 
-    public static final String OUTBOX_MSG_CLASS_NAME = OrderPaymentOutboxMessage.class.getSimpleName();
+    public static final String OUTBOX_MSG_CLASS_NAME = OrderApprovalOutboxMessage.class.getSimpleName();
 
     private final ApprovalOutboxHelper approvalOutboxHelper;
 

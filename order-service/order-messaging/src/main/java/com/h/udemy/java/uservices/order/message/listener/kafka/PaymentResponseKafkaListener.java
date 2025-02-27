@@ -1,6 +1,6 @@
 package com.h.udemy.java.uservices.order.message.listener.kafka;
 
-import com.h.udemy.java.uservices.kafka.consumer.IKafkaConsumer;
+import com.h.udemy.java.uservices.kafka.consumer.KafkaConsumer;
 import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentResponseAvroModel;
 import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentStatus;
 import com.h.udemy.java.uservices.order.message.mapper.OrderMessagingDataMapper;
@@ -20,9 +20,9 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.*;
 
 @Slf4j
 @Component
-public class PaymentResponseKafkaListener implements IKafkaConsumer<PaymentResponseAvroModel> {
+public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentResponseAvroModel> {
 
-    private final String MODEL_NAME = "PAYMENT";
+    private final String AVRO_MODEL_NAME = PaymentResponseAvroModel.class.getSimpleName();
     private final String KAFKA_CONSUMER_GROUP_ID = "${kafka-consumer-config.payment-consumer-group-id}";
     private final String KAFKA_TOPIC_NAME = "${order-service.payment-response-topic-name}";
     private final OrderMessagingDataMapper orderMessagingDataMapper;
@@ -41,9 +41,9 @@ public class PaymentResponseKafkaListener implements IKafkaConsumer<PaymentRespo
                         @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
                         @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
 
-        log.info(ORDER_KAFKA_NUMBER_MODEL_RESPONSES_RECEIVED.build(
+        log.info(KAFKA_X_REQUESTS_RECEIVED.build(
                 messages.size(),
-                MODEL_NAME,
+                AVRO_MODEL_NAME,
                 keys.toString(),
                 partitions.toString(),
                 offsets.toString()));

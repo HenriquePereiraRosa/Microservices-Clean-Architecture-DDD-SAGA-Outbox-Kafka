@@ -1,7 +1,6 @@
 package com.h.udemy.java.uservices.order.message.publisher.kafka;
 
 import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentRequestAvroModel;
-import com.h.udemy.java.uservices.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
 import com.h.udemy.java.uservices.kafka.producer.KafkaMessageHelper;
 import com.h.udemy.java.uservices.kafka.producer.service.impl.KafkaProducerI;
 import com.h.udemy.java.uservices.order.message.mapper.OrderMessagingDataMapper;
@@ -23,7 +22,7 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.*;
 public class OrderPaymentEventKafkaPublisher implements PaymentRequestMessagePublisher {
 
     private static final String OUTBOX_MESSAGE_CLASS_NAME = OrderApprovalOutboxMessage.class.getSimpleName();
-    private static final String AVRO_MODEL_NAME = RestaurantApprovalRequestAvroModel.class.getSimpleName();
+    private static final String AVRO_MODEL_NAME = PaymentRequestAvroModel.class.getSimpleName();
 
     private final OrderMessagingDataMapper orderMessagingDataMapper;
     private final OrderServiceConfigData orderServiceConfigData;

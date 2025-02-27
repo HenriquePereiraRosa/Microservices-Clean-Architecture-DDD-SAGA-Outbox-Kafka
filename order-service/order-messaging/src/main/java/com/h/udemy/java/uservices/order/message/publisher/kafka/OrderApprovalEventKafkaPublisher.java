@@ -6,6 +6,7 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.OUTBOX_
 
 import java.util.function.BiConsumer;
 
+import com.h.udemy.java.uservices.kafka.producer.service.KafkaProducer;
 import org.springframework.stereotype.Component;
 
 import com.h.udemy.java.uservices.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
@@ -28,7 +29,7 @@ public class OrderApprovalEventKafkaPublisher implements RestaurantApprovalReque
 
     private final OrderMessagingDataMapper orderMessagingDataMapper;
     private final OrderServiceConfigData orderServiceConfigData;
-    private final KafkaProducerI<String, RestaurantApprovalRequestAvroModel> kafkaProducer;
+    private final KafkaProducer<String, RestaurantApprovalRequestAvroModel> kafkaProducer;
     private final KafkaMessageHelper kafkaMessageHelper;
 
     public OrderApprovalEventKafkaPublisher(
@@ -66,11 +67,11 @@ public class OrderApprovalEventKafkaPublisher implements RestaurantApprovalReque
                             orderApprovalEventPayload);
 
             kafkaProducer.send(
-                    orderServiceConfigData.getPaymentRequestTopicName(),
+                    orderServiceConfigData.getRestaurantApprovalRequestTopicName(),
                     sagaId,
                     approvalRequestAvroModel,
                     kafkaMessageHelper.getKafkaCallback(
-                            orderServiceConfigData.getPaymentRequestTopicName(),
+                            orderServiceConfigData.getRestaurantApprovalRequestTopicName(),
                             approvalRequestAvroModel,
                             orderApprovalOutboxMessage,
                             outboxCallback,
@@ -78,7 +79,7 @@ public class OrderApprovalEventKafkaPublisher implements RestaurantApprovalReque
                             orderApprovalEventPayload.getOrderId()));
 
             log.info(EVENT_SENT_TO_KAFKA.build(
-                    OUTBOX_MESSAGE_CLASS_NAME,
+                    OrderApprovalEventPayload.class.getSimpleName(),
                     orderApprovalEventPayload.getOrderId(),
                     sagaId));
 

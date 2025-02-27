@@ -21,16 +21,16 @@ public class OrderOutboxDataAccessMapper {
                 .build();
     }
 
-    public OrderOutboxMessage orderOutboxEntityToOrderOutboxMessage(OrderOutboxEntity paymentOutboxEntity) {
+    public OrderOutboxMessage orderOutboxEntityToOrderOutboxMessage(OrderOutboxEntity orderOutboxEntity) {
         return OrderOutboxMessage.builder()
-                .id(paymentOutboxEntity.getId())
-                .sagaId(paymentOutboxEntity.getSagaId())
-                .createdAt(paymentOutboxEntity.getCreatedAt())
-                .type(paymentOutboxEntity.getType())
-                .payload(paymentOutboxEntity.getPayload())
-                .outboxStatus(paymentOutboxEntity.getOutboxStatus())
-                .approvalStatus(paymentOutboxEntity.getApprovalStatus())
-                .version(paymentOutboxEntity.getVersion())
+                .id(orderOutboxEntity.getId())
+                .sagaId(orderOutboxEntity.getSagaId())
+                .createdAt(orderOutboxEntity.getCreatedAt())
+                .type(orderOutboxEntity.getType())
+                .payload(orderOutboxEntity.getPayload())
+                .outboxStatus(orderOutboxEntity.getOutboxStatus())
+                .approvalStatus(orderOutboxEntity.getApprovalStatus())
+                .version(orderOutboxEntity.getVersion())
                 .build();
     }
 
