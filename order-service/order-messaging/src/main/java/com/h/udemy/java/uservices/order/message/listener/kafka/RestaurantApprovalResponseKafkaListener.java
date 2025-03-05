@@ -4,12 +4,14 @@ import com.h.udemy.java.uservices.kafka.consumer.KafkaConsumer;
 import com.h.udemy.java.uservices.kafka.order.avro.model.OrderApprovalStatus;
 import com.h.udemy.java.uservices.kafka.order.avro.model.RestaurantApprovalResponseAvroModel;
 import com.h.udemy.java.uservices.order.message.mapper.OrderMessagingDataMapper;
+import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderNotFoundException;
 import com.h.udemy.java.uservices.order.service.domain.ports.input.message.listener.payment.PaymentResponseMessageListener;
 import com.h.udemy.java.uservices.order.service.domain.ports.input.message.listener.restaurantApproval.IRestaurantApprovalMessageListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
@@ -35,9 +37,9 @@ public class RestaurantApprovalResponseKafkaListener implements KafkaConsumer<Re
     @KafkaListener(id = "${kafka-consumer-config.restaurant-approval-consumer-group-id}",
             topics = "${order-service.restaurant-approval-response-topic-name}")
     public void receive(@Payload List<RestaurantApprovalResponseAvroModel> messages,
-                        @Header List<String> keys,
-                        @Header List<Integer> partitions,
-                        @Header List<Long> offsets) {
+                        @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) List<String> keys,
+                        @Header(KafkaHeaders.RECEIVED_PARTITION_ID) List<Integer> partitions,
+                        @Header(KafkaHeaders.OFFSET) List<Long> offsets) {
 
         log.info(KAFKA_X_REQUESTS_RECEIVED.build(
                 messages.size(),
@@ -71,7 +73,9 @@ public class RestaurantApprovalResponseKafkaListener implements KafkaConsumer<Re
                         avroModel.getOrderId()));
             } catch (OrderNotFoundException e) {
                 //NO-OP for OrderNotFoundException
-                log.error(ORDER_ERROR_NOT_FOUND.build(avroModel.getOrderId()));
+                log.error(ERR_NOT_FOUND.build(
+                        Order.class.getSimpleName(),
+                        avroModel.getOrderId()));
             }
         });
     }

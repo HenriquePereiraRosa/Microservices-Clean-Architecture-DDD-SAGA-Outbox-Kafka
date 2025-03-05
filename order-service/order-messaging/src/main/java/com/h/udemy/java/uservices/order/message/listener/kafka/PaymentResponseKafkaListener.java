@@ -4,6 +4,7 @@ import com.h.udemy.java.uservices.kafka.consumer.KafkaConsumer;
 import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentResponseAvroModel;
 import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentStatus;
 import com.h.udemy.java.uservices.order.message.mapper.OrderMessagingDataMapper;
+import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderNotFoundException;
 import com.h.udemy.java.uservices.order.service.domain.ports.input.message.listener.payment.PaymentResponseMessageListener;
 import lombok.extern.slf4j.Slf4j;
@@ -74,7 +75,9 @@ public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentRespon
                         avroModel.getOrderId()));
             } catch (OrderNotFoundException e) {
                 //NO-OP for OrderNotFoundException
-                log.error(ORDER_ERROR_NOT_FOUND.build(avroModel.getOrderId()));
+                log.error(ERR_NOT_FOUND.build(
+                        Order.class.getSimpleName(),
+                        avroModel.getOrderId()));
             }
         });
     }

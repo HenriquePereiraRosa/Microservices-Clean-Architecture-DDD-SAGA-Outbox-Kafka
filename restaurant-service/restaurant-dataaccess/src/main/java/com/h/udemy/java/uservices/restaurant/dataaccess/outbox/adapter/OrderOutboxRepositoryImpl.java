@@ -40,7 +40,7 @@ public class OrderOutboxRepositoryImpl implements OrderOutboxRepository {
                         "cannot be found for saga type " + sagaType))
                 .stream()
                 .map(orderOutboxDataAccessMapper::orderOutboxEntityToOrderOutboxMessage)
-                .collect(Collectors.toList()));
+                .toList());
     }
 
     @Override

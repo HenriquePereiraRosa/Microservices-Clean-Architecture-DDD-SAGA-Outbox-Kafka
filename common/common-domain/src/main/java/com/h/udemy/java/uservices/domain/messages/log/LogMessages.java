@@ -14,7 +14,7 @@ public enum LogMessages {
     PUB_PROCESSING_APPROVAL_FOR_ID("Processing [{0}] approval for order id: [{1}]"),
 
     EVENT_RECEIVED("Received {0} for {1} id: {2}"),
-    EVENT_SENT_TO_KAFKA("{0} sent to KAFKA. OrderId [{2}]"),
+    EVENT_SENT_TO_KAFKA("{0} sent to KAFKA. OrderId [{1}], SagaId [{2}]"),
     EVENT_SENT_TO_KAFKA_AT("{0} sent to KAFKA at:  {1}"),
     EVENT_ERR_SENT_TO_KAFKA("Error while sending {0} message to KAFKA with {1}. Order id [{2}] and Saga id [{3}], error: {4}"),
     EVENT_ERR_OPTIMISTIC_LOCK("Caught optimistic locking exception in {0} for order id: {1}"),
@@ -37,6 +37,8 @@ public enum LogMessages {
 
     ERR_OUTBOX_MESSAGE_COULD_NOT_BE_SAVED("{0} with ID [{1}], could not be saved!"),
     ERR_ORDER_COULD_NOT_BE_MAPPED("{0} with ID {1}, could not be serialized to JSON."),
+
+    ERR_NOT_FOUND("{0} id [{1}] not found!"),
 
     // ORDER
     ORDER_RECEIVED_ID("Received OrderCreatedEvent. orderId: {0}"),
@@ -63,7 +65,6 @@ public enum LogMessages {
 
     ORDER_ERROR_WHILE_SENDING_REQUEST_AVRO("Error while sending {0} message {1} to topic {2}"),
     ORDER_ERROR_MSG_SENDING_REQ_AVRO_KAFKA("Error while sending {0} message to Kafka. orderId {1}, error: {2}"),
-    ORDER_ERROR_NOT_FOUND("Order id [{0}] not found!"),
 
 
     // PAYMENT

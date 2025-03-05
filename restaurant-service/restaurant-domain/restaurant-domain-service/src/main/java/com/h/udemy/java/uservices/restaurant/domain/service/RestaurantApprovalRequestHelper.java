@@ -22,9 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_RESTAURANT_NOT_FOUND;
-import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.OUTBOX_MESSAGE_ALREADY_SAVED;
-import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.PUB_PROCESSING_APPROVAL_FOR_ID;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.*;
 import static java.text.MessageFormat.format;
 
 @Slf4j
@@ -89,7 +87,9 @@ public class RestaurantApprovalRequestHelper {
 
         Optional<Restaurant> restaurantDbOp = restaurantRepository.findRestaurantInformation(restaurant);
         if (restaurantDbOp.isEmpty()) {
-            String message = ERR_RESTAURANT_NOT_FOUND.build(restaurant.getId().getValue());
+            String message = ERR_NOT_FOUND.build(
+                    Restaurant.class.getSimpleName(),
+                    restaurant.getId().getValue());
             log.error(message);
             throw new RestaurantNotFoundException(message);
         }
