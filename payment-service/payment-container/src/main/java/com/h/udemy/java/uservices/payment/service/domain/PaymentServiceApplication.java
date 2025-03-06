@@ -1,6 +1,5 @@
 package com.h.udemy.java.uservices.payment.service.domain;
 
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

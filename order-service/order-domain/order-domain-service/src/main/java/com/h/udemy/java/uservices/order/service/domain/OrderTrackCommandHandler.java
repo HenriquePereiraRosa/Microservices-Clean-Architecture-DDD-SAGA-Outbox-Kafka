@@ -6,7 +6,7 @@ import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderRespo
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderNotFoundException;
 import com.h.udemy.java.uservices.order.service.domain.mapper.OrderDataMapper;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.OrderRepository;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.TrackingId;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,19 +20,19 @@ import java.util.Optional;
 public class OrderTrackCommandHandler {
 
     private final OrderDataMapper orderDataMapper;
-    private final IOrderRepository IOrderRepository;
+    private final OrderRepository orderRepository;
 
-    public OrderTrackCommandHandler(OrderDataMapper orderDataMapper, IOrderRepository IOrderRepository) {
+    public OrderTrackCommandHandler(OrderDataMapper orderDataMapper, OrderRepository orderRepository) {
         this.orderDataMapper = orderDataMapper;
-        this.IOrderRepository = IOrderRepository;
+        this.orderRepository = orderRepository;
     }
 
     @Transactional(readOnly = true)
     public TrackOrderResponse trackOrder(TrackOrderQuery trackOrderQuery) {
         final TrackingId trackingId = new TrackingId(trackOrderQuery.getOrderTrackingId());
-        Optional<Order> orderOp = IOrderRepository.findByTrackingId(trackingId);
+        Optional<Order> orderOp = orderRepository.findByTrackingId(trackingId);
         if(orderOp.isEmpty()) {
-            final String msg = Messages.ERR_ORDER_TRACKING_ID_NOT_FOUND.get() + trackingId;
+            final String msg = Messages.ERR_ORDER_TRACKING_ID_NOT_FOUND.build(trackingId);
             log.warn(msg);
             throw new OrderNotFoundException(msg);
         }
@@ -42,7 +42,7 @@ public class OrderTrackCommandHandler {
 
     public List<TrackOrderResponse> fetchAll() {
 
-        List<Order> orders = IOrderRepository.fetchAll();
+        List<Order> orders = orderRepository.fetchAll();
 
         return orderDataMapper.ordersToTrackOrderResponse(orders);
     }

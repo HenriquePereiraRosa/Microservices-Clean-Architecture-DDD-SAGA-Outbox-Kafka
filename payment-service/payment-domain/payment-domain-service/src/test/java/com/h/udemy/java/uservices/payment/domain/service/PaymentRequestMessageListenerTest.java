@@ -1,16 +1,11 @@
 package com.h.udemy.java.uservices.payment.domain.service;
 
-import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
 import com.h.udemy.java.uservices.domain.valueobject.PaymentStatus;
-import com.h.udemy.java.uservices.payment.domain.core.PaymentDomainService;
+import com.h.udemy.java.uservices.payment.domain.core.PaymentDomainServiceImpl;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditEntry;
 import com.h.udemy.java.uservices.payment.domain.core.entity.CreditHistory;
 import com.h.udemy.java.uservices.payment.domain.core.entity.Payment;
-import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCancelledEvent;
-import com.h.udemy.java.uservices.payment.domain.core.event.PaymentCompletedEvent;
 import com.h.udemy.java.uservices.payment.domain.core.event.PaymentEvent;
-import com.h.udemy.java.uservices.payment.domain.core.event.PaymentFailedEvent;
-import com.h.udemy.java.uservices.payment.domain.service.exception.PaymentDomainServiceException;
 import com.h.udemy.java.uservices.payment.domain.service.test.config.ApiEnvTest;
 import com.h.udemy.java.uservices.payment.domain.service.test.util.factory.CreditEntryFactory;
 import com.h.udemy.java.uservices.payment.domain.service.test.util.factory.CreditHistoryFactory;
@@ -25,7 +20,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.h.udemy.java.uservices.domain.test.constants.ConstantsTest.ERROR_PRICE;
+import static com.h.udemy.java.uservices.constants.TestConstants.ERROR_PRICE;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -33,13 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PaymentRequestMessageListenerTest extends ApiEnvTest {
 
     @Autowired
-    PaymentDomainService paymentDomainService;
-    @Autowired
-    IDomainEventPublisher<PaymentCompletedEvent> completedEventPublisher;
-    @Autowired
-    IDomainEventPublisher<PaymentCancelledEvent> cancelledEventPublisher;
-    @Autowired
-    IDomainEventPublisher<PaymentFailedEvent> failedEventPublisher;
+    PaymentDomainServiceImpl paymentDomainServiceImpl;
 
     @Test
     void should_completePayment() {
@@ -48,12 +37,10 @@ class PaymentRequestMessageListenerTest extends ApiEnvTest {
         List<CreditHistory> creditHistories = CreditHistoryFactory.createOKList(1);
         List<String> failureMessages = new ArrayList<>();
 
-        PaymentEvent paymentEvent = paymentDomainService.validateAndInitiatePayment(payment,
+        PaymentEvent paymentEvent = paymentDomainServiceImpl.validateAndInitiatePayment(payment,
                 creditEntry,
                 creditHistories,
-                failureMessages,
-                completedEventPublisher,
-                failedEventPublisher);
+                failureMessages);
 
         assertTrue(CollectionUtils.isEmpty(paymentEvent.getFailureMessages()));
         assertEquals(PaymentStatus.COMPLETED, paymentEvent.getPayment().getPaymentStatus());
@@ -68,14 +55,11 @@ class PaymentRequestMessageListenerTest extends ApiEnvTest {
 
         assertThrows(
                 UnsupportedOperationException.class,  // check this exception
-                () -> paymentDomainService.validateAndInitiatePayment(
+                () -> paymentDomainServiceImpl.validateAndInitiatePayment(
                         payment,
                         creditEntry,
                         creditHistories,
-                        failureMessages,
-                        completedEventPublisher,
-                        failedEventPublisher
-                )
+                        failureMessages)
         );
     }
 
@@ -86,12 +70,10 @@ class PaymentRequestMessageListenerTest extends ApiEnvTest {
         List<CreditHistory> creditHistories = CreditHistoryFactory.createOKList(1);
         List<String> failureMessages = new ArrayList<>();
 
-        PaymentEvent paymentEvent = paymentDomainService.validateAndCancelPayment(payment,
+        PaymentEvent paymentEvent = paymentDomainServiceImpl.validateAndCancelPayment(payment,
                 creditEntry,
                 creditHistories,
-                failureMessages,
-                cancelledEventPublisher,
-                failedEventPublisher);
+                failureMessages);
 
         assertTrue(CollectionUtils.isEmpty(paymentEvent.getFailureMessages()));
         assertEquals(PaymentStatus.CANCELLED, paymentEvent.getPayment().getPaymentStatus());
@@ -104,12 +86,10 @@ class PaymentRequestMessageListenerTest extends ApiEnvTest {
         List<CreditHistory> creditHistories = CreditHistoryFactory.createOKList(1);
         List<String> failureMessages = new ArrayList<>();
 
-        PaymentEvent paymentEvent = paymentDomainService.validateAndCancelPayment(payment,
+        PaymentEvent paymentEvent = paymentDomainServiceImpl.validateAndCancelPayment(payment,
                 creditEntry,
                 creditHistories,
-                failureMessages,
-                cancelledEventPublisher,
-                failedEventPublisher);
+                failureMessages);
 
         assertFalse(CollectionUtils.isEmpty(paymentEvent.getFailureMessages()));
         assertEquals(PaymentStatus.FAILED, paymentEvent.getPayment().getPaymentStatus());

@@ -1,42 +1,28 @@
 package com.h.udemy.java.uservices.order.service.dataaccess;
 
-import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.restaurantapproval.IOrderPaidRestaurantRequestMessagePublisher;
-import com.h.udemy.java.uservices.restaurant.dataaccess.repository.IRestaurantJpaRepository;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCancelledPaymentRequestRequestMessagePublisher;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.IOrderCreatedPaymentRequestMessagePublisher;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
+import com.h.udemy.java.uservices.order.service.domain.OrderDomainServiceImpl;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.restaurantapproval.RestaurantApprovalRequestMessagePublisher;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.ApprovalOutboxRepository;
+import com.h.udemy.java.uservices.restaurant.dataaccess.repository.RestaurantJpaRepository;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.OrderRepository;
 import org.mockito.Mockito;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 
-@SpringBootApplication(scanBasePackages = "com.h.udemy.java.uservices")
+@SpringBootApplication(scanBasePackages = "com.h.udemy.java.uservices.order.service.dataaccess")
 public class BeanTestConfig {
 
     @Bean
-    public IOrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher() {
-        return Mockito.mock(IOrderCreatedPaymentRequestMessagePublisher.class);
-    }
-
-    @Bean
-    public IOrderCancelledPaymentRequestRequestMessagePublisher orderCancelledPaymentRequestRequestMessagePublisher() {
-        return Mockito.mock(IOrderCancelledPaymentRequestRequestMessagePublisher.class);
-    }
-
-    @Bean
-    public IOrderPaidRestaurantRequestMessagePublisher orderPaidRestaurantRequestRequestMessagePublisher() {
-        return Mockito.mock(IOrderPaidRestaurantRequestMessagePublisher.class);
-    }
-
-    @Bean
-    public IRestaurantJpaRepository restaurantJpaRepository() {
-        return Mockito.mock(IRestaurantJpaRepository.class);
+    public RestaurantJpaRepository restaurantJpaRepository() {
+        return Mockito.mock(RestaurantJpaRepository.class);
     }
 
     @Bean
     @Primary
-    public IOrderRepository orderJpaRepository() {
-        return Mockito.mock(IOrderRepository.class);
+    public OrderRepository orderJpaRepository() {
+        return Mockito.mock(OrderRepository.class);
     }
 
 }

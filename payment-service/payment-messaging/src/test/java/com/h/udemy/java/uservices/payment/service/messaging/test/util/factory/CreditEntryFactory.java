@@ -7,7 +7,8 @@ import com.h.udemy.java.uservices.payment.domain.core.entity.CreditEntry;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import static com.h.udemy.java.uservices.domain.test.constants.ConstantsTest.CUSTOMER_UUID;
+import static com.h.udemy.java.uservices.constants.TestConstants.CUSTOMER_ID;
+
 
 public class CreditEntryFactory {
 
@@ -16,7 +17,7 @@ public class CreditEntryFactory {
     static public CreditEntry createOne() {
 
         return CreditEntry.builder()
-                .customerId(new CustomerId(CUSTOMER_UUID))
+                .customerId(new CustomerId(CUSTOMER_ID))
                 .totalCreditAmount(new Money(new BigDecimal(CREDIT_VALUE)))
                 .build();
     }
@@ -24,7 +25,7 @@ public class CreditEntryFactory {
     static public CreditEntry createOne(double value) {
 
         return CreditEntry.builder()
-                .customerId(new CustomerId(CUSTOMER_UUID))
+                .customerId(new CustomerId(CUSTOMER_ID))
                 .totalCreditAmount(new Money(new BigDecimal(value)))
                 .build();
     }

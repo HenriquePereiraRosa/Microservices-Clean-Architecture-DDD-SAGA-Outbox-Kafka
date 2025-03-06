@@ -3,7 +3,7 @@ package com.h.udemy.java.uservices.order.service.domain.saga.helper;
 import com.h.udemy.java.uservices.domain.valueobject.OrderId;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderNotFoundException;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +15,9 @@ import static com.h.udemy.java.uservices.domain.messages.Messages.ERR_ORDER_NOT_
 @Slf4j
 @Component
 public class OrderSagaHelper {
-    private final IOrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    public OrderSagaHelper(IOrderRepository orderRepository) {
+    public OrderSagaHelper(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
@@ -33,7 +33,7 @@ public class OrderSagaHelper {
         return orderOp.get();
     }
 
-    public Order saveOrder(Order pOrder) {
-        return orderRepository.save(pOrder);
+    public void saveOrder(Order pOrder) {
+        orderRepository.save(pOrder);
     }
 }

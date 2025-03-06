@@ -1,16 +1,16 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
-import com.h.udemy.java.uservices.order.service.domain.dto.message.RestaurantApprovalResponse;
-import com.h.udemy.java.uservices.order.service.domain.event.OrderCancelledEvent;
-import com.h.udemy.java.uservices.order.service.domain.ports.input.message.listener.restaurantApproval.IRestaurantApprovalMessageListener;
-import com.h.udemy.java.uservices.order.service.domain.saga.OrderApprovalSaga;
-import lombok.extern.slf4j.Slf4j;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_ID_APPROVED;
+import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.PROCESS_ROLLBACK_OPERATION_COMPLETED;
+import static com.h.udemy.java.uservices.order.service.domain.entity.Order.FAILURE_MESSAGE_DELIMITER;
+
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_ID_APPROVED;
-import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.ORDER_ID_PUBLISHING_ORDER_CANCELLED_EVENT;
-import static com.h.udemy.java.uservices.order.service.domain.entity.Order.FAILURE_MESSAGE_DELIMITER;
+import com.h.udemy.java.uservices.order.service.domain.dto.message.RestaurantApprovalResponse;
+import com.h.udemy.java.uservices.order.service.domain.ports.input.message.listener.restaurantApproval.IRestaurantApprovalMessageListener;
+import com.h.udemy.java.uservices.order.service.domain.saga.OrderApprovalSaga;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
@@ -32,11 +32,11 @@ public class RestaurantApprovalResponseMessageListener implements IRestaurantApp
 
     @Override
     public void orderRejected(RestaurantApprovalResponse restaurantApprovalResponse) {
-        OrderCancelledEvent domainEvent = orderApprovalSaga.rollback(restaurantApprovalResponse);
+        orderApprovalSaga.rollback(restaurantApprovalResponse);
 
-        log.info(ORDER_ID_PUBLISHING_ORDER_CANCELLED_EVENT.build(restaurantApprovalResponse.getOrderId(),
-                        String.join(FAILURE_MESSAGE_DELIMITER, restaurantApprovalResponse.getFailureMessages())));
-
-        domainEvent.fire();
+        log.info(PROCESS_ROLLBACK_OPERATION_COMPLETED.build(
+                OrderApprovalSaga.class.getSimpleName(),
+                restaurantApprovalResponse.getOrderId(),
+                String.join(FAILURE_MESSAGE_DELIMITER, restaurantApprovalResponse.getFailureMessages())));
     }
 }

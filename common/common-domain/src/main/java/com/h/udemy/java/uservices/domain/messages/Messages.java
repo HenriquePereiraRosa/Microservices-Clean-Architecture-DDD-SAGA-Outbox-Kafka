@@ -9,6 +9,7 @@ import static java.text.MessageFormat.format;
 
 
 @Getter
+@Deprecated
 public enum Messages {
     PUBLISHING_EVENT_FOR_ID("event.publishing.with-id"),
 

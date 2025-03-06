@@ -1,7 +1,7 @@
 package com.h.udemy.java.uservices.application.exception.handler;
 
 import com.h.udemy.java.uservices.application.ApiEnvTest;
-import com.h.udemy.java.uservices.application.exception.handler.model.ErrorDTO;
+import com.h.udemy.java.uservices.application.exception.handler.model.ErrorTo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -46,7 +46,7 @@ class GlobalExceptionHandlerTest extends ApiEnvTest {
 
     @Test
     void should_return_400() {
-        ResponseEntity<ErrorDTO> response = handler
+        ResponseEntity<ErrorTo> response = handler
                 .handleValidationException(new ValidationException(ERROR_MSG));
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -58,7 +58,7 @@ class GlobalExceptionHandlerTest extends ApiEnvTest {
         Email email = new Email("invalid.email.server.com");
         Set<ConstraintViolation<Email>> violations = validator.validate(email);
 
-        ResponseEntity<ErrorDTO> response = handler
+        ResponseEntity<ErrorTo> response = handler
                 .handleValidationException(new ConstraintViolationException(
                         new HashSet<ConstraintViolation<?>>(violations)));
 

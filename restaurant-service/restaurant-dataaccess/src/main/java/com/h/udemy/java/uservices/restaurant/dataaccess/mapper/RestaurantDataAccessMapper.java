@@ -9,8 +9,8 @@ import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
 import com.h.udemy.java.uservices.restaurant.dataaccess.entity.OrderApprovalEntity;
 import com.h.udemy.java.uservices.restaurant.domain.core.entity.OrderApproval;
 import com.h.udemy.java.uservices.restaurant.domain.core.entity.OrderDetail;
+import com.h.udemy.java.uservices.restaurant.domain.core.entity.Product;
 import com.h.udemy.java.uservices.restaurant.domain.core.entity.Restaurant;
-import com.h.udemy.java.uservices.restaurant.domain.core.entity.RestaurantProduct;
 import com.h.udemy.java.uservices.restaurant.domain.core.valueobject.OrderApprovalId;
 import org.springframework.stereotype.Component;
 
@@ -35,8 +35,8 @@ public class RestaurantDataAccessMapper {
                         .orElseThrow(() ->
                                 new RestaurantDataAccessException(ERR_RESTAURANT_NONE_FOUND.build()));
 
-        List<RestaurantProduct> restaurantProducts = restaurantEntities.stream().map(entity ->
-                        RestaurantProduct.builder()
+        List<Product> restaurantProducts = restaurantEntities.stream().map(entity ->
+                        Product.builder()
                                 .productId(new ProductId(entity.getProductId()))
                                 .name(entity.getProductName())
                                 .price(new Money(entity.getProductPrice()))
@@ -62,8 +62,8 @@ public class RestaurantDataAccessMapper {
                 .build();
     }
 
-    public OrderApproval orderApprovalEntityToOrderApproval(OrderApprovalEntity orderApprovalEntity) {
-        return OrderApproval.builder()
+    public void orderApprovalEntityToOrderApproval(OrderApprovalEntity orderApprovalEntity) {
+        OrderApproval.builder()
                 .orderApprovalId(new OrderApprovalId(orderApprovalEntity.getId()))
                 .restaurantId(new RestaurantId(orderApprovalEntity.getRestaurantId()))
                 .orderId(new OrderId(orderApprovalEntity.getOrderId()))

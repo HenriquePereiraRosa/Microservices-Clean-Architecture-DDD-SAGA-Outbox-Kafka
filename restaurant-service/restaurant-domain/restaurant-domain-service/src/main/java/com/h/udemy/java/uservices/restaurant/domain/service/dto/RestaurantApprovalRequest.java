@@ -1,7 +1,7 @@
 package com.h.udemy.java.uservices.restaurant.domain.service.dto;
 
 import com.h.udemy.java.uservices.domain.valueobject.RestaurantOrderStatus;
-import com.h.udemy.java.uservices.restaurant.domain.core.entity.RestaurantProduct;
+import com.h.udemy.java.uservices.restaurant.domain.core.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +20,7 @@ public class RestaurantApprovalRequest {
     private String restaurantId;
     private String orderId;
     private RestaurantOrderStatus restaurantOrderStatus;
-    private List<RestaurantProduct> restaurantProducts;
+    private List<Product> products;
     private BigDecimal price;
     private Instant createdAt;
 }

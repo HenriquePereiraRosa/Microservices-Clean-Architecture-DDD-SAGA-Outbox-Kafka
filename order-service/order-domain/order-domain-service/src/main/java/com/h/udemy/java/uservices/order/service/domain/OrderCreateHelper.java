@@ -1,6 +1,5 @@
 package com.h.udemy.java.uservices.order.service.domain;
 
-import com.h.udemy.java.uservices.domain.event.IDomainEventPublisher;
 import com.h.udemy.java.uservices.domain.messages.Messages;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCommand;
 import com.h.udemy.java.uservices.order.service.domain.entity.Customer;
@@ -11,9 +10,9 @@ import com.h.udemy.java.uservices.order.service.domain.exception.CustomerNotFoun
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderCouldNotBeSavedException;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
 import com.h.udemy.java.uservices.order.service.domain.mapper.OrderDataMapper;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.ICustomerRepository;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IRestaurantRepository;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.CustomerRepository;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.OrderRepository;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.RestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,33 +24,31 @@ import java.util.UUID;
 @Component
 public class OrderCreateHelper {
 
-    private final IOrderDomainService iOrderDomainService;
-    private final IOrderRepository orderRepository;
-    private final ICustomerRepository iCustomerRepository;
-    private final IRestaurantRepository restaurantRepository;
+    private final OrderDomainService iOrderDomainService;
+    private final OrderRepository orderRepository;
+    private final CustomerRepository iCustomerRepository;
+    private final RestaurantRepository restaurantRepository;
     private final OrderDataMapper orderDataMapper;
-    private final IDomainEventPublisher<OrderCreatedEvent> createdEventPublisher;
 
-    public OrderCreateHelper(IOrderDomainService orderDomainService,
-                             IOrderRepository orderRepository,
-                             ICustomerRepository iCustomerRepository,
-                             IRestaurantRepository restaurantRepository,
-                             OrderDataMapper orderDataMapper,
-                             IDomainEventPublisher<OrderCreatedEvent> createdEventPublisher) {
+    public OrderCreateHelper(OrderDomainService orderDomainService,
+                             OrderRepository orderRepository,
+                             CustomerRepository iCustomerRepository,
+                             RestaurantRepository restaurantRepository,
+                             OrderDataMapper orderDataMapper) {
         this.iOrderDomainService = orderDomainService;
         this.orderRepository = orderRepository;
         this.iCustomerRepository = iCustomerRepository;
         this.restaurantRepository = restaurantRepository;
         this.orderDataMapper = orderDataMapper;
-        this.createdEventPublisher = createdEventPublisher;
     }
+
     @Transactional
     public OrderCreatedEvent persistOrder(CreateOrderCommand createOrderCommand) {
         checkCustomer(createOrderCommand.customerId());
         Restaurant restaurant = checkRestaurant(createOrderCommand);
         Order order = orderDataMapper.createOrderCommandToOrder(createOrderCommand);
         OrderCreatedEvent orderCreatedEvent = iOrderDomainService
-                .validateAndInitiateOrder(order, restaurant, createdEventPublisher);
+                .validateAndInitiateOrder(order, restaurant);
         insertOrder(order);
 
         final String msg = Messages.ORDER_ID_CREATED

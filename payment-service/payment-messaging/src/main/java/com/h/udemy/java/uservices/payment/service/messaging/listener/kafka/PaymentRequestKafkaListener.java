@@ -1,8 +1,8 @@
 package com.h.udemy.java.uservices.payment.service.messaging.listener.kafka;
 
-import com.h.udemy.java.uservices.kafka.consumer.IKafkaConsumer;
+import com.h.udemy.java.uservices.kafka.consumer.KafkaConsumer;
 import com.h.udemy.java.uservices.kafka.order.avro.model.PaymentRequestAvroModel;
-import com.h.udemy.java.uservices.payment.domain.service.PaymentRequestMessageListener;
+import com.h.udemy.java.uservices.payment.domain.service.PaymentRequestMessageListenerI;
 import com.h.udemy.java.uservices.payment.service.messaging.listener.kafka.strategy.PaymentProcessor;
 import com.h.udemy.java.uservices.payment.service.messaging.mapper.PaymentMessagingDataMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -18,15 +18,15 @@ import static com.h.udemy.java.uservices.domain.messages.log.LogMessages.KAFKA_X
 
 @Slf4j
 @Component
-public class PaymentRequestKafkaListener implements IKafkaConsumer<PaymentRequestAvroModel> {
+public class PaymentRequestKafkaListener implements KafkaConsumer<PaymentRequestAvroModel> {
 
     private final String KAFKA_CONSUMER_GROUP_ID = "${kafka-consumer-config.payment-consumer-group-id}";
     private final String KAFKA_TOPIC_NAME = "${payment-service.payment-request-topic-name}";
 
-    private final PaymentRequestMessageListener listener;
+    private final PaymentRequestMessageListenerI listener;
     private final PaymentProcessor paymentProcessor;
 
-    public PaymentRequestKafkaListener(PaymentRequestMessageListener paymentRequestMessageListener,
+    public PaymentRequestKafkaListener(PaymentRequestMessageListenerI paymentRequestMessageListener,
                                        PaymentMessagingDataMapper mapper) {
         this.listener = paymentRequestMessageListener;
         this.paymentProcessor = new PaymentProcessor(listener, mapper);

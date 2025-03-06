@@ -11,7 +11,7 @@ public class OrderDetail extends BaseEntity<OrderId> {
 
     private final OrderStatus orderStatus;
     private final Money totalAmount;
-    private final List<RestaurantProduct> products;
+    private final List<Product> products;
 
     private OrderDetail(Builder builder) {
         setId(builder.orderId);
@@ -29,7 +29,7 @@ public class OrderDetail extends BaseEntity<OrderId> {
         private OrderId orderId;
         private OrderStatus orderStatus;
         private Money totalAmount;
-        private List<RestaurantProduct> products;
+        private List<Product> products;
 
         private Builder() {
         }
@@ -50,7 +50,7 @@ public class OrderDetail extends BaseEntity<OrderId> {
             return this;
         }
 
-        public Builder products(List<RestaurantProduct> val) {
+        public Builder products(List<Product> val) {
             products = val;
             return this;
         }
@@ -69,7 +69,7 @@ public class OrderDetail extends BaseEntity<OrderId> {
         return totalAmount;
     }
 
-    public List<RestaurantProduct> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 

@@ -1,15 +1,11 @@
 package com.h.udemy.java.uservices.order.service.dataaccess.order.adapter;
 
+import com.h.udemy.java.uservices.domain.valueobject.*;
 import com.h.udemy.java.uservices.order.service.dataaccess.ApiEnvTestConfig;
-import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
-import com.h.udemy.java.uservices.domain.valueobject.Money;
-import com.h.udemy.java.uservices.domain.valueobject.OrderId;
-import com.h.udemy.java.uservices.domain.valueobject.ProductId;
-import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
 import com.h.udemy.java.uservices.order.service.domain.entity.Order;
 import com.h.udemy.java.uservices.order.service.domain.entity.OrderItem;
 import com.h.udemy.java.uservices.order.service.domain.entity.Product;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.IOrderRepository;
+import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.OrderRepository;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.OrderItemId;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.StreetAddress;
 import com.h.udemy.java.uservices.order.service.domain.valueobject.TrackingId;
@@ -19,12 +15,12 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -35,7 +31,7 @@ class CustomerRepositoryTest extends ApiEnvTestConfig {
     private final TrackingId TRACKING_ID = new TrackingId(UUID.randomUUID());
 
     @Autowired
-    IOrderRepository orderRepository;
+    OrderRepository orderRepository;
 
 
     private final Order order = this.getOne();
@@ -67,7 +63,7 @@ class CustomerRepositoryTest extends ApiEnvTestConfig {
 
         final Optional<Order> orderDb = orderRepository.findByTrackingId(TRACKING_ID);
 
-        assertNotNull(orderDb.get());
+        assertThat(orderDb.isPresent()).isTrue();
         assertEquals(dummyOrder.getPrice(), orderDb.get().getPrice());
         assertEquals(dummyOrder.getTrackingId(), orderDb.get().getTrackingId());
     }
@@ -84,8 +80,8 @@ class CustomerRepositoryTest extends ApiEnvTestConfig {
                 .orderItemId(new OrderItemId(112L))
                 .product(new Product(new ProductId(UUID.randomUUID()),
                         "product name",
-                        new Money(new BigDecimal(10.99))))
-                .price(new Money(new BigDecimal(10.99)))
+                        new Money(new BigDecimal("10.99"))))
+                .price(new Money(new BigDecimal("10.99")))
                 .quantity(5)
                 .build();
 
@@ -94,8 +90,8 @@ class CustomerRepositoryTest extends ApiEnvTestConfig {
                 .customerId(new CustomerId(UUID.randomUUID()))
                 .restaurantId(new RestaurantId(UUID.randomUUID()))
                 .deliveryAddress(address)
-                .price(new Money(new BigDecimal(54.95)))
-                .items(Arrays.asList(item))
+                .price(new Money(new BigDecimal("54.95")))
+                .items(List.of(item))
                 .trackingId(TRACKING_ID)
                 .build();
     }

@@ -1,7 +1,7 @@
 package com.h.udemy.java.uservices.restaurant.container;
 
 
-import com.h.udemy.java.uservices.restaurant.domain.core.RestaurantDomainService;
+import com.h.udemy.java.uservices.restaurant.domain.core.RestaurantDomainServiceI;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguration {
 
     @Bean
-    public RestaurantDomainService restaurantDomainService() {
-        return new RestaurantDomainService();
+    public RestaurantDomainServiceI restaurantDomainService() {
+        return new RestaurantDomainServiceI();
     }
 }
