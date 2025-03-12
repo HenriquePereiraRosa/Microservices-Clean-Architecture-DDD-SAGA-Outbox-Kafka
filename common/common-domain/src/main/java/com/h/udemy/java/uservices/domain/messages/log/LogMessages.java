@@ -8,7 +8,7 @@ import static java.text.MessageFormat.format;
 public enum LogMessages {
 
     // COMMON
-    KAFKA_X_REQUESTS_RECEIVED("{0} of {1} request received with keys: {2}, partitions: {3}, and offsets: {4}"),
+    KAFKA_X_REQUESTS_RECEIVED("{0} of {1} requests received with keys: {2}, partitions: {3}, offsets: {4}"),
     KAFKA_PROCESSING_FOR_ID("Processing {0} for order id: {1}"),
 
     PUB_PROCESSING_APPROVAL_FOR_ID("Processing [{0}] approval for order id: [{1}]"),

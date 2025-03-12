@@ -2,23 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>parent</artifactId>
         <groupId>com.h.udemy.java.uservices</groupId>
+        <artifactId>customer-service</artifactId>
         <version>1.0.0</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>customer-service</artifactId>
+    <artifactId>customer-domain</artifactId>
 
     <packaging>pom</packaging>
 
     <modules>
-        <module>customer-domain</module>
-        <module>customer-dataaccess</module>
-        <module>customer-application</module>
-        <module>customer-messaging</module>
-        <module>customer-container</module>
+        <module>customer-domain-core</module>
+        <module>customer-domain-service</module>
     </modules>
 
 </project>

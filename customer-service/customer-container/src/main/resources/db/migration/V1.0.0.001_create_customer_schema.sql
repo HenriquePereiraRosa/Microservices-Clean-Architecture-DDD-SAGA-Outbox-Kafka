@@ -13,20 +13,6 @@ CREATE TABLE customer.customers
     CONSTRAINT customers_pkey PRIMARY KEY (id)
 );
 
-DROP MATERIALIZED VIEW IF EXISTS customer.vw_order_customer;
-
-CREATE MATERIALIZED VIEW customer.vw_order_customer
-TABLESPACE pg_default
-AS
- SELECT id,
-    username,
-    first_name,
-    last_name
-   FROM customer.customers
-WITH DATA;
-
-refresh materialized VIEW customer.vw_order_customer;
-
 DROP function IF EXISTS customer.refresh_vw_order_customer;
 
 CREATE OR replace function customer.refresh_vw_order_customer()

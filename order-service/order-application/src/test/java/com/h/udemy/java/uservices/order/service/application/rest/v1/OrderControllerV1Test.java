@@ -16,6 +16,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MvcResult;
@@ -126,7 +127,7 @@ class OrderControllerV1Test extends EnvConfigTestCase {
                 .andReturn();
 
         assertTrue(res.getResponse().getContentAsString()
-                .contains(lSearchUUID.toString()));
+                .contains(HttpStatus.NOT_FOUND.getReasonPhrase()));
     }
 
     @Test

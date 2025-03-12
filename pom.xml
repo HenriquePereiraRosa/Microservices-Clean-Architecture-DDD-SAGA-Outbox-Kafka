@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.14</version>
+		<version>2.7.18</version>
 		<relativePath/>
 	</parent>
 
@@ -50,6 +50,12 @@
 		<restaurant.domain.service.version>1.0.0</restaurant.domain.service.version>
 		<restaurant.dataaccess.version>1.0.0</restaurant.dataaccess.version>
 		<restaurant.messaging.version>1.0.0</restaurant.messaging.version>
+
+		<customer.domain.core.version>1.0.0</customer.domain.core.version>
+		<customer.domain.service.version>1.0.0</customer.domain.service.version>
+		<customer.application.version>1.0.0</customer.application.version>
+		<customer.dataaccess.version>1.0.0</customer.dataaccess.version>
+		<customer.messaging.version>1.0.0</customer.messaging.version>
 
 		<spring-boot-starter-validation.version>3.0.0</spring-boot-starter-validation.version>
 
@@ -168,6 +174,39 @@
 				<groupId>com.h.udemy.java.uservices</groupId>
 				<artifactId>order-messaging</artifactId>
 				<version>${order.messaging.version}</version>
+			</dependency>
+
+
+			<!-- CUSTOMER -->
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>customer-domain-core</artifactId>
+				<version>${customer.domain.core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>customer-domain-service</artifactId>
+				<version>${customer.domain.service.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>customer-application</artifactId>
+				<version>${customer.application.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>customer-dataaccess</artifactId>
+				<version>${customer.dataaccess.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h.udemy.java.uservices</groupId>
+				<artifactId>customer-messaging</artifactId>
+				<version>${customer.messaging.version}</version>
 			</dependency>
 
 
