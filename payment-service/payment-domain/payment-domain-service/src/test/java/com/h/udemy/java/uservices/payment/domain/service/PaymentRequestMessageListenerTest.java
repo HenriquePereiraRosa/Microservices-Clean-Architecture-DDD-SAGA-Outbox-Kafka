@@ -32,7 +32,7 @@ class PaymentRequestMessageListenerTest extends ApiEnvTest {
 
     @Test
     void should_completePayment() {
-        Payment payment = PaymentFactory.createPayment();
+        Payment payment = PaymentFactory.mockPayment();
         CreditEntry creditEntry = CreditEntryFactory.createOne();
         List<CreditHistory> creditHistories = CreditHistoryFactory.createOKList(1);
         List<String> failureMessages = new ArrayList<>();
@@ -48,7 +48,7 @@ class PaymentRequestMessageListenerTest extends ApiEnvTest {
 
     @Test
     void should_return_FAILED_in_completePayment_when_failureMessages_is_not_null() {
-        Payment payment = PaymentFactory.createPayment(ERROR_PRICE);
+        Payment payment = PaymentFactory.mockPayment(ERROR_PRICE);
         CreditEntry creditEntry = CreditEntryFactory.createOne();
         List<CreditHistory> creditHistories = CreditHistoryFactory.createOKList(2);
         List<String> failureMessages = new ArrayList<>();
@@ -65,7 +65,7 @@ class PaymentRequestMessageListenerTest extends ApiEnvTest {
 
     @Test
     void should_cancelPayment() {
-        Payment payment = PaymentFactory.createPayment();
+        Payment payment = PaymentFactory.mockPayment();
         CreditEntry creditEntry = CreditEntryFactory.createOne();
         List<CreditHistory> creditHistories = CreditHistoryFactory.createOKList(1);
         List<String> failureMessages = new ArrayList<>();
@@ -81,7 +81,7 @@ class PaymentRequestMessageListenerTest extends ApiEnvTest {
 
     @Test
     void should_return_FAILED_in_cancelPayment_when_failureMessages_is_not_null() {
-        Payment payment = PaymentFactory.createPayment(ERROR_PRICE);
+        Payment payment = PaymentFactory.mockPayment(ERROR_PRICE);
         CreditEntry creditEntry = CreditEntryFactory.createOne();
         List<CreditHistory> creditHistories = CreditHistoryFactory.createOKList(1);
         List<String> failureMessages = new ArrayList<>();

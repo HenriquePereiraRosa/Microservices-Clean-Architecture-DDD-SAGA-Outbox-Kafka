@@ -69,7 +69,6 @@ class OrderControllerV1Test extends EnvConfigTestCase {
                 .thenReturn(Optional.of(restaurant));
     }
 
-
     @Test
     void when_createOrder_should_return_201() throws Exception {
         when(this.orderRepository.insertOrder(any(Order.class)))

@@ -6,8 +6,10 @@ import com.h.udemy.java.uservices.payment.domain.core.entity.CreditHistory;
 import com.h.udemy.java.uservices.payment.domain.core.entity.Payment;
 import com.h.udemy.java.uservices.payment.domain.service.dto.PaymentRequest;
 import com.h.udemy.java.uservices.payment.domain.service.exception.PaymentDomainServiceException;
+import com.h.udemy.java.uservices.payment.domain.service.outbox.model.OrderOutboxMessage;
 import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.CreditEntryRepository;
 import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.CreditHistoryRepository;
+import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.OrderOutboxRepository;
 import com.h.udemy.java.uservices.payment.domain.service.ports.output.repository.PaymentRepository;
 import com.h.udemy.java.uservices.payment.domain.service.test.config.ApiEnvTest;
 import org.junit.jupiter.api.*;
@@ -20,8 +22,9 @@ import java.util.UUID;
 import static com.h.udemy.java.uservices.domain.messages.Messages.*;
 import static com.h.udemy.java.uservices.payment.domain.service.test.util.factory.CreditEntryFactory.createOne;
 import static com.h.udemy.java.uservices.payment.domain.service.test.util.factory.CreditHistoryFactory.createOKList;
-import static com.h.udemy.java.uservices.payment.domain.service.test.util.factory.PaymentFactory.createPayment;
-import static com.h.udemy.java.uservices.payment.domain.service.test.util.factory.PaymentRequestFactory.createPaymentRequest;
+import static com.h.udemy.java.uservices.payment.domain.service.test.util.factory.OrderOutboxMessageMockFactory.mockOrderOutboxMessage;
+import static com.h.udemy.java.uservices.payment.domain.service.test.util.factory.PaymentFactory.mockPayment;
+import static com.h.udemy.java.uservices.payment.domain.service.test.util.factory.PaymentRequestFactory.mockPaymentRequest;
 import static java.text.MessageFormat.format;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -31,21 +34,23 @@ import static org.mockito.Mockito.when;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class PaymentRequestHelperTest extends ApiEnvTest {
 
-    private final PaymentRequest paymentRequest = createPaymentRequest();
+    private final PaymentRequest paymentRequest = mockPaymentRequest();
     private final CreditEntry creditEntry = createOne();
     private final List<CreditHistory> creditHistories = createOKList(1);
-    private final Payment payment = createPayment();
+    private final Payment payment = mockPayment();
+    private final OrderOutboxMessage orderOutboxMessage = mockOrderOutboxMessage();
 
 
     @Autowired
     PaymentRequestHelper paymentRequestHelper;
-
     @Autowired
     PaymentRepository paymentRepository;
     @Autowired
     CreditEntryRepository creditEntryRepository;
     @Autowired
     CreditHistoryRepository creditHistoryRepository;
+    @Autowired
+    OrderOutboxRepository orderOutboxRepository;
 
 
     @Test
@@ -101,6 +106,8 @@ class PaymentRequestHelperTest extends ApiEnvTest {
 
         when(creditHistoryRepository.findByCustomerId(any()))
                 .thenReturn(Optional.of(creditHistories));
+        when(orderOutboxRepository.save(any()))
+                .thenReturn(orderOutboxMessage);
 
         paymentRequestHelper.persistPayment(paymentRequest);
 
@@ -114,11 +121,12 @@ class PaymentRequestHelperTest extends ApiEnvTest {
 
         when(paymentRepository.findByOrderId(UUID.fromString(paymentRequest.getOrderId())))
                 .thenReturn(Optional.of(payment));
+        when(orderOutboxRepository.save(any()))
+                .thenReturn(orderOutboxMessage);
 
         paymentRequestHelper.persistCancelPayment(paymentRequest);
 
         // todo: redo assertion without PaymentEvent obj
-
 //        assertTrue(CollectionUtils.isEmpty(paymentEvent.getFailureMessages()));
     }
 }

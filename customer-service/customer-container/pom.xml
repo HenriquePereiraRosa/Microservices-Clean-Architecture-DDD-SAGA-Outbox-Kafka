@@ -11,6 +11,10 @@
 
     <artifactId>customer-container</artifactId>
 
+    <properties>
+        <docker.skip>true</docker.skip>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -40,6 +44,15 @@
 
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>enableDocker-linux</id>
+            <properties>
+                <docker.skip>false</docker.skip>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>
@@ -56,9 +69,9 @@
                         <goals>
                             <goal>build-image</goal>
                         </goals>
-<!--                        <configuration>-->
-<!--                            <skip>${docker.skip}</skip>-->
-<!--                        </configuration>-->
+                        <configuration>
+                            <skip>${docker.skip}</skip>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
