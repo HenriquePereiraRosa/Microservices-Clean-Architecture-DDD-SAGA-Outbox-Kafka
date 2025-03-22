@@ -1,4 +1,4 @@
-package com.h.udemy.java.uservices.customer.service;
+package com.h.udemy.java.uservices.container.customer.service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Locale;
 
-import static com.h.udemy.java.uservices.customer.service.CustomerServiceApplication.CUSTOMER_MODULE_PACKAGE_DATAACCESS;
-import static com.h.udemy.java.uservices.customer.service.CustomerServiceApplication.PARENT_MODULE_PACKAGE_DATAACCESS;
+import static com.h.udemy.java.uservices.container.customer.service.CustomerServiceApplication.CUSTOMER_MODULE_PACKAGE_DATAACCESS;
+import static com.h.udemy.java.uservices.container.customer.service.CustomerServiceApplication.PARENT_MODULE_PACKAGE_DATAACCESS;
 import static com.h.udemy.java.uservices.domain.Constants.BASE_PACKAGE;
 
 @EnableJpaRepositories(basePackages = {PARENT_MODULE_PACKAGE_DATAACCESS, CUSTOMER_MODULE_PACKAGE_DATAACCESS})

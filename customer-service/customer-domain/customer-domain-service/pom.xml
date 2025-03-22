@@ -14,6 +14,11 @@
 
         <dependency>
             <groupId>com.h.udemy.java.uservices</groupId>
+            <artifactId>customer-domain-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h.udemy.java.uservices</groupId>
             <artifactId>common-domain</artifactId>
         </dependency>
 
@@ -26,6 +31,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

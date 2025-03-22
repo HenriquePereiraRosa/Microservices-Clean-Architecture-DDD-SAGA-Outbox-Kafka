@@ -13,9 +13,10 @@ public enum LogMessages {
 
     PUB_PROCESSING_APPROVAL_FOR_ID("Processing [{0}] approval for order id: [{1}]"),
 
-    EVENT_RECEIVED("Received {0} for {1} id: {2}"),
+    EVENT_RECEIVED("Received {0} for {1} id: [{2}]"),
     EVENT_SENT_TO_KAFKA("{0} sent to KAFKA. OrderId [{1}], SagaId [{2}]"),
-    EVENT_SENT_TO_KAFKA_AT("{0} sent to KAFKA at:  {1}"),
+    EVENT_X_ID_SENT_TO_KAFKA("{0} sent to KAFKA. {1} id [{2}]"),
+    EVENT_SENT_TO_KAFKA_AT("{0} sent to KAFKA at: {1}"),
     EVENT_ERR_SENT_TO_KAFKA("Error while sending {0} message to KAFKA with {1}. Order id [{2}] and Saga id [{3}], error: {4}"),
     EVENT_ERR_OPTIMISTIC_LOCK("Caught optimistic locking exception in {0} for order id: {1}"),
     ERR_UNIQUE_VIOLATION_IN_REQUEST_LISTENER("Caught unique constraint exception with sql state: {0}  in {1} for order id: {2}"),
@@ -39,6 +40,10 @@ public enum LogMessages {
     ERR_ORDER_COULD_NOT_BE_MAPPED("{0} with ID {1}, could not be serialized to JSON."),
 
     ERR_NOT_FOUND("{0} id [{1}] not found!"),
+
+    // COMMON MODULES
+    ID_CREATED_ORDER_RESPONSE("Returning {0}  for {1} with ID: [{1}]"),
+    SAVED_SUCCESSFULLY("{0} saved successfully!"),
 
     // ORDER
     ORDER_RECEIVED_ID("Received OrderCreatedEvent. orderId: {0}"),
@@ -85,8 +90,16 @@ public enum LogMessages {
     RESTAURANT_REJECTED_ORDER_ID("Order id {0} REJECTED."),
     RESTAURANT_PAYMENT_NOT_COMPLETED("Payment is not completed for order: {0}"),
     RESTAURANT_PRODUCT_NOT_AVAILABLE("Product with id: {0} is not available"),
-    RESTAURANT_PRODUCT_PRICE_INCORRECT("Price total is not correct for order: {0}");
+    RESTAURANT_PRODUCT_PRICE_INCORRECT("Price total is not correct for order: {0}"),
 
+    // CUSTOMER
+    CUSTOMER_ID_INITIATED("Customer id [{0}] is initiated."),
+    CUSTOMER_ID_COULD_NOT_BE_SAVED("Customer id [{0}] could not be saved."),
+    CUSTOMER_EVENT_ERR_SENDING_CUSTOMER_TO_KAFKA("Error while sending {0} to kafka for {1} id: [{2}]. Error: {3}."),
+    CUSTOMER_EVENT_ERR_SENDING_TO_KAFKA("Error while sending message {0} to topic {1}"),
+    CUSTOMER_EVENT_ON_SUCCESS("Received new metadata." +
+            " Topic: {0}; Partition {1}; Offset {2}; Timestamp {3}, at time {4}"),
+    CUSTOMER_CONTROLLER_CREATE("Creating customer with username: {0}");
 
     final String key;
 
