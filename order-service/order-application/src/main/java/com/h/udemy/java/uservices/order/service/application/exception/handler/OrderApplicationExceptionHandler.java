@@ -1,7 +1,7 @@
 package com.h.udemy.java.uservices.order.service.application.exception.handler;
 
-import com.h.udemy.java.uservices.application.exception.handler.GlobalExceptionHandler;
-import com.h.udemy.java.uservices.application.exception.handler.model.ErrorTo;
+import com.h.udemy.java.uservices.common.application.exception.handler.handler.GlobalExceptionHandler;
+import com.h.udemy.java.uservices.common.application.exception.handler.handler.model.ErrorTo;
 import com.h.udemy.java.uservices.order.service.domain.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

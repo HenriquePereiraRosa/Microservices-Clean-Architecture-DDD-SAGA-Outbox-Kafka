@@ -8,7 +8,7 @@ import org.mapstruct.NullValueMappingStrategy;
 
 @Mapper(componentModel = "spring",
         nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
-public abstract class IOrderDataAccessMapper {
+public abstract class OrderDataAccessMapper {
 
     abstract StreetAddress addressEntityToDeliveryAddress(OrderAddressEntity address);
 

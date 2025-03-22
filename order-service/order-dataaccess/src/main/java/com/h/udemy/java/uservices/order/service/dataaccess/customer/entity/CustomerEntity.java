@@ -17,9 +17,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "vw_order_customer", schema = "customer")
+@Table(name = "customers")
 public class CustomerEntity {
 
     @Id
     private UUID id;
+    private String username;
+    private String firstName;
+    private String lastName;
 }

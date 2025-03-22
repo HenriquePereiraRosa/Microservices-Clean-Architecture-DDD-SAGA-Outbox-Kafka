@@ -3,6 +3,7 @@ package com.h.udemy.java.uservices.order.message.mapper;
 import com.h.udemy.java.uservices.domain.valueobject.OrderApprovalStatus;
 import com.h.udemy.java.uservices.domain.valueobject.PaymentStatus;
 import com.h.udemy.java.uservices.kafka.order.avro.model.*;
+import com.h.udemy.java.uservices.order.service.domain.dto.message.CustomerModel;
 import com.h.udemy.java.uservices.order.service.domain.dto.message.PaymentResponse;
 import com.h.udemy.java.uservices.order.service.domain.dto.message.RestaurantApprovalResponse;
 import com.h.udemy.java.uservices.order.service.domain.outbox.model.approval.OrderApprovalEventPayload;
@@ -82,6 +83,15 @@ public class OrderMessagingDataMapper {
                                 .build()).collect(Collectors.toList()))
                 .setPrice(orderApprovalEventPayload.getPrice())
                 .setCreatedAt(orderApprovalEventPayload.getCreatedAt().toInstant())
+                .build();
+    }
+
+    public CustomerModel customerAvroModeltoCustomerModel(CustomerAvroModel customerAvroModel) {
+        return CustomerModel.builder()
+                .id(customerAvroModel.getId())
+                .username(customerAvroModel.getUsername())
+                .firstName(customerAvroModel.getFirstName())
+                .lastName(customerAvroModel.getLastName())
                 .build();
     }
 

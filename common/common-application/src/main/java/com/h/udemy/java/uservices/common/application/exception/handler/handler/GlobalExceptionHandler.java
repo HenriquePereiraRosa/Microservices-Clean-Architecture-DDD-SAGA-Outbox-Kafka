@@ -1,6 +1,6 @@
-package com.h.udemy.java.uservices.application.exception.handler;
+package com.h.udemy.java.uservices.common.application.exception.handler.handler;
 
-import com.h.udemy.java.uservices.application.exception.handler.model.ErrorTo;
+import com.h.udemy.java.uservices.common.application.exception.handler.handler.model.ErrorTo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
