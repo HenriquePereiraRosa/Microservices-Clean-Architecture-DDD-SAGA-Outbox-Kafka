@@ -1,10 +1,6 @@
 package com.h.udemy.java.uservices.order.service.dataaccess;
 
-import com.h.udemy.java.uservices.order.service.domain.OrderDomainServiceImpl;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.message.publisher.restaurantapproval.RestaurantApprovalRequestMessagePublisher;
-import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.ApprovalOutboxRepository;
-import com.h.udemy.java.uservices.restaurant.dataaccess.repository.RestaurantJpaRepository;
+import com.h.udemy.java.uservices.common.dataaccess.repository.RestaurantJpaRepository;
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.OrderRepository;
 import org.mockito.Mockito;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,8 +1,8 @@
 package com.h.udemy.java.uservices.order.service.dataaccess.restaurant.adapter;
 
 import com.h.udemy.java.uservices.order.service.domain.ports.output.repository.RestaurantRepository;
-import com.h.udemy.java.uservices.restaurant.dataaccess.entity.RestaurantEntity;
-import com.h.udemy.java.uservices.restaurant.dataaccess.repository.RestaurantJpaRepository;
+import com.h.udemy.java.uservices.common.dataaccess.entity.RestaurantEntity;
+import com.h.udemy.java.uservices.common.dataaccess.repository.RestaurantJpaRepository;
 import com.h.udemy.java.uservices.order.service.dataaccess.restaurant.mapper.RestaurantDataAccessMapper;
 import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;

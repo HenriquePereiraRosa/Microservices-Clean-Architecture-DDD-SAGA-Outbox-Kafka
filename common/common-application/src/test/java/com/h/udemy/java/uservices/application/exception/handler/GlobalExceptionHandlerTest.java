@@ -1,7 +1,8 @@
 package com.h.udemy.java.uservices.application.exception.handler;
 
 import com.h.udemy.java.uservices.application.ApiEnvTest;
-import com.h.udemy.java.uservices.application.exception.handler.model.ErrorTo;
+import com.h.udemy.java.uservices.common.application.exception.handler.handler.GlobalExceptionHandler;
+import com.h.udemy.java.uservices.common.application.exception.handler.handler.model.ErrorTo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

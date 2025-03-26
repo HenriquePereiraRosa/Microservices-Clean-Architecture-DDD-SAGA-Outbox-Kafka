@@ -2,6 +2,7 @@ package com.h.udemy.java.uservices.restaurant.domain.service;
 
 import com.h.udemy.java.uservices.domain.valueobject.OrderId;
 import com.h.udemy.java.uservices.outbox.OutboxStatus;
+import com.h.udemy.java.uservices.restaurant.domain.core.RestaurantDomainService;
 import com.h.udemy.java.uservices.restaurant.domain.core.RestaurantDomainServiceI;
 import com.h.udemy.java.uservices.restaurant.domain.core.entity.Restaurant;
 import com.h.udemy.java.uservices.restaurant.domain.core.event.OrderApprovalEvent;
@@ -28,7 +29,7 @@ import static java.text.MessageFormat.format;
 @Slf4j
 @Service
 public class RestaurantApprovalRequestHelper {
-    private final RestaurantDomainServiceI restaurantDomainService;
+    private final RestaurantDomainService restaurantDomainService;
     private final RestaurantDataMapper restaurantDataMapper;
     private final RestaurantRepository restaurantRepository;
     private final OrderApprovalRepository orderApprovalRepository;
@@ -36,7 +37,7 @@ public class RestaurantApprovalRequestHelper {
     private final RestaurantApprovalResponseMessagePublisher restaurantApprovalResponseMessagePublisher;
 
 
-    public RestaurantApprovalRequestHelper(RestaurantDomainServiceI restaurantDomainService,
+    public RestaurantApprovalRequestHelper(RestaurantDomainService restaurantDomainService,
                                            RestaurantDataMapper restaurantMapper,
                                            RestaurantRepository restaurantRepository,
                                            OrderApprovalRepository orderApprovalRepository,

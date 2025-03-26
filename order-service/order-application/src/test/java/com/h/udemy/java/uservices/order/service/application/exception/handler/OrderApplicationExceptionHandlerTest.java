@@ -5,13 +5,13 @@ import com.h.udemy.java.uservices.order.service.domain.exception.CustomerNotFoun
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderCouldNotBeSavedException;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderDomainException;
 import com.h.udemy.java.uservices.order.service.domain.exception.OrderNotFoundException;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import javax.annotation.PostConstruct;
 import javax.validation.ValidationException;
 import java.util.UUID;
 
@@ -26,7 +26,7 @@ class OrderApplicationExceptionHandlerTest {
 
     OrderApplicationExceptionHandler handler;
 
-    @PostConstruct
+    @BeforeAll
     void setup() {
         handler = new OrderApplicationExceptionHandler();
     }

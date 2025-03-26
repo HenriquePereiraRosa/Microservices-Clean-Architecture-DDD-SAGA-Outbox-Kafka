@@ -1,0 +1,28 @@
+type Query {
+    findAllCustomers: [Customer]
+    findCustomerById(id: String!): Customer
+    findCustomerByUsername(username: String!): Customer
+}
+
+type Mutation {
+    createCustomer(createCustomerCommand: CreateCustomerCommand!): CreateCustomerResponse!
+}
+
+input CreateCustomerCommand {
+    customerId: String!
+    username: String!
+    firstName: String!
+    lastName: String!
+}
+
+type CreateCustomerResponse {
+    customerId: String!
+    message: String!
+}
+
+type Customer {
+    customerId: String!
+    username: String!
+    firstName: String!
+    lastName: String!
+}

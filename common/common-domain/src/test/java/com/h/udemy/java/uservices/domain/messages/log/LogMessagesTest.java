@@ -86,21 +86,22 @@ class LogMessagesTest extends ApiEnvTestConfig {
     }
 
     @Test
-    void assure_that_ORDER_KAFKA_NUMBER_MODEL_RESPONSES_RECEIVED_is_ok() {
+    void assure_that_KAFKA_X_REQUESTS_RECEIVED_is_ok() {
 
         final int messagesSize = 20;
         final String modelTestName = "MODEL_TEST_NAME";
         final int keys = 19;
-        final Object[] objects = {messagesSize,
+        final Object[] objects = {
+                messagesSize,
                 modelTestName,
                 keys,
                 partition,
                 offset};
 
-        final String expected = format("{0} number of {1} responses received." +
-                        " Keys: {2}, Partitions: {3}, Offsets: {4}",
+        final String expected = format("{0} of {1} requests received with" +
+                        " keys: {2}, partitions: {3}, offsets: {4}",
                 objects);
-        final String sut = ORDER_KAFKA_NUMBER_MODEL_RESPONSES_RECEIVED.build(objects);
+        final String sut = KAFKA_X_REQUESTS_RECEIVED.build(objects);
 
         assertTrue(StringUtils.isNotBlank(sut));
         assertEquals(expected, sut);

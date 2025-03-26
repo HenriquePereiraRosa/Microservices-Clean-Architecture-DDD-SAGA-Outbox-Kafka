@@ -23,15 +23,24 @@ select * from restaurant.restaurants;
 select * from restaurant.order_approval;
 select * from restaurant.order_restaurant_m_view;
 
-select * from order.orders;
-select * from order.order_items;
-select * from order.order_address;
+select * from "order".orders;
+select * from "order".order_items;
+select * from "order".order_address;
+select * from "order".payment_outbox;
+select * from "order".customers;
+
+select * from customer.customers;
 
 select * from payment.payments;
 select * from payment.credit_entry;
 select * from payment.credit_history;
 
-select * from customer.customers;
+
+[//]: # (DESCRIBE A COLUMN IN POSTGRES)
+SELECT column_name, data_type, is_nullable, column_default
+FROM information_schema.columns
+WHERE table_schema = 'payment'
+  AND table_name = 'order_outbox';
 ````
 
 

@@ -23,6 +23,5 @@ public class PaymentRequestMessageListenerI implements PaymentRequestMessageList
     @Override
     public void cancelPayment(PaymentRequest paymentRequest) {
         paymentRequestHelper.persistCancelPayment(paymentRequest);
-
     }
 }

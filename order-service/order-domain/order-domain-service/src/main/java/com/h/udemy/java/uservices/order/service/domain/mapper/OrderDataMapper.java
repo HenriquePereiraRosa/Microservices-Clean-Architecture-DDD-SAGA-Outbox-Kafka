@@ -1,5 +1,6 @@
 package com.h.udemy.java.uservices.order.service.domain.mapper;
 
+import com.h.udemy.java.uservices.domain.valueobject.CustomerId;
 import com.h.udemy.java.uservices.domain.valueobject.PaymentOrderStatus;
 import com.h.udemy.java.uservices.domain.valueobject.RestaurantId;
 import com.h.udemy.java.uservices.domain.valueobject.RestaurantOrderStatus;
@@ -7,11 +8,9 @@ import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderCom
 import com.h.udemy.java.uservices.order.service.domain.dto.create.CreateOrderResponse;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.OrderAddressDTO;
 import com.h.udemy.java.uservices.order.service.domain.dto.create.OrderItemDTO;
+import com.h.udemy.java.uservices.order.service.domain.dto.message.CustomerModel;
 import com.h.udemy.java.uservices.order.service.domain.dto.track.TrackOrderResponse;
-import com.h.udemy.java.uservices.order.service.domain.entity.Order;
-import com.h.udemy.java.uservices.order.service.domain.entity.OrderItem;
-import com.h.udemy.java.uservices.order.service.domain.entity.Product;
-import com.h.udemy.java.uservices.order.service.domain.entity.Restaurant;
+import com.h.udemy.java.uservices.order.service.domain.entity.*;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCancelledEvent;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderCreatedEvent;
 import com.h.udemy.java.uservices.order.service.domain.event.OrderPaidEvent;
@@ -115,6 +114,14 @@ public class OrderDataMapper {
                 .price(orderPaidEvent.getOrder().getPrice().getAmount())
                 .createdAt(orderPaidEvent.getCreatedAt())
                 .build();
+    }
+
+    public Customer customerModelToCustomer(CustomerModel customerModel) {
+        return new Customer(
+                new CustomerId(UUID.fromString(customerModel.getId())),
+                customerModel.getUsername(),
+                customerModel.getFirstName(),
+                customerModel.getLastName());
     }
 
     public List<TrackOrderResponse> ordersToTrackOrderResponse(List<Order> orders) {
