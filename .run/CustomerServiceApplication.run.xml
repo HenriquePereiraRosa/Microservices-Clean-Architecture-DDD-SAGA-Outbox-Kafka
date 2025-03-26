@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="CustomerServiceApplication" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.h.udemy.java.uservices.customer.service.CustomerServiceApplication" />
+    <module name="customer-container" />
+    <option name="VM_PARAMETERS" value="-Dspring.profiles.active=local" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.h.udemy.java.uservices.customer.service.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

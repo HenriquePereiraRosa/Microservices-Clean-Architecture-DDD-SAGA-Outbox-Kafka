@@ -4,8 +4,14 @@ CREATE SCHEMA "order";
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-DROP TYPE IF EXISTS order_status;
+DROP TYPE IF EXISTS  order_status;
 CREATE TYPE order_status AS ENUM ('PENDING', 'PAID', 'APPROVED', 'CANCELLED', 'CANCELLING');
+
+DROP TYPE IF EXISTS saga_status;
+CREATE TYPE saga_status AS ENUM ('STARTED', 'FAILED', 'SUCCEEDED', 'PROCESSING', 'COMPENSATING', 'COMPENSATED');
+
+DROP TYPE IF EXISTS outbox_status;
+CREATE TYPE outbox_status AS ENUM ('STARTED', 'COMPLETED', 'FAILED');
 
 DROP TABLE IF EXISTS "order".orders CASCADE;
 
@@ -30,13 +36,12 @@ CREATE TABLE "order".order_items
     product_id uuid NOT NULL,
     price numeric(10,2) NOT NULL,
     quantity integer NOT NULL,
---    sub_total numeric(10,2) NOT NULL, //todo: check  if is really need a sub_total column since we  just need to multiply price by quantity
     CONSTRAINT order_items_pkey PRIMARY KEY (id, order_id)
 );
 
 ALTER TABLE "order".order_items
     ADD CONSTRAINT "FK_ORDER_ID" FOREIGN KEY (order_id)
-    REFERENCES "order".orders (id) MATCH SIMPLE
+    REFERENCES "order".orders (id)
     ON UPDATE NO ACTION
     ON DELETE CASCADE
     NOT VALID;
@@ -55,16 +60,10 @@ CREATE TABLE "order".order_address
 
 ALTER TABLE "order".order_address
     ADD CONSTRAINT "FK_ORDER_ID" FOREIGN KEY (order_id)
-    REFERENCES "order".orders (id) MATCH SIMPLE
+    REFERENCES "order".orders (id)
     ON UPDATE NO ACTION
     ON DELETE CASCADE
     NOT VALID;
-
-DROP TYPE IF EXISTS saga_status;
-CREATE TYPE saga_status AS ENUM ('STARTED', 'FAILED', 'SUCCEEDED', 'PROCESSING', 'COMPENSATING', 'COMPENSATED');
-
-DROP TYPE IF EXISTS outbox_status;
-CREATE TYPE outbox_status AS ENUM ('STARTED', 'COMPLETED', 'FAILED');
 
 DROP TABLE IF EXISTS "order".payment_outbox CASCADE;
 
@@ -87,10 +86,6 @@ CREATE INDEX "payment_outbox_saga_status"
     ON "order".payment_outbox
     (type, outbox_status, saga_status);
 
---CREATE UNIQUE INDEX "payment_outbox_saga_id"
---    ON "order".payment_outbox
---    (type, saga_id, saga_status);
-
 DROP TABLE IF EXISTS "order".restaurant_approval_outbox CASCADE;
 
 CREATE TABLE "order".restaurant_approval_outbox
@@ -111,10 +106,6 @@ CREATE TABLE "order".restaurant_approval_outbox
 CREATE INDEX "restaurant_approval_outbox_saga_status"
     ON "order".restaurant_approval_outbox
     (type, outbox_status, saga_status);
-
---CREATE UNIQUE INDEX "restaurant_approval_outbox_saga_id"
---    ON "order".restaurant_approval_outbox
---    (type, saga_id, saga_status);
 
 DROP TABLE IF EXISTS "order".customers CASCADE;
 

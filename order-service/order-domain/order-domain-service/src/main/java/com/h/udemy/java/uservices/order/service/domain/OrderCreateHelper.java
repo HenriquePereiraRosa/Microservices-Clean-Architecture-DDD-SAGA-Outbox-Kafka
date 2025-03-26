@@ -26,7 +26,7 @@ public class OrderCreateHelper {
 
     private final OrderDomainService iOrderDomainService;
     private final OrderRepository orderRepository;
-    private final CustomerRepository iCustomerRepository;
+    private final CustomerRepository customerRepository;
     private final RestaurantRepository restaurantRepository;
     private final OrderDataMapper orderDataMapper;
 
@@ -37,7 +37,7 @@ public class OrderCreateHelper {
                              OrderDataMapper orderDataMapper) {
         this.iOrderDomainService = orderDomainService;
         this.orderRepository = orderRepository;
-        this.iCustomerRepository = iCustomerRepository;
+        this.customerRepository = iCustomerRepository;
         this.restaurantRepository = restaurantRepository;
         this.orderDataMapper = orderDataMapper;
     }
@@ -73,7 +73,7 @@ public class OrderCreateHelper {
     }
 
     private void checkCustomer(UUID customerId) {
-        Optional<Customer> customer = iCustomerRepository.findCustomer(customerId);
+        Optional<Customer> customer = customerRepository.findCustomer(customerId);
         if (customer.isEmpty()) {
             final String msg = Messages.ERR_CUSTOMER_NOT_FOUND.get() + customerId;
             log.warn(msg);

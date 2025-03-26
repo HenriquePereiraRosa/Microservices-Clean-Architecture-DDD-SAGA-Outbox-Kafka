@@ -2,7 +2,7 @@ package com.h.udemy.java.uservices.application.handler;
 
 import com.h.udemy.java.uservices.common.application.exception.handler.handler.GlobalExceptionHandler;
 import com.h.udemy.java.uservices.common.application.exception.handler.handler.model.ErrorTo;
-import com.h.udemy.java.uservices.core.exception.CustomerDomainException;
+import com.h.udemy.java.uservices.customer.service.domain.exception.CustomerDomainException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
